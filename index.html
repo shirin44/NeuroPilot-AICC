@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeuroPilot AICC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        /* Default Light Theme: Jobseeker (Blue) - High Contrast Update */
+        --background: 220 16% 96%;   /* #F1F5F9 */
+        --foreground: 222 47% 11%;   /* #0F172A */
+        --card: 0 0% 100%;           /* #FFFFFF */
+        --card-foreground: 222 47% 11%;
+        --primary: 224 71% 40%;       /* #1E40AF - Darker blue for AA */
+        --primary-foreground: 0 0% 100%; /* #FFFFFF */
+        --secondary: 220 16% 96%;     /* #F1F5F9 */
+        --secondary-foreground: 222 47% 11%;
+        --accent: 267 27% 48%;        /* #7A5DA0 - Purple for contrast */
+        --accent-foreground: 0 0% 100%;
+        --muted: 220 16% 96%;
+        --muted-foreground: 220 14% 25%;     /* #334155 - Darker for AA */
+        --border: 215 20% 87%;        /* #E2E8F0 */
+        --ring: 224 71% 40%;
+      }
+      .theme-blue { /* Jobseeker - Dark High Contrast */
+        --background: 215 33% 21%;    /* #253346 */
+        --foreground: 213 67% 95%;    /* #E3EEF6 */
+        --card: 0 0% 100%;             /* #FFFFFF */
+        --card-foreground: 215 33% 21%;
+        --primary: 211 43% 45%;        /* #4675A9 - Darkened for AA contrast */
+        --primary-foreground: 213 67% 96%; /* #F3F7FB */
+        --secondary: 215 42% 33%;      /* #375071 */
+        --secondary-foreground: 213 67% 95%;
+        --accent: 209 50% 60%;         /* #669DCB */
+        --accent-foreground: 0 0% 100%; /* #FFFFFF - For Finish Story button text */
+        --muted: 215 42% 33%;
+        --muted-foreground: 215 30% 25%; /* Darker text for light cards for AA */
+        --border: 215 39% 40%;         /* #3F5F8E */
+        --ring: 205 50% 70%;
+      }
+      .theme-red { /* Parent - Dark High Contrast */
+        --background: 12 60% 14%;      /* #3A1310 */
+        --foreground: 30 71% 95%;      /* #F9E8DB */
+        --card: 0 0% 100%;
+        --card-foreground: 12 60% 14%;
+        --primary: 11 65% 42%;         /* #B24328 - Darkened for AA contrast */
+        --primary-foreground: 30 71% 97%; /* #FCF5F0 */
+        --secondary: 7 50% 28%;        /* #6C2A22 */
+        --secondary-foreground: 30 71% 95%;
+        --accent: 16 68% 53%;          /* #D76138 */
+        --accent-foreground: 0 0% 100%;
+        --muted: 7 50% 28%;
+        --muted-foreground: 10 35% 20%; /* Darker text for light cards for AA */
+        --border: 7 57% 34%;           /* #863026 */
+        --ring: 20 68% 61%;
+      }
+      .theme-purple { /* Employer - Dark High Contrast */
+        --background: 272 23% 32%;    /* #533F64 */
+        --foreground: 270 50% 97%;    /* #F3EFF8 */
+        --card: 0 0% 100%;
+        --card-foreground: 272 23% 32%;
+        --primary: 267 27% 48%;        /* #7A5DA0 - Darkened for AA contrast */
+        --primary-foreground: 270 50% 98%; /* #FAF8FC */
+        --secondary: 268 25% 39%;      /* #664D7C */
+        --secondary-foreground: 270 50% 97%;
+        --accent: 269 32% 65%;         /* #A589C3 */
+        --accent-foreground: 0 0% 100%;
+        --muted: 268 25% 39%;
+        --muted-foreground: 270 25% 20%; /* Darker text for light cards for AA */
+        --border: 268 25% 39%;
+        --ring: 267 36% 73%;
+      }
+      .theme-green { /* Volunteer - Dark High Contrast */
+        --background: 132 34% 9%;     /* #0F1F12 */
+        --foreground: 122 33% 90%;    /* #DFEDDE */
+        --card: 0 0% 100%;
+        --card-foreground: 132 34% 9%;
+        --primary: 128 38% 30%;        /* #33683A */
+        --primary-foreground: 120 29% 97%; /* #F1F8F1 */
+        --secondary: 131 33% 16%;      /* #1D3722 */
+        --secondary-foreground: 122 33% 90%;
+        --accent: 128 38% 39%;         /* #45844C */
+        --accent-foreground: 0 0% 100%;
+        --muted: 131 33% 16%;
+        --muted-foreground: 130 20% 30%; /* Darker text for light cards */
+        --border: 132 32% 20%;         /* #224328 */
+        --ring: 127 23% 58%;
+      }
+      .force-light-theme {
+        --background: 220 16% 96%;
+        --foreground: 222 47% 11%;
+        --card: 0 0% 100%;
+        --card-foreground: 222 47% 11%;
+        --primary: 224 71% 40%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 220 16% 96%;
+        --secondary-foreground: 222 47% 11%;
+        --accent: 267 27% 48%;
+        --accent-foreground: 0 0% 100%;
+        --muted: 220 16% 96%;
+        --muted-foreground: 220 14% 25%;
+        --border: 215 20% 87%;
+        --ring: 224 71% 40%;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+      }
+      .animate-float {
+        animation: float 6s infinite ease-in-out;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fadeInUp {
+        animation: fadeInUp 0.4s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .animate-fadeIn {
+        animation: fadeIn 0.5s ease-in-out forwards;
+      }
+      @keyframes pulse-calm {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4); }
+        70% { transform: scale(1.05); box-shadow: 0 0 0 10px hsl(var(--primary) / 0); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 hsl(var(--primary) / 0); }
+      }
+      .animate-pulse-calm {
+        animation: pulse-calm 3s infinite;
+      }
+      @keyframes progress-node-pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.8; }
+      }
+      .animate-progress-node-pulse {
+        animation: progress-node-pulse 2s infinite ease-in-out;
+      }
+      @keyframes bounce-slow {
+        0%, 100% {
+          transform: translateY(0);
+          animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+        }
+        50% {
+          transform: translateY(-15px);
+          animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+        }
+      }
+      .animate-bounce-slow {
+        animation: bounce-slow 2s infinite;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'sans': ['Be Vietnam Pro', 'sans-serif'],
+              'display': ['Be Vietnam Pro', 'sans-serif'],
+            },
+            colors: {
+              border: 'hsl(var(--border))',
+              ring: 'hsl(var(--ring))',
+              background: 'hsl(var(--background))',
+              foreground: 'hsl(var(--foreground))',
+              primary: {
+                DEFAULT: 'hsl(var(--primary))',
+                foreground: 'hsl(var(--primary-foreground))',
+              },
+              secondary: {
+                DEFAULT: 'hsl(var(--secondary))',
+                foreground: 'hsl(var(--secondary-foreground))',
+              },
+              accent: {
+                DEFAULT: 'hsl(var(--accent))',
+                foreground: 'hsl(var(--accent-foreground))',
+              },
+              muted: {
+                DEFAULT: 'hsl(var(--muted))',
+                foreground: 'hsl(var(--muted-foreground))',
+              },
+              card: {
+                DEFAULT: 'hsl(var(--card))',
+                foreground: 'hsl(var(--card-foreground))',
+              },
+              'brand-blue': {
+                '50': '#F3F7FB', '100': '#E3EEF6', '200': '#CEE3EF', '300': '#ABD0E5',
+                '400': '#8BBBD9', '500': '#669DCB', '600': '#5386BD', '700': '#4873AD',
+                '800': '#3F5F8E', '900': '#375071', '950': '#253346'
+              },
+              'brand-red': {
+                '50': '#FCF5F0', '100': '#F9E8DB', '200': '#F2CDB6', '300': '#E6A17A',
+                '400': '#DF8158', '500': '#D76138', '600': '#C94B2D', '700': '#A73927',
+                '800': '#863026', '900': '#6C2A22', '950': '#3A1310'
+              },
+              'brand-purple': {
+                '50': '#FAF8FC', '100': '#F3EFF8', '200': '#EAE3F1', '300': '#D8CCE6',
+                '400': '#B8A2D1', '500': '#A589C3', '600': '#8E6EAF', '700': '#785997',
+                '800': '#664D7C', '900': '#533F64'
+              },
+              'brand-green': {
+                '50': '#F1F8F1', '100': '#DFEDDE', '200': '#C0DBBF', '300': '#94C196',
+                '400': '#7BAE7F', '500': '#45844C', '600': '#33683A', '700': '#28542F',
+                '800': '#224328', '900': '#1D3722', '950': '#0F1F12'
+              },
+              'brand-neutral': {
+                '100': '#F5F5F5', '300': '#E0E0E0', '500': '#9E9E9E',
+                '700': '#616161', '900': '#212121',
+              }
+            },
+          },
+        },
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.16.0",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.8.2"
+  }
+}
+</script>
+</head>
+  <body class="bg-background font-sans text-foreground">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
