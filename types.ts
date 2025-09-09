@@ -1,4 +1,5 @@
 
+
 export enum NarratorRole {
   Jobseeker = 'Jobseeker',
   Employer = 'Employer',
@@ -11,7 +12,10 @@ export enum Language {
   VN = 'vn',
 }
 
-export type NarratorState = 'idle' | 'intro' | 'thinking' | 'pointing' | 'celebrating' | 'explaining' | 'listening' | 'talking';
+export type NarratorState = 'neutral' | 'happy' | 'sad';
+
+// The application's view of the narrator's emotion or action state
+export type NarratorAppEmotion = NarratorState | 'intro' | 'celebrating' | 'thinking' | 'pointing' | 'explaining' | 'talking' | 'idle';
 
 export type AppMode = 'practice' | 'story';
 
@@ -20,7 +24,7 @@ export interface Narrator {
   name: { [key in Language]: string };
   intro: { [key in Language]: string };
   hover: { [key in Language]: string };
-  avatars: { [key in NarratorState]?: string };
+  avatars: { [key in NarratorState]: string };
   theme: string;
 }
 

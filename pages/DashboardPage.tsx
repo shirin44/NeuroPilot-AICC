@@ -122,7 +122,7 @@ const DashboardPage: React.FC = () => {
         {mode === 'practice' && (
             <header className="bg-card p-6 rounded-2xl shadow-lg flex items-start space-x-6">
                 <div className={`w-24 h-24 rounded-full border-4 border-accent bg-muted overflow-hidden flex-shrink-0`}>
-                   <img src={narrator.avatars.idle} alt={narrator.name[language]} className="w-full h-full object-cover" />
+                   <img src={narrator.avatars.neutral} alt={narrator.name[language]} className="w-full h-full object-cover" />
                 </div>
                 <div>
                     <h1 className="font-display text-3xl font-bold text-foreground">

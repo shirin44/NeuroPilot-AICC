@@ -1,11 +1,12 @@
 
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import DashboardPage from './pages/DashboardPage';
-import { Language, NarratorRole, NarratorState, AppMode } from './types';
+import { Language, NarratorRole, AppMode, NarratorAppEmotion } from './types';
 import CalmBreathingGuide from './components/CalmBreathingGuide';
 import ModeSelectionPage from './pages/ModeSelectionPage';
 import { NARRATORS } from './constants';
@@ -21,8 +22,8 @@ export const AppContext = React.createContext<{
   setIsBreathingGuideVisible: (visible: boolean) => void;
   narratorDialogue: string;
   setNarratorDialogue: (dialogue: string) => void;
-  narratorState: NarratorState;
-  setNarratorState: (state: NarratorState) => void;
+  narratorState: NarratorAppEmotion;
+  setNarratorState: (state: NarratorAppEmotion) => void;
 }>({
   language: Language.EN,
   setLanguage: () => {},
@@ -34,7 +35,7 @@ export const AppContext = React.createContext<{
   setIsBreathingGuideVisible: () => {},
   narratorDialogue: '',
   setNarratorDialogue: () => {},
-  narratorState: 'idle',
+  narratorState: 'neutral',
   setNarratorState: () => {},
 });
 
@@ -44,7 +45,7 @@ const App: React.FC = () => {
   const [mode, setMode] = useState<AppMode | null>(null);
   const [isBreathingGuideVisible, setIsBreathingGuideVisible] = useState(false);
   const [narratorDialogue, setNarratorDialogue] = useState('');
-  const [narratorState, setNarratorState] = useState<NarratorState>('idle');
+  const [narratorState, setNarratorState] = useState<NarratorAppEmotion>('neutral');
 
   useEffect(() => {
     // Apply theme class to body

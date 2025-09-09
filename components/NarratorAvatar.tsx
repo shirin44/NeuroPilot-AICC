@@ -1,7 +1,26 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../App';
 import { NARRATORS } from '../constants';
-import type { NarratorState } from '../types';
+import type { NarratorAppEmotion, NarratorState } from '../types';
+
+const mapAppEmotionToImageState = (emotion: NarratorAppEmotion): NarratorState => {
+    switch (emotion) {
+        case 'happy':
+        case 'celebrating':
+        case 'intro':
+            return 'happy';
+        case 'sad':
+            return 'sad';
+        case 'neutral':
+        case 'thinking':
+        case 'pointing':
+        case 'explaining':
+        case 'talking':
+        case 'idle':
+        default:
+            return 'neutral';
+    }
+};
 
 const NarratorAvatar: React.FC = () => {
   const { narratorRole, narratorDialogue, language, narratorState } = useContext(AppContext);
@@ -11,19 +30,18 @@ const NarratorAvatar: React.FC = () => {
   }
 
   const narrator = NARRATORS[narratorRole];
-  
-  // Define states that are specific actions and should not be overridden by the 'talking' state.
-  const actionStates: NarratorState[] = ['intro', 'celebrating', 'thinking', 'pointing'];
 
-  let effectiveState = narratorState;
+  let currentAppEmotion = narratorState;
   
-  // If there's dialogue and the current state is not a specific action, switch to the 'talking' state.
-  if (narratorDialogue && !actionStates.includes(narratorState)) {
-    effectiveState = 'talking';
+  // If there's dialogue and the narrator is in a neutral/idle state,
+  // set their application state to 'talking' to potentially change animation or logic later.
+  // The visual state will still be mapped correctly to 'neutral'.
+  if (narratorDialogue && (narratorState === 'idle' || narratorState === 'neutral')) {
+    currentAppEmotion = 'talking';
   }
-  
-  const avatarSrc = narrator.avatars[effectiveState] || narrator.avatars.idle;
 
+  const imageState = mapAppEmotionToImageState(currentAppEmotion);
+  const avatarSrc = narrator.avatars[imageState];
 
   return (
     <div className="fixed bottom-6 left-6 z-40 w-80 pointer-events-none">

@@ -48,7 +48,7 @@ const StarRating: React.FC<{ score: number; size?: string }> = ({ score, size = 
     </div>
 );
 
-const FeedbackDisplay: React.FC<{ 
+const FeedbackDisplay: React.FC<{
     feedback: StarFeedback;
     suggestions: Partial<Record<StarComponent, string>>;
     isFetchingSuggestions: boolean;
@@ -57,21 +57,18 @@ const FeedbackDisplay: React.FC<{
         label: string;
         data: { score: number; feedback: string };
         icon: StarComponent;
-        color: 'blue' | 'purple' | 'green' | 'yellow';
         suggestion?: string;
+        themeClasses: {
+            border: string;
+            bg: string;
+            text: string;
+        };
     }[] = [
-        { label: 'Situation', data: feedback.situation, icon: 'situation', color: 'blue', suggestion: suggestions.situation },
-        { label: 'Task', data: feedback.task, icon: 'task', color: 'purple', suggestion: suggestions.task },
-        { label: 'Action', data: feedback.action, icon: 'action', color: 'green', suggestion: suggestions.action },
-        { label: 'Result', data: feedback.result, icon: 'result', color: 'yellow', suggestion: suggestions.result },
+        { label: 'Situation', data: feedback.situation, icon: 'situation', suggestion: suggestions.situation, themeClasses: { border: 'border-primary/20', bg: 'bg-primary/10', text: 'text-primary' } },
+        { label: 'Task', data: feedback.task, icon: 'task', suggestion: suggestions.task, themeClasses: { border: 'border-accent/20', bg: 'bg-accent/10', text: 'text-accent' } },
+        { label: 'Action', data: feedback.action, icon: 'action', suggestion: suggestions.action, themeClasses: { border: 'border-success/20', bg: 'bg-success/10', text: 'text-success' } },
+        { label: 'Result', data: feedback.result, icon: 'result', suggestion: suggestions.result, themeClasses: { border: 'border-warning/20', bg: 'bg-warning/10', text: 'text-warning' } },
     ];
-
-    const colorClasses = {
-        blue: { border: 'border-blue-200', bg: 'bg-blue-50', textIcon: 'text-blue-600', textTitle: 'text-blue-800' },
-        purple: { border: 'border-purple-200', bg: 'bg-purple-50', textIcon: 'text-purple-600', textTitle: 'text-purple-800' },
-        green: { border: 'border-green-200', bg: 'bg-green-50', textIcon: 'text-green-600', textTitle: 'text-green-800' },
-        yellow: { border: 'border-yellow-200', bg: 'bg-yellow-50', textIcon: 'text-yellow-600', textTitle: 'text-yellow-800' },
-    };
 
     return (
         <div className="mt-6 space-y-6">
@@ -86,13 +83,12 @@ const FeedbackDisplay: React.FC<{
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {feedbackItems.map(item => {
-                    const itemColors = colorClasses[item.color];
                     return (
-                        <div key={item.label} className={`rounded-xl shadow-md overflow-hidden border ${itemColors.border}`}>
-                            <div className={`p-3 ${itemColors.bg} flex items-center justify-between`}>
+                        <div key={item.label} className={`rounded-xl shadow-md overflow-hidden border ${item.themeClasses.border}`}>
+                            <div className={`p-3 ${item.themeClasses.bg} flex items-center justify-between`}>
                                 <div className="flex items-center space-x-3">
-                                    <StarMethodIcon type={item.icon} className={`w-7 h-7 ${itemColors.textIcon}`} />
-                                    <h4 className={`font-display font-bold text-lg ${itemColors.textTitle}`}>{item.label}</h4>
+                                    <StarMethodIcon type={item.icon} className={`w-7 h-7 ${item.themeClasses.text}`} />
+                                    <h4 className={`font-display font-bold text-lg ${item.themeClasses.text}`}>{item.label}</h4>
                                 </div>
                                 <StarRating score={item.data.score} />
                             </div>

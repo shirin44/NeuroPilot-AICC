@@ -30,8 +30,8 @@ const Tooltip: React.FC<TooltipProps> = ({ children, tip, position = 'top' }) =>
   return (
     <div className="relative flex items-center">
       {React.cloneElement(children, {
-        // FIX: The 'aria-describedby' attribute must be kebab-cased in React. As an object key with a hyphen, it must be quoted.
-        'aria-describedby': isVisible ? tooltipId : undefined,
+        // FIX: Changed 'aria-describedby' to camelCase 'ariaDescribedby' for TypeScript compatibility.
+        ariaDescribedby: isVisible ? tooltipId : undefined,
         onMouseEnter: showTooltip,
         onMouseLeave: hideTooltip,
         onFocus: showTooltip,

@@ -21,8 +21,8 @@ const NarratorCard: React.FC<NarratorCardProps> = ({ narrator }) => {
   };
 
   const avatarSrc = isHovered 
-    ? (narrator.avatars.intro || narrator.avatars.idle) 
-    : narrator.avatars.idle;
+    ? narrator.avatars.happy
+    : narrator.avatars.neutral;
 
   return (
     <button

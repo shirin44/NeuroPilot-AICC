@@ -398,7 +398,7 @@ const CalmBreathingGuide: React.FC = () => {
                     </div>
                      <div className="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-white/90 transform translate-y-full"></div>
                 </div>
-                <img src={narratorData.avatars.idle} alt={narratorData.name[language]} className="w-20 h-20 rounded-full border-4 border-white shadow-lg object-cover bg-gray-200" />
+                <img src={narratorData.avatars.neutral} alt={narratorData.name[language]} className="w-20 h-20 rounded-full border-4 border-white shadow-lg object-cover bg-gray-200" />
             </div>
         )}
       

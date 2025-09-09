@@ -1,8 +1,10 @@
 import { Narrator, NarratorRole, Language, Story } from './types';
 
-// Using DiceBear PNGs (reliable, CORS-friendly). Each seed is stable.
-// Example format:
-// https://api.dicebear.com/7.x/adventurer/png?seed=<Name>&backgroundType=gradientLinear&size=256
+// Note: Ensure your character images are placed in a public-facing 'characters' directory.
+// The required paths are, for example:
+// - /characters/candidates/candidate_neutral.png
+// - /characters/employer/employer_happy.png
+// - /characters/parents/parent_sad.png
 
 export const NARRATORS: Record<NarratorRole, Narrator> = {
   [NarratorRole.Jobseeker]: {
@@ -14,12 +16,9 @@ export const NARRATORS: Record<NarratorRole, Narrator> = {
     },
     hover: { [Language.EN]: "Let's practice interviews!", [Language.VN]: "Hãy luyện tập phỏng vấn!" },
     avatars: {
-      idle:        'https://api.dicebear.com/7.x/adventurer/png?seed=BuddyIdle&backgroundType=gradientLinear&size=256',
-      intro:       'https://api.dicebear.com/7.x/adventurer/png?seed=BuddyIntro&backgroundType=gradientLinear&size=256',
-      celebrating: 'https://api.dicebear.com/7.x/adventurer/png?seed=BuddyCelebrate&backgroundType=gradientLinear&size=256',
-      thinking:    'https://api.dicebear.com/7.x/adventurer/png?seed=BuddyThink&backgroundType=gradientLinear&size=256',
-      pointing:    'https://api.dicebear.com/7.x/adventurer/png?seed=BuddyPoint&backgroundType=gradientLinear&size=256',
-      talking:     'https://api.dicebear.com/7.x/adventurer/png?seed=BuddyTalk&backgroundType=gradientLinear&size=256',
+      neutral: '/characters/candidates/candidate_neutral.png',
+      happy: '/characters/candidates/candidate_happy.png',
+      sad: '/characters/candidates/candidate_sad.png',
     },
     theme: 'blue'
   },
@@ -32,11 +31,9 @@ export const NARRATORS: Record<NarratorRole, Narrator> = {
     },
     hover: { [Language.EN]: "Learn inclusive hiring.", [Language.VN]: "Học cách tuyển dụng hòa nhập." },
     avatars: {
-      idle:        'https://api.dicebear.com/7.x/bottts/png?seed=CoachIdle&backgroundType=gradientLinear&size=256',
-      intro:       'https://api.dicebear.com/7.x/bottts/png?seed=CoachIntro&backgroundType=gradientLinear&size=256',
-      explaining:  'https://api.dicebear.com/7.x/bottts/png?seed=CoachExplain&backgroundType=gradientLinear&size=256',
-      thinking:    'https://api.dicebear.com/7.x/bottts/png?seed=CoachThink&backgroundType=gradientLinear&size=256',
-      talking:     'https://api.dicebear.com/7.x/bottts/png?seed=CoachTalk&backgroundType=gradientLinear&size=256',
+      neutral: '/characters/employer/employer_neutral.png',
+      happy: '/characters/employer/employer_happy.png',
+      sad: '/characters/employer/employer_sad.png',
     },
     theme: 'purple'
   },
@@ -49,10 +46,9 @@ export const NARRATORS: Record<NarratorRole, Narrator> = {
     },
     hover: { [Language.EN]: "Support your child's growth.", [Language.VN]: "Hỗ trợ sự phát triển của con bạn." },
     avatars: {
-      idle:        'https://api.dicebear.com/7.x/thumbs/png?seed=CounselorIdle&backgroundType=gradientLinear&size=256',
-      intro:       'https://api.dicebear.com/7.x/thumbs/png?seed=CounselorIntro&backgroundType=gradientLinear&size=256',
-      explaining:  'https://api.dicebear.com/7.x/thumbs/png?seed=CounselorExplain&backgroundType=gradientLinear&size=256',
-      talking:     'https://api.dicebear.com/7.x/thumbs/png?seed=CounselorTalk&backgroundType=gradientLinear&size=256',
+      neutral: '/characters/parents/parent_neutral.png',
+      happy: '/characters/parents/parent_happy.png',
+      sad: '/characters/parents/parent_sad.png',
     },
     theme: 'red'
   },
@@ -65,11 +61,9 @@ export const NARRATORS: Record<NarratorRole, Narrator> = {
     },
     hover: { [Language.EN]: "Be an empathetic peer.", [Language.VN]: "Trở thành một người bạn đồng cảm." },
     avatars: {
-       idle:        'https://api.dicebear.com/7.x/big-smile/png?seed=PeerIdle&backgroundType=gradientLinear&size=256',
-       intro:       'https://api.dicebear.com/7.x/big-smile/png?seed=PeerIntro&backgroundType=gradientLinear&size=256',
-       celebrating: 'https://api.dicebear.com/7.x/big-smile/png?seed=PeerCelebrate&backgroundType=gradientLinear&size=256',
-       explaining:  'https://api.dicebear.com/7.x/big-smile/png?seed=PeerExplain&backgroundType=gradientLinear&size=256',
-       talking:     'https://api.dicebear.com/7.x/big-smile/png?seed=PeerTalk&backgroundType=gradientLinear&size=256',
+       neutral: '/characters/volunteer/volunteer_neutral.png',
+       happy: '/characters/volunteer/volunteer_happy.png',
+       sad: '/characters/volunteer/volunteer_sad.png',
     },
     theme: 'green'
   },

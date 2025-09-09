@@ -211,18 +211,26 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
 
     if (isFinished) {
         return (
-            <div className="text-center p-8 md:p-12 bg-gradient-to-br from-card to-secondary rounded-2xl shadow-xl border border-border animate-fadeInUp">
-                <div className="mx-auto mb-6 w-16 h-16 rounded-full bg-accent text-accent-foreground flex items-center justify-center">
-                    <CheckIcon className="w-8 h-8"/>
+            <div className="w-full text-center p-8 md:p-16 bg-gradient-to-b from-primary/10 to-background rounded-2xl shadow-xl border border-primary/20 animate-fadeInUp">
+                <div
+                    className="text-8xl text-primary/70 mb-6 animate-pulse-calm"
+                    style={{ animationIterationCount: 1, animationDuration: '2s' }}
+                    aria-hidden="true"
+                >
+                    {story.closingAffirmation[language].startsWith('💡') ? '💡' : '🌟'}
                 </div>
-                <h2 className="font-display text-4xl font-bold text-card-foreground">{story.title[language]}</h2>
-                <p className="mt-4 text-xl text-card-foreground/90 max-w-2xl mx-auto">
-                    {story.closingAffirmation[language].replace(/^[💡]\s*/, '')}
+                <h2 className="font-display text-4xl font-bold text-foreground">
+                    You've completed "{story.title[language]}"
+                </h2>
+                <p className="mt-4 text-2xl font-medium text-foreground/80 max-w-3xl mx-auto">
+                    {story.closingAffirmation[language].replace(/^[💡🌟]\s*/, '')}
                 </p>
-                <div className="mt-10">
+                <div className="my-10 h-px w-2/3 mx-auto bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+                <div>
+                    <p className="mb-5 text-lg text-muted-foreground">Ready for the next step?</p>
                     <button
                         onClick={handleStartPractice}
-                        className="px-10 py-4 bg-primary text-primary-foreground font-bold rounded-full text-xl hover:bg-primary/90 transform hover:scale-105 transition-all duration-300 shadow-lg"
+                        className="px-12 py-4 bg-primary text-primary-foreground font-bold rounded-full text-xl transform hover:scale-105 transition-all duration-300 shadow-lg ring-4 ring-primary/30 hover:ring-primary/50"
                     >
                         {LOCALIZED_CONTENT.startPractice[language]}
                     </button>

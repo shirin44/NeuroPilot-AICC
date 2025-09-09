@@ -100,9 +100,9 @@ const VolunteerPractice: React.FC = () => {
                     let borderColor = 'border-border';
                     if (showFeedback) {
                         if (option.isCorrect) {
-                            borderColor = 'border-green-500';
+                            borderColor = 'border-success';
                         } else if (isSelected) {
-                            borderColor = 'border-yellow-500';
+                            borderColor = 'border-warning';
                         }
                     }
 
@@ -113,7 +113,7 @@ const VolunteerPractice: React.FC = () => {
                             disabled={showFeedback}
                             className={`w-full text-left flex items-start p-6 bg-card rounded-lg border-2 transition-all ${borderColor} ${!showFeedback ? 'hover:border-primary hover:bg-primary/10' : 'cursor-not-allowed'}`}
                         >
-                            <span className={`mr-4 font-bold text-lg ${showFeedback && option.isCorrect ? 'text-green-600' : showFeedback && isSelected ? 'text-yellow-600' : 'text-primary'}`}>
+                            <span className={`mr-4 font-bold text-lg ${showFeedback && option.isCorrect ? 'text-success' : showFeedback && isSelected ? 'text-warning' : 'text-primary'}`}>
                                 {String.fromCharCode(65 + index)}
                             </span>
                             <span className="text-muted-foreground">{option.text[language]}</span>
@@ -123,11 +123,11 @@ const VolunteerPractice: React.FC = () => {
             </div>
             
             {showFeedback && selectedOption && (
-                <div className={`mt-6 p-4 rounded-lg border-l-4 ${selectedOption.isCorrect ? 'bg-green-50 border-green-500' : 'bg-yellow-50 border-yellow-500'} animate-fadeInUp`}>
-                    <h4 className={`font-bold ${selectedOption.isCorrect ? 'text-green-800' : 'text-yellow-800'}`}>
+                <div className={`mt-6 p-4 rounded-lg border-l-4 ${selectedOption.isCorrect ? 'bg-success/10 border-success' : 'bg-warning/10 border-warning'} animate-fadeInUp`}>
+                    <h4 className={`font-bold ${selectedOption.isCorrect ? 'text-success' : 'text-warning'}`}>
                         {selectedOption.isCorrect ? 'Great Choice!' : 'Consider this:'}
                     </h4>
-                    <p className={`mt-1 ${selectedOption.isCorrect ? 'text-green-700' : 'text-yellow-700'}`}>
+                    <p className={`mt-1 ${selectedOption.isCorrect ? 'text-success/90' : 'text-warning/90'}`}>
                         {selectedOption.feedback[language]}
                     </p>
                 </div>

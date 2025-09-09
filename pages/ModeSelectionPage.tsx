@@ -76,7 +76,7 @@ const ModeSelectionPage: React.FC = () => {
         <Layout>
             <div className="text-center">
                 <div className="flex justify-center items-center flex-col">
-                    <img src={narrator.avatars.intro || narrator.avatars.idle} alt={narrator.name[language]} className="w-32 h-32 rounded-full border-4 border-card shadow-xl object-cover bg-muted" />
+                    <img src={narrator.avatars.happy} alt={narrator.name[language]} className="w-32 h-32 rounded-full border-4 border-card shadow-xl object-cover bg-muted" />
                     <h1 className="mt-4 font-display text-4xl md:text-5xl font-extrabold text-foreground">
                         {narrator.name[language]}
                     </h1>

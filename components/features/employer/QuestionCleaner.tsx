@@ -16,9 +16,9 @@ const MAX_QUESTION_LENGTH = 500;
 
 const ScoreIndicator: React.FC<{ score: number }> = ({ score }) => {
   const getColor = () => {
-    if (score >= 85) return 'bg-green-500';
-    if (score >= 60) return 'bg-yellow-500';
-    return 'bg-red-500';
+    if (score >= 85) return 'bg-success';
+    if (score >= 60) return 'bg-warning';
+    return 'bg-danger';
   };
 
   return (
