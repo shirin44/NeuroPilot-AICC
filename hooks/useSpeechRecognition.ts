@@ -1,128 +1,178 @@
-import { useState, useRef, useEffect } from 'react';
+// hooks/useSpeechRecognition.ts
+import { useCallback, useEffect, useRef, useState } from "react";
 
-// Add type definitions for the Web Speech API to fix TypeScript errors.
-// These are not included in the default DOM typings.
-interface SpeechRecognition extends EventTarget {
-  continuous: boolean;
-  interimResults: boolean;
-  lang: string;
-  onresult: (event: SpeechRecognitionEvent) => void;
-  onerror: (event: SpeechRecognitionErrorEvent) => void;
-  onend: () => void;
-  start(): void;
-  stop(): void;
-}
-
-interface SpeechRecognitionEvent extends Event {
-  readonly results: SpeechRecognitionResultList;
-}
-
-interface SpeechRecognitionResultList {
-  readonly length: number;
-  item(index: number): SpeechRecognitionResult;
-  [index: number]: SpeechRecognitionResult;
-}
-
-interface SpeechRecognitionResult {
-  readonly 0: SpeechRecognitionAlternative;
-  readonly isFinal: boolean;
-  [index: number]: SpeechRecognitionAlternative;
-}
-
-interface SpeechRecognitionAlternative {
-  readonly transcript: string;
-}
-
-interface SpeechRecognitionErrorEvent extends Event {
-  readonly error: string;
-}
-
-interface SpeechRecognitionStatic {
-  new (): SpeechRecognition;
-}
-
+type RecognitionCtor = new () => SpeechRecognition;
 declare global {
   interface Window {
-    SpeechRecognition?: SpeechRecognitionStatic;
-    webkitSpeechRecognition?: SpeechRecognitionStatic;
+    webkitSpeechRecognition?: RecognitionCtor;
+    SpeechRecognition?: RecognitionCtor;
   }
 }
 
+export type UseSpeechRecognitionOptions = {
+  lang?: string;                 // e.g. "en-US"
+  continuous?: boolean;          // keep listening across multiple phrases
+  interimResults?: boolean;      // get interim hypotheses
+  autoStopSilenceMs?: number;    // stop after this much silence (if provided)
+  keepAliveOnEnd?: boolean;      // restart onend (workaround for iOS/Chrome flakiness)
+};
 
-interface SpeechRecognitionHook {
-  isListening: boolean;
-  transcript: string;
-  error: string | null;
-  startListening: () => void;
-  stopListening: () => void;
-  hasSupport: boolean;
-}
+export function useSpeechRecognition(opts: UseSpeechRecognitionOptions = {}) {
+  const {
+    lang = "en-US",
+    continuous = false,
+    interimResults = true,
+    autoStopSilenceMs = 1500,
+    keepAliveOnEnd = true,
+  } = opts;
 
-const SpeechRecognitionApi = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const Rec = (typeof window !== "undefined") &&
+              (window.SpeechRecognition || window.webkitSpeechRecognition);
 
-export const useSpeechRecognition = (): SpeechRecognitionHook => {
-  const [isListening, setIsListening] = useState(false);
-  const [transcript, setTranscript] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const hasSupport = Boolean(Rec);
+
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const [isListening, setIsListening] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!SpeechRecognitionApi) {
-      setError('Speech recognition is not supported in this browser.');
-      return;
+  const [finalTranscript, setFinalTranscript] = useState("");
+  const [interimTranscript, setInterimTranscript] = useState("");
+
+  // Silence timer to auto-stop after no results
+  const silenceTimerRef = useRef<number | null>(null);
+
+  const clearSilenceTimer = () => {
+    if (silenceTimerRef.current) {
+      window.clearTimeout(silenceTimerRef.current);
+      silenceTimerRef.current = null;
     }
-    
-    recognitionRef.current = new SpeechRecognitionApi();
-    const recognition = recognitionRef.current;
-    recognition.continuous = false; // Stop after a pause
-    recognition.interimResults = false; // We only want final results
-    recognition.lang = 'en-US';
+  };
 
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
-      const currentTranscript = Array.from(event.results)
-        .map(result => result[0])
-        .map(result => result.transcript)
-        .join('');
-      setTranscript(currentTranscript);
+  const armSilenceTimer = useCallback(() => {
+    if (!autoStopSilenceMs) return;
+    clearSilenceTimer();
+    silenceTimerRef.current = window.setTimeout(() => {
+      // No speech for a while → stop
+      stopListening();
+    }, autoStopSilenceMs) as unknown as number;
+  }, [autoStopSilenceMs]);
+
+  // Create recognition instance lazily
+  const getRecognition = useCallback(() => {
+    if (!hasSupport) return null;
+    if (recognitionRef.current) return recognitionRef.current;
+
+    const rec = new Rec!();
+    rec.lang = lang;
+    rec.continuous = continuous;
+    rec.interimResults = interimResults;
+
+    rec.onstart = () => {
+      setError(null);
+      setIsListening(true);
+      // arm timer early so we stop on silence even without initial result
+      armSilenceTimer();
     };
 
-    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      setError(event.error);
-    };
-    
-    recognition.onend = () => {
-      setIsListening(false);
-    };
+    rec.onresult = (ev: SpeechRecognitionEvent) => {
+      let interim = "";
+      let finalChunk = "";
 
-    return () => {
-        if (recognitionRef.current) {
-            recognitionRef.current.stop();
+      for (let i = ev.resultIndex; i < ev.results.length; i++) {
+        const res = ev.results[i];
+        const text = res[0]?.transcript ?? "";
+        if (res.isFinal) {
+          finalChunk += text;
+        } else {
+          interim += text;
         }
+      }
+
+      if (finalChunk) {
+        setFinalTranscript((prev) => (prev ? prev + " " : "") + finalChunk.trim());
+        setInterimTranscript("");
+      } else {
+        setInterimTranscript(interim.trim());
+      }
+
+      // every time we get audio, reset the silence timer
+      armSilenceTimer();
+    };
+
+    rec.onerror = (e: SpeechRecognitionErrorEvent) => {
+      // ignore harmless "no-speech" errors when we auto-stop
+      if (e.error === "no-speech" || e.error === "aborted") return;
+      setError(e.error || "speech-recognition-error");
+    };
+
+    rec.onend = () => {
+      setIsListening(false);
+      clearSilenceTimer();
+
+      // Chrome/Safari sometimes end spontaneously. If user still expects listening, restart.
+      if (keepAliveOnEnd && recognitionRef.current && isListening) {
+        try {
+          recognitionRef.current.start();
+        } catch {
+          // swallow; next user press will start it
+        }
+      }
+    };
+
+    recognitionRef.current = rec;
+    return rec;
+  }, [Rec, hasSupport, lang, continuous, interimResults, armSilenceTimer, keepAliveOnEnd, isListening]);
+
+  const startListening = useCallback(() => {
+    if (!hasSupport) return;
+    setError(null);
+    const rec = getRecognition();
+    if (!rec) return;
+    try {
+      // reset interim on a new start if not continuous
+      if (!continuous) {
+        setInterimTranscript("");
+      }
+      rec.start();
+    } catch (e) {
+      // calling start twice throws - safe to ignore
+    }
+  }, [continuous, getRecognition, hasSupport]);
+
+  const stopListening = useCallback(() => {
+    const rec = recognitionRef.current;
+    if (!rec) return;
+    try {
+      rec.stop();
+    } catch {
+      // ignore
     }
   }, []);
 
-  const startListening = () => {
-    if (recognitionRef.current && !isListening) {
-      setTranscript(''); // Reset transcript
-      setError(null);
-      recognitionRef.current.start();
-      setIsListening(true);
-    }
-  };
+  // Cleanup
+  useEffect(() => {
+    return () => {
+      clearSilenceTimer();
+      try {
+        recognitionRef.current?.stop();
+      } catch {}
+      recognitionRef.current = null;
+    };
+  }, []);
 
-  const stopListening = () => {
-    if (recognitionRef.current && isListening) {
-      recognitionRef.current.stop();
-      setIsListening(false);
-    }
-  };
+  // Expose a combined transcript for convenience
+  const transcript = (finalTranscript + (interimTranscript ? " " + interimTranscript : "")).trim();
 
   return {
+    hasSupport,
     isListening,
-    transcript,
     error,
     startListening,
     stopListening,
-    hasSupport: !!SpeechRecognitionApi,
+    transcript,
+    finalTranscript,
+    interimTranscript,
+    setFinalTranscript,   // in case caller wants to clear
+    setInterimTranscript, // in case caller wants to clear
   };
-};
+}

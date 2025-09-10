@@ -128,3 +128,5 @@ export interface Story {
   scenes: StoryScene[];
   closingAffirmation: { [key in Language]: string };
 }
+
+
