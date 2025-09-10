@@ -1,18 +1,21 @@
 import React, { useState, useContext, useEffect } from "react";
-import {
-  getInterviewFeedback,
-  getImprovementSuggestion,
-} from "../../../services/geminiService";
-import type { StarFeedback } from "../../../types";
-import StarMethodIcon from "../../icons/StarMethodIcon";
-import { AppContext } from "../../../App";
-import { DIALOGUE } from "../../../constants";
-import VoiceInputButton from "../../VoiceInputButton";
-import Tooltip from "../../Tooltip";
-import CheckIcon from "../../icons/CheckIcon";
-import NextArrowIcon from "../../icons/NextArrowIcon";
-import BookmarkIcon from "../../icons/BookmarkIcon";
-import LightbulbIcon from "../../icons/LightbulbIcon";
+
+import { AppContext } from "@/App";
+import { DIALOGUE } from "@/constants";
+import type { StarFeedback } from "@/types";
+import VoiceInputButton from "@/components/VoiceInputButton";
+import Tooltip from "@/components/Tooltip";
+
+
+import StarRating from "@/components/StarRating";
+import FeedbackDisplay from "@/components/FeedbackDisplay";
+import SavedQuestionsList from "@/components/SavedQuestionsList";
+import QuestionControls from "@/components/QuestionControls";
+import BookmarkIcon from "@/components/icons/BookmarkIcon";
+
+import { loadSavedQuestions, saveQuestion, removeSavedQuestion, isQuestionSaved, type SavedQuestion } from "@/utils/savedQuestions";
+
+import { getInterviewFeedback, getImprovementSuggestion } from "@/services/geminiService";
 
 type FlowStep = "setup" | "practice" | "summary";
 type PracticeType = "STAR Interview" | "Common Questions" | "Small Talk";
@@ -40,150 +43,29 @@ const questionSets: Record<PracticeType, string[]> = {
   ],
 };
 
-const StarRating: React.FC<{ score: number; size?: string }> = ({
-  score,
-  size = "w-5 h-5",
-}) => (
-  <div role="img" aria-label={`${score} out of 5 stars`} className="flex">
-    {[...Array(5)].map((_, i) => (
-      <svg
-        key={i}
-        className={`${size} ${
-          i < score ? "text-yellow-500" : "text-slate-300"
-        }`}
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-      >
-        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.16c.969 0 1.371 1.24.588 1.81l-3.363 2.44a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.363-2.44a1 1 0 00-1.175 0l-3.363 2.44c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.07 9.384c-.783-.57-.38-1.81.588-1.81h4.16a1 1 0 00.95-.69L9.049 2.927z" />
-      </svg>
-    ))}
-  </div>
-);
-
-const FeedbackDisplay: React.FC<{
-  feedback: StarFeedback;
-  suggestions: Partial<Record<StarComponent, string>>;
-  isFetchingSuggestions: boolean;
-}> = ({ feedback, suggestions, isFetchingSuggestions }) => {
-  const items: {
-    label: string;
-    data: { score: number; feedback: string };
-    icon: StarComponent;
-    suggestion?: string;
-    classes: string;
-    headText: string;
-  }[] = [
-    {
-      label: "Situation",
-      data: feedback.situation,
-      icon: "situation",
-      suggestion: suggestions.situation,
-      classes: "border-sky-300 bg-sky-50",
-      headText: "text-sky-900",
-    },
-    {
-      label: "Task",
-      data: feedback.task,
-      icon: "task",
-      suggestion: suggestions.task,
-      classes: "border-violet-300 bg-violet-50",
-      headText: "text-violet-900",
-    },
-    {
-      label: "Action",
-      data: feedback.action,
-      icon: "action",
-      suggestion: suggestions.action,
-      classes: "border-emerald-300 bg-emerald-50",
-      headText: "text-emerald-900",
-    },
-    {
-      label: "Result",
-      data: feedback.result,
-      icon: "result",
-      suggestion: suggestions.result,
-      classes: "border-amber-300 bg-amber-50",
-      headText: "text-amber-900",
-    },
-  ];
-
-  return (
-    <div className="mt-6 space-y-6">
-      <div className="rounded-xl shadow-lg overflow-hidden border border-slate-300 bg-white">
-        <div className="p-4 bg-slate-900 text-white flex items-center justify-between">
-          <h3 className="font-display font-bold text-2xl">Overall Feedback</h3>
-          <StarRating score={feedback.overall.score} size="w-6 h-6" />
-        </div>
-        <div className="p-6">
-          <p className="text-lg text-slate-900">{feedback.overall.feedback}</p>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {items.map((item) => (
-          <div
-            key={item.label}
-            className={`rounded-xl shadow-md overflow-hidden border ${item.classes}`}
-          >
-            <div className={`p-3 flex items-center justify-between`}>
-              <div className="flex items-center space-x-3">
-                <StarMethodIcon
-                  type={item.icon}
-                  className={`w-7 h-7 ${item.headText}`}
-                />
-                <h4
-                  className={`font-display font-bold text-lg ${item.headText}`}
-                >
-                  {item.label}
-                </h4>
-              </div>
-              <StarRating score={item.data.score} />
-            </div>
-            <div className="p-4 bg-white border-t border-slate-200">
-              <p className="text-slate-800">{item.data.feedback}</p>
-              {item.suggestion && (
-                <div className="mt-3 pt-3 border-t border-dashed border-slate-300">
-                  <h5 className="flex items-center font-bold text-sm text-amber-900">
-                    <LightbulbIcon className="w-4 h-4 mr-1.5 text-amber-600" />
-                    Example for Improvement:
-                  </h5>
-                  <p className="text-sm text-slate-800 italic mt-1 pl-1">
-                    "{item.suggestion}"
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {isFetchingSuggestions && (
-        <div className="text-center text-slate-800 mt-4 motion-safe:animate-pulse">
-          Generating specific examples...
-        </div>
-      )}
-    </div>
-  );
-};
-
 const InterviewPractice: React.FC = () => {
-  const { language, setNarratorDialogue, setNarratorState } =
-    useContext(AppContext);
+  const { language, setNarratorDialogue, setNarratorState } = useContext(AppContext);
+
   const [flowStep, setFlowStep] = useState<FlowStep>("setup");
-  const [practiceType, setPracticeType] =
-    useState<PracticeType>("STAR Interview");
+  const [practiceType, setPracticeType] = useState<PracticeType>("STAR Interview");
+
   const [questions, setQuestions] = useState<string[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<StarFeedback | null>(null);
+  const [suggestions, setSuggestions] = useState<Partial<Record<StarComponent, string>>>({});
+  const [isFetchingSuggestions, setIsFetchingSuggestions] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isCalmMode, setIsCalmMode] = useState(false);
-  const [suggestions, setSuggestions] = useState<
-    Partial<Record<StarComponent, string>>
-  >({});
-  const [isFetchingSuggestions, setIsFetchingSuggestions] = useState(false);
+
+  const [saved, setSaved] = useState<SavedQuestion[]>([]);
+
+  useEffect(() => {
+    setSaved(loadSavedQuestions());
+  }, []);
 
   useEffect(() => {
     let dialogueKey = "";
@@ -201,9 +83,7 @@ const InterviewPractice: React.FC = () => {
           feedback?.overall.score && feedback.overall.score >= 4
             ? "jobseekerSummary"
             : "jobseekerFeedback";
-        if (feedback?.overall.score && feedback.overall.score >= 4)
-          setNarratorState("celebrating");
-        else setNarratorState("explaining");
+        setNarratorState(feedback?.overall.score && feedback.overall.score >= 4 ? "celebrating" : "explaining");
         break;
     }
     if (dialogueKey) setNarratorDialogue(DIALOGUE[dialogueKey][language]);
@@ -219,9 +99,35 @@ const InterviewPractice: React.FC = () => {
     setCurrentQuestionIndex(0);
     setAnswer("");
     setFeedback(null);
-    setError("");
     setSuggestions({});
+    setError("");
     setFlowStep("practice");
+  };
+
+  const startFromSaved = (q: string) => {
+    setPracticeType("STAR Interview");
+    setQuestions([q, ...questionSets["STAR Interview"].filter((x) => x !== q)]);
+    setCurrentQuestionIndex(0);
+    setAnswer("");
+    setFeedback(null);
+    setSuggestions({});
+    setError("");
+    setFlowStep("practice");
+  };
+
+  const currentQuestion = questions[currentQuestionIndex] || "";
+  const isFirst = currentQuestionIndex === 0;
+  const isLast = currentQuestionIndex === Math.max(0, questions.length - 1);
+  const isBookmarked = currentQuestion ? isQuestionSaved(currentQuestion, saved) : false;
+
+  const toggleBookmark = () => {
+    if (!currentQuestion) return;
+    if (isBookmarked) {
+      removeSavedQuestion(currentQuestion);
+    } else {
+      saveQuestion(currentQuestion);
+    }
+    setSaved(loadSavedQuestions());
   };
 
   const handleSubmitAnswer = async () => {
@@ -233,31 +139,26 @@ const InterviewPractice: React.FC = () => {
     setError("");
     setSuggestions({});
     try {
-      const fb = await getInterviewFeedback(
-        questions[currentQuestionIndex],
-        answer
-      );
+      const fb = await getInterviewFeedback(currentQuestion, answer);
       setFeedback(fb);
       setFlowStep("summary");
 
-      const toImprove: StarComponent[] = (
-        Object.keys(fb) as (keyof StarFeedback)[]
-      ).filter((k) => k !== "overall" && fb[k].score < 4) as StarComponent[];
+      const toImprove: StarComponent[] = (Object.keys(fb) as (keyof StarFeedback)[])
+        .filter((k) => k !== "overall" && (fb as any)[k]?.score < 4)
+        .map((k) => k as StarComponent);
 
       if (toImprove.length > 0) {
         setIsFetchingSuggestions(true);
         const settled = await Promise.all(
           toImprove.map((comp) =>
             getImprovementSuggestion(
-              questions[currentQuestionIndex],
+              currentQuestion,
               answer,
               (comp.charAt(0).toUpperCase() + comp.slice(1)) as any
             ).then((res) => ({ [comp]: res.suggestion }))
           )
         );
-        setSuggestions(
-          settled.reduce((acc, curr) => ({ ...acc, ...curr }), {})
-        );
+        setSuggestions(settled.reduce((acc, cur) => ({ ...acc, ...cur }), {}));
         setIsFetchingSuggestions(false);
       }
     } catch (err: any) {
@@ -267,40 +168,57 @@ const InterviewPractice: React.FC = () => {
     }
   };
 
+  const resetForQuestion = (nextIndex: number) => {
+    setCurrentQuestionIndex(nextIndex);
+    setFlowStep("practice");
+    setAnswer("");
+    setFeedback(null);
+    setError("");
+    setSuggestions({});
+  };
+
+  const prevQuestion = () => {
+    if (isFirst) return;
+    resetForQuestion(currentQuestionIndex - 1);
+  };
+
   const nextQuestion = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1);
-      setFlowStep("practice");
-      setAnswer("");
-      setFeedback(null);
-      setError("");
-      setSuggestions({});
-    } else {
+    if (isLast) {
       alert("You've completed all questions in this set!");
       resetPractice();
+      return;
     }
+    resetForQuestion(currentQuestionIndex + 1);
+  };
+
+  const skipQuestion = () => {
+    // Skip behaves like next without requiring an answer
+    nextQuestion();
   };
 
   const resetPractice = () => {
     setFlowStep("setup");
     setFeedback(null);
     setSuggestions({});
+    setAnswer("");
+    setError("");
+    setQuestions([]);
+    setCurrentQuestionIndex(0);
   };
 
   const handleVoiceInput = (text: string) => {
     setAnswer((prev) => (prev ? prev.trim() + " " : "") + text);
   };
 
+  /* -------------------------------- Render -------------------------------- */
   if (flowStep === "setup") {
     return (
       <div>
-        <h2 className="font-display text-3xl font-extrabold mb-4 text-white tracking-tight">
+        <h2 className="font-display text-3xl font-extrabold mb-4 text-black tracking-tight">
           Choose Your Practice Type
         </h2>
 
-        <p className="mb-6 text-slate-800">
-          Choose how you'd like to practice today.
-        </p>
+        <p className="mb-6 text-slate-800">Choose how you'd like to practice today.</p>
 
         <div className="space-y-4">
           {(Object.keys(questionSets) as PracticeType[]).map((type) => (
@@ -330,142 +248,103 @@ const InterviewPractice: React.FC = () => {
             <label htmlFor="calm-mode" className="font-semibold text-slate-900">
               Enable Calm Practice Mode
             </label>
-            <p className="text-sm text-slate-800">
-              Slower pace with breathing reminders.
-            </p>
+            <p className="text-sm text-slate-800">Slower pace with breathing reminders.</p>
           </div>
         </div>
+
+        <SavedQuestionsList
+          saved={saved}
+          onPractice={startFromSaved}
+          onRemove={(q) => {
+            removeSavedQuestion(q);
+            setSaved(loadSavedQuestions());
+          }}
+        />
       </div>
     );
   }
 
-  if (flowStep === "practice" || flowStep === "summary") {
-    return (
-      <div>
-        <button
-          onClick={resetPractice}
-          className="mb-4 text-sm font-semibold text-blue-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded"
-        >
-          &larr; Back to Setup
-        </button>
+  // practice / summary
+  return (
+    <div>
+      <button
+        onClick={resetPractice}
+        className="mb-4 text-sm font-semibold text-blue-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded"
+      >
+        &larr; Back to Setup
+      </button>
 
-        <div className="p-4 bg-white rounded-lg border border-slate-300">
-          <p className="font-semibold text-blue-700">
-            Question {currentQuestionIndex + 1}/{questions.length}:
-          </p>
-          <p className="text-lg text-slate-900">
-            {questions[currentQuestionIndex]}
-          </p>
+      <div className="p-4 bg-white rounded-lg border border-slate-300">
+        <p className="font-semibold text-blue-700 flex items-center">
+          Question {currentQuestionIndex + 1}/{questions.length}
+          {isBookmarked && (
+            <span className="ml-2 inline-flex items-center text-amber-700 text-sm">
+              <BookmarkIcon filled className="w-4 h-4 mr-1 text-amber-600" />
+              Saved
+            </span>
+          )}
+        </p>
+        <p className="text-lg text-slate-900">{currentQuestion}</p>
+      </div>
+
+      {isCalmMode && (
+        <div className="my-4 p-3 bg-sky-50 text-slate-900 rounded-lg text-center font-medium border border-sky-200">
+          Take a deep breath. You're doing great.
         </div>
+      )}
 
-        {isCalmMode && (
-          <div className="my-4 p-3 bg-sky-50 text-slate-900 rounded-lg text-center font-medium border border-sky-200">
-            Take a deep breath. You're doing great.
-          </div>
-        )}
+      <div className="mt-6">
+        <div className="flex items-center justify-between mb-2">
+          <label htmlFor="answer" className="block text-lg font-medium text-slate-900">
+            Your Answer:
+          </label>
+          <VoiceInputButton onTextReceived={handleVoiceInput} />
+        </div>
+        <textarea
+          id="answer"
+          rows={10}
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
+          placeholder="Type or use the microphone to speak your answer..."
+          className="w-full p-3 bg-white text-slate-900 placeholder:text-slate-600
+                     border border-slate-300 rounded-lg
+                     focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+          disabled={isLoading || flowStep === "summary"}
+          maxLength={MAX_ANSWER_LENGTH}
+          aria-invalid={!!error}
+        />
+        <div className={`text-right text-sm mt-1 ${answer.length > MAX_ANSWER_LENGTH - 100 ? "text-red-700" : "text-slate-800"}`}>
+          {answer.length} / {MAX_ANSWER_LENGTH}
+        </div>
+      </div>
 
-        <div className="mt-6">
-          <div className="flex items-center justify-between mb-2">
-            <label
-              htmlFor="answer"
-              className="block text-lg font-medium text-slate-900"
-            >
-              Your Answer:
-            </label>
-            <VoiceInputButton onTextReceived={handleVoiceInput} />
-          </div>
-          <textarea
-            id="answer"
-            rows={10}
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-            placeholder="Type or use the microphone to speak your answer..."
-            className="w-full p-3 bg-white text-slate-900 placeholder:text-slate-600
-                       border border-slate-300 rounded-lg
-                       focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-            disabled={isLoading || flowStep === "summary"}
-            maxLength={MAX_ANSWER_LENGTH}
-            aria-invalid={!!error}
+      {error && <p className="mt-2 text-red-700">{error}</p>}
+
+      {flowStep === "summary" && feedback && (
+        <div className="mt-8">
+          <h3 className="font-display text-2xl font-bold mb-4 text-slate-900">Session Summary</h3>
+          <FeedbackDisplay
+            feedback={feedback}
+            suggestions={suggestions}
+            isFetchingSuggestions={isFetchingSuggestions}
           />
-          <div
-            className={`text-right text-sm mt-1 ${
-              answer.length > MAX_ANSWER_LENGTH - 100
-                ? "text-red-700"
-                : "text-slate-800"
-            }`}
-          >
-            {answer.length} / {MAX_ANSWER_LENGTH}
-          </div>
         </div>
+      )}
 
-        {error && <p className="mt-2 text-red-700">{error}</p>}
-
-        {flowStep === "practice" && (
-          <Tooltip tip="Get instant AI feedback on your STAR answer.">
-            <button
-              onClick={handleSubmitAnswer}
-              disabled={isLoading}
-              className="mt-6 w-full flex items-center justify-center px-8 py-4 text-lg
-                         bg-blue-700 text-white font-bold rounded-lg shadow-md
-                         hover:bg-blue-800 disabled:bg-slate-300
-                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-            >
-              <CheckIcon className="w-6 h-6 mr-2" />
-              {isLoading ? "Getting Feedback..." : "Submit for Feedback"}
-            </button>
-          </Tooltip>
-        )}
-
-        {isLoading && (
-          <div className="mt-4 text-center text-slate-900">
-            Analyzing your answer with care...
-          </div>
-        )}
-
-        {flowStep === "summary" && feedback && (
-          <div className="mt-8">
-            <h3 className="font-display text-2xl font-bold mb-4 text-slate-900">
-              Session Summary
-            </h3>
-            <FeedbackDisplay
-              feedback={feedback}
-              suggestions={suggestions}
-              isFetchingSuggestions={isFetchingSuggestions}
-            />
-            <div className="mt-6 flex flex-col sm:flex-row gap-4">
-              <Tooltip tip="Continue to the next question in the set.">
-                <button
-                  onClick={nextQuestion}
-                  className="flex-1 flex items-center justify-center px-8 py-4 text-lg
-                             bg-slate-900 text-white font-bold rounded-lg
-                             hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-                >
-                  {currentQuestionIndex < questions.length - 1
-                    ? "Next Question"
-                    : "Finish Practice"}
-                  <NextArrowIcon className="w-5 h-5 ml-2" />
-                </button>
-              </Tooltip>
-
-              <Tooltip tip="Save this question to practice again later.">
-                <button
-                  onClick={() => alert("Question bookmarked!")}
-                  className="flex-1 flex items-center justify-center px-8 py-4 text-lg
-                             bg-white border border-slate-300 text-slate-900 font-bold rounded-lg
-                             hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-                >
-                  <BookmarkIcon className="w-5 h-5 mr-2" />
-                  Bookmark for Retry
-                </button>
-              </Tooltip>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  return null;
+      <QuestionControls
+        flowStep={flowStep}
+        isLoading={isLoading}
+        isBookmarked={isBookmarked}
+        onSubmit={handleSubmitAnswer}
+        onPrev={prevQuestion}
+        onSkip={skipQuestion}
+        onNext={nextQuestion}
+        onToggleBookmark={toggleBookmark}
+        isFirst={isFirst}
+        isLast={isLast}
+      />
+    </div>
+  );
 };
 
 export default InterviewPractice;
