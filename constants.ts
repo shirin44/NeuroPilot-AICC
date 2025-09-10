@@ -31,9 +31,9 @@ export const NARRATORS: Record<NarratorRole, Narrator> = {
     },
     hover: { [Language.EN]: "Learn inclusive hiring.", [Language.VN]: "Học cách tuyển dụng hòa nhập." },
     avatars: {
-      neutral: '/characters/employers/employer_neutral.png',
-      happy: '/characters/employers/employer_happy.png',
-      sad: '/characters/employers/employer_sad.png',
+      neutral: '/characters/employer/employer_neutral.png',
+      happy: '/characters/employer/employer_happy.png',
+      sad: '/characters/employer/employer_sad.png',
     },
     theme: 'purple'
   },
@@ -61,9 +61,9 @@ export const NARRATORS: Record<NarratorRole, Narrator> = {
     },
     hover: { [Language.EN]: "Be an empathetic peer.", [Language.VN]: "Trở thành một người bạn đồng cảm." },
     avatars: {
-       neutral: '/characters/volunteers/volunteer_neutral.png',
-       happy: '/characters/volunteers/volunteer_happy.png',
-       sad: '/characters/volunteers/volunteer_sad.png',
+       neutral: '/characters/volunteer/volunteer_neutral.png',
+       happy: '/characters/volunteer/volunteer_happy.png',
+       sad: '/characters/volunteer/volunteer_sad.png',
     },
     theme: 'green'
   },
