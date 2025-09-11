@@ -336,6 +336,11 @@ const AboutPage: React.FC = () => {
                   avatarSrc="/Images/HieuPhung.jpeg"
                 />
                 <MentorCard
+                  name="Ngoc Quach"
+                  role=""
+                  avatarSrc="/Images/HieuPhung.jpeg"
+                />
+                <MentorCard
                   name="Kristen Lewis"
                   role="Accessibility Mentor; Employment Inclusion Specialist at Imago Work (Hanoi); 6 years in vocational training for young adults with intellectual disabilities"
                   avatarSrc="/Images/KristenLewis.jpeg"
@@ -353,7 +358,11 @@ const AboutPage: React.FC = () => {
                 <MentorCard
                   name="Simona Bossoni"
                   role="Head of Child Development Dept (hospital, HCMC); lecturer at the National College of Education; consultant for special schools & kindergartens"
-                  avatarSrc="/Images/SimonaBossoni.jpeg"
+                  avatarSrc="/Images/Simona.png"
+                  socials={{
+                    website: "https://vica.edu.vn/en/out_teams/ms-simona-bossoni/"
+                     
+                  }}
                 />
               </div>
             </div>
