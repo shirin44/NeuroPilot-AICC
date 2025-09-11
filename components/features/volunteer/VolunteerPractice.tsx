@@ -1,151 +1,87 @@
-import React, { useState, useContext, useEffect } from 'react';
+// VolunteerPractice.tsx — Coming Soon placeholder
+import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../../App';
-import { DIALOGUE, VOLUNTEER_SCENARIOS } from '../../../constants';
-import NextArrowIcon from '../../icons/NextArrowIcon';
-import Tooltip from '../../Tooltip';
-
-interface Option {
-    text: { [key: string]: string };
-    feedback: { [key: string]: string };
-    isCorrect: boolean;
-}
+import { useNavigate } from 'react-router-dom';
 
 const VolunteerPractice: React.FC = () => {
-    const { language, setNarratorDialogue, setNarratorState } = useContext(AppContext);
-    const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
-    const [selectedOption, setSelectedOption] = useState<Option | null>(null);
-    const [showFeedback, setShowFeedback] = useState(false);
-    const [completed, setCompleted] = useState(false);
+  const { language, setNarratorDialogue, setNarratorState } = useContext(AppContext);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        setNarratorDialogue(DIALOGUE.volunteerIntro[language]);
-        setNarratorState('intro');
-    }, [language, setNarratorDialogue, setNarratorState]);
-
-    const handleOptionSelect = (option: Option) => {
-        if (showFeedback) return;
-        setSelectedOption(option);
-        setShowFeedback(true);
-        if(option.isCorrect) {
-            setNarratorState('celebrating');
-        } else {
-            setNarratorState('explaining');
-        }
-    };
-    
-    const handleNext = () => {
-        if (currentScenarioIndex < VOLUNTEER_SCENARIOS.length - 1) {
-            setCurrentScenarioIndex(currentScenarioIndex + 1);
-            setSelectedOption(null);
-            setShowFeedback(false);
-            setNarratorState('idle');
-        } else {
-            setCompleted(true);
-            setNarratorDialogue("Great work! You've completed the practice scenarios. You're ready to be a great peer supporter.");
-            setNarratorState('celebrating');
-        }
-    };
-    
-    const resetPractice = () => {
-        setCurrentScenarioIndex(0);
-        setSelectedOption(null);
-        setShowFeedback(false);
-        setCompleted(false);
-        setNarratorState('intro');
-    }
-
-    if (completed) {
-        return (
-            <div className="text-center p-8 bg-gradient-to-br from-secondary to-muted rounded-xl animate-fadeInUp">
-                <h2 className="font-display text-3xl font-bold text-accent">Practice Complete!</h2>
-                <p className="mt-4 text-xl text-muted-foreground">
-                    You've shown great empathy and understanding. Keep practicing these skills to be an amazing supporter!
-                </p>
-                <button
-                    onClick={resetPractice}
-                    className="mt-6 px-6 py-2 bg-primary text-primary-foreground font-bold rounded-full hover:bg-primary/90"
-                >
-                    Practice Again
-                </button>
-            </div>
-        );
-    }
-    
-    const scenario = VOLUNTEER_SCENARIOS[currentScenarioIndex];
-    const progressPercentage = ((currentScenarioIndex + 1) / VOLUNTEER_SCENARIOS.length) * 100;
-
-    return (
-        <div>
-             <div className="mb-6">
-                <div className="flex justify-between items-center mb-1">
-                    <h2 className="font-display text-2xl font-bold">Empathy Practice</h2>
-                     <span className="text-sm font-semibold text-muted-foreground">
-                        Scenario {currentScenarioIndex + 1} of {VOLUNTEER_SCENARIOS.length}
-                    </span>
-                </div>
-                <div className="w-full bg-foreground/10 rounded-full h-2.5">
-                    <div className="bg-primary h-2.5 rounded-full transition-all duration-500" style={{ width: `${progressPercentage}%` }}></div>
-                </div>
-            </div>
-            
-            <div className="p-6 bg-card rounded-xl shadow-md border border-border">
-                <p className="font-semibold text-lg text-foreground leading-relaxed">
-                    {scenario.scenario[language]}
-                </p>
-            </div>
-
-            <div className="mt-6 space-y-3">
-                {scenario.options.map((option, index) => {
-                    const isSelected = selectedOption?.text[language] === option.text[language];
-                    let borderColor = 'border-border';
-                    if (showFeedback) {
-                        if (option.isCorrect) {
-                            borderColor = 'border-success';
-                        } else if (isSelected) {
-                            borderColor = 'border-warning';
-                        }
-                    }
-
-                    return (
-                        <button
-                            key={index}
-                            onClick={() => handleOptionSelect(option)}
-                            disabled={showFeedback}
-                            className={`w-full text-left flex items-start p-6 bg-card rounded-lg border-2 transition-all ${borderColor} ${!showFeedback ? 'hover:border-primary hover:bg-primary/10' : 'cursor-not-allowed'}`}
-                        >
-                            <span className={`mr-4 font-bold text-lg ${showFeedback && option.isCorrect ? 'text-success' : showFeedback && isSelected ? 'text-warning' : 'text-primary'}`}>
-                                {String.fromCharCode(65 + index)}
-                            </span>
-                            <span className="text-muted-foreground">{option.text[language]}</span>
-                        </button>
-                    );
-                })}
-            </div>
-            
-            {showFeedback && selectedOption && (
-                <div className={`mt-6 p-4 rounded-lg border-l-4 ${selectedOption.isCorrect ? 'bg-success/10 border-success' : 'bg-warning/10 border-warning'} animate-fadeInUp`}>
-                    <h4 className={`font-bold ${selectedOption.isCorrect ? 'text-success' : 'text-warning'}`}>
-                        {selectedOption.isCorrect ? 'Great Choice!' : 'Consider this:'}
-                    </h4>
-                    <p className={`mt-1 ${selectedOption.isCorrect ? 'text-success/90' : 'text-warning/90'}`}>
-                        {selectedOption.feedback[language]}
-                    </p>
-                </div>
-            )}
-            
-            {showFeedback && (
-                <Tooltip tip="Continue to the next scenario.">
-                    <button
-                        onClick={handleNext}
-                        className="mt-6 w-full flex items-center justify-center px-8 py-4 text-lg bg-primary text-primary-foreground font-bold rounded-lg hover:bg-primary/90 transition-colors shadow-md"
-                    >
-                        {currentScenarioIndex < VOLUNTEER_SCENARIOS.length - 1 ? 'Next Scenario' : 'Finish Practice'}
-                        <NextArrowIcon className="w-5 h-5 ml-2" />
-                    </button>
-                </Tooltip>
-            )}
-        </div>
+  useEffect(() => {
+    setNarratorDialogue(
+      language === 'en'
+        ? 'Volunteer practice is coming soon. Thanks for your patience!'
+        : 'Bài luyện tập cho tình nguyện viên sẽ sớm có mặt. Cảm ơn bạn đã chờ đợi!'
     );
+    setNarratorState('intro');
+  }, [language, setNarratorDialogue, setNarratorState]);
+
+  const title = language === 'en' ? 'Coming Soon' : 'Sắp ra mắt';
+  const desc =
+    language === 'en'
+      ? 'We’re polishing the Volunteer Practice experience. Check back soon!'
+      : 'Chúng tôi đang hoàn thiện trải nghiệm Luyện tập Tình nguyện viên. Hãy quay lại sau nhé!';
+  const hint =
+    language === 'en'
+      ? 'Tip: You can explore other modes in the meantime.'
+      : 'Gợi ý: Trong lúc chờ, bạn có thể khám phá các chế độ khác.';
+
+  return (
+    <div className="w-full">
+      <div className="mb-6">
+        <div className="flex justify-between items-center mb-1">
+          <h2 className="font-display text-2xl font-bold">{title}</h2>
+          <span className="text-xs font-semibold px-2 py-1 rounded-full bg-foreground/10 text-muted-foreground">
+            Beta
+          </span>
+        </div>
+        <div className="w-full bg-foreground/10 rounded-full h-2.5">
+          <div className="h-2.5 rounded-full bg-muted animate-pulse" style={{ width: '24%' }} />
+        </div>
+      </div>
+
+      <div className="relative overflow-hidden rounded-xl border border-border bg-card p-8 shadow-md">
+        {/* Glow */}
+        <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-primary/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-secondary/20 blur-3xl" />
+
+        <div className="flex items-start gap-4">
+          {/* Icon */}
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="mt-1 h-10 w-10 text-primary" fill="currentColor">
+            <path d="M12 2a10 10 0 100 20 10 10 0 000-20Zm1 5v6h5v2h-7V7h2Z" />
+          </svg>
+
+          <div>
+            <h3 className="font-display text-xl font-bold text-foreground">{title}</h3>
+            <p className="mt-2 text-muted-foreground">{desc}</p>
+            <div className="mt-4 inline-flex items-center gap-2 rounded-lg bg-foreground/5 px-3 py-2 text-sm text-muted-foreground">
+              <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-primary" />
+              {hint}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            className="rounded-lg bg-primary px-4 py-2 font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+            onClick={() => {
+              setNarratorState('idle');
+              navigate('/mode-selection');
+            }}
+          >
+            {language === 'en' ? 'Back' : 'Quay lại'}
+          </button>
+        </div>
+      </div>
+
+      {/* Minimal inline styles for pulse/fade (if Tailwind animations not present) */}
+      <style>{`
+        @keyframes pulseLite { 0%,100%{opacity:.6} 50%{opacity:1} }
+        .animate-pulse { animation: pulseLite 1.8s ease-in-out infinite; }
+      `}</style>
+    </div>
+  );
 };
 
 export default VolunteerPractice;
