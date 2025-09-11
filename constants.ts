@@ -1,10 +1,6 @@
 import { Narrator, NarratorRole, Language, Story } from './types';
 
-// Note: Ensure your character images are placed in a public-facing 'characters' directory.
-// The required paths are, for example:
-// - /characters/candidates/candidate_neutral.png
-// - /characters/employer/employer_happy.png
-// - /characters/parents/parent_sad.png
+
 
 export const NARRATORS: Record<NarratorRole, Narrator> = {
   [NarratorRole.Jobseeker]: {

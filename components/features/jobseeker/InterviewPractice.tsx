@@ -5,8 +5,7 @@ import { DIALOGUE } from "@/constants";
 import type { StarFeedback } from "@/types";
 import VoiceInputButton from "@/components/VoiceInputButton";
 import Tooltip from "@/components/Tooltip";
-
-
+import { addHistoryEntry, type PracticeType as HistoryPracticeType } from "@/utils/History";
 import StarRating from "@/components/StarRating";
 import FeedbackDisplay from "@/components/FeedbackDisplay";
 import SavedQuestionsList from "@/components/SavedQuestionsList";
@@ -138,15 +137,27 @@ const InterviewPractice: React.FC = () => {
     setIsLoading(true);
     setError("");
     setSuggestions({});
+  
     try {
       const fb = await getInterviewFeedback(currentQuestion, answer);
       setFeedback(fb);
       setFlowStep("summary");
-
+  
+      // --- NEW: save compact session history entry ---
+      addHistoryEntry({
+        type: practiceType,                  // "STAR Interview" | "Common Questions" | "Small Talk"
+        question: currentQuestion,
+        overallScore: fb.overall?.score ?? 0,
+        // keep payload small (optional)
+        answer: answer.length > 1000 ? `${answer.slice(0, 1000)}…` : answer,
+        feedback: fb.overall ? { overall: fb.overall } : undefined,
+      });
+      // --- end new code ---
+  
       const toImprove: StarComponent[] = (Object.keys(fb) as (keyof StarFeedback)[])
         .filter((k) => k !== "overall" && (fb as any)[k]?.score < 4)
         .map((k) => k as StarComponent);
-
+  
       if (toImprove.length > 0) {
         setIsFetchingSuggestions(true);
         const settled = await Promise.all(
@@ -167,6 +178,7 @@ const InterviewPractice: React.FC = () => {
       setIsLoading(false);
     }
   };
+  
 
   const resetForQuestion = (nextIndex: number) => {
     setCurrentQuestionIndex(nextIndex);

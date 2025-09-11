@@ -14,22 +14,22 @@ export const getInterviewFeedback = async (
 ): Promise<StarFeedback> => {
   try {
     const prompt = `
-You are a supportive interview coach. Analyze the answer using STAR (Situation, Task, Action, Result).
+You are a supportive interview coach. Analyze the candidate's answer using STAR (Situation, Task, Action, Result).
 
 QUESTION: "${question}"
 CANDIDATE ANSWER: "${answer}"
 
-Tone rules:
-- Be specific, kind, and actionable. Use plain English.
-- Prefer “Consider / Try …” over “You should …”.
-- Avoid harsh phrases (“bad”, “wrong”); use “could be clearer”, “can strengthen by…”.
+Tone guidelines:
+- Be specific, kind, and practical. Use plain, simple English.
+- Prefer gentle suggestions like "Consider..." or "Try..." instead of "You should...".
+- Frame feedback constructively (e.g., "could be clearer", "can be strengthened by…").
+- The candidate is a high-functioning autistic person, so keep feedback encouraging, concise, and not overwhelming Also dont expect too much.
 
-Output:
-- For each STAR part: { score 1–5, feedback (2–4 sentences), strengths (2 short bullets) }.
-- overall: { score 1–5, feedback (encouraging summary), strengths (2–4 bullets), revisedAnswer (5–7 sentences STAR rewrite), concise and not overwhelming suitable for an autistic person }.
-
-Return JSON ONLY, no markdown.
-    `;
+Output format (JSON only):
+- For each STAR element: { score 1–5, feedback (2–4 supportive sentences), strengths (2 short bullet points) }.
+- Overall: { score 1–5, feedback (1–2 sentence encouraging summary), strengths (2–4 short bullets), revisedAnswer (5–7 sentence STAR rewrite that is supportive, concise, and easy to follow) }.
+`
+;
 
     const response: GenerateContentResponse = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -115,7 +115,8 @@ Their answer was: "${answer}"
 Their response for the "${componentToImprove}" part of the STAR method was weak.
 
 Provide a concise, improved example for ONLY the "${componentToImprove}" part of their answer. 
-Keep it to 1–2 sentences and directly related to their context.
+Keep it to 1–2 sentences and directly related to their context. 
+Keep the improved example human like.
 
 Return JSON ONLY.
     `;
