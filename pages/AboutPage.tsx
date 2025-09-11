@@ -216,7 +216,7 @@ const AboutPage: React.FC = () => {
                 title="Software Engineering student at RMIT Vietnam (AI/ML minor, Intel Capstone Engineer)"
                 bio="Passionate about AI for good, I build smart tools and elegant interfaces — blending AI, automation, and clean design into real-world solutions. I’ve developed automation tools at Intel, built scalable platforms for startups, and crafted AI-powered applications — always with a focus on user-centered design and accessibility."
                 portfolioUrl="https://shirin44.github.io/shirin-portfolio/"
-                avatarSrc="/Images/shirin.png"
+                avatarSrc="/Images/shirin.JPG"
               />
               <TeamMemberCard
                 name="Nghi Trinh"

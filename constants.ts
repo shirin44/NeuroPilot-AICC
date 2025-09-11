@@ -361,7 +361,7 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
 
     [NarratorRole.Jobseeker]: {
       title: { [Language.EN]: "Interactive Situational Story", [Language.VN]: "Câu chuyện Tình huống" },
-      description: { [Language.EN]: "You will be Lan, a high-functioning autistic adult finding her way in the professional world. Bạn sẽ hóa thân thành Lan, một người tự kỷ chức năng cao đang làm quen với con đường sự nghiệp của mình. Let's follow Lan's story of self-discovery and finding her place in the professional world.", [Language.VN]: "Theo dõi câu chuyện của Lan về việc khám phá bản thân và tìm vị trí trong thế giới chuyên nghiệp." },
+      description: { [Language.EN]: "You will be Lan, a high-functioning autistic adult finding her way in the professional world. Let's follow Lan's story of self-discovery and finding her place in the professional world.", [Language.VN]: "Bạn sẽ hóa thân thành Lan, một người tự kỷ chức năng cao đang làm quen với con đường sự nghiệp của mình.Theo dõi câu chuyện của Lan về việc khám phá bản thân và tìm vị trí trong thế giới chuyên nghiệp." },
       scenes: [
         {
           title: { [Language.EN]: "Scene 1: Masking", [Language.VN]: "Cảnh 1: Cố gắng hoà nhập" },
