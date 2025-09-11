@@ -219,7 +219,7 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
   };
 
   const handleBackToDashboard = () => {
-    navigate('/dashboard');
+    navigate('/mode-selection');
   };
 
   const handleScrollToScene = (index: number) => {
