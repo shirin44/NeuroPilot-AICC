@@ -5,18 +5,15 @@ import { AppContext } from '../../../App';
 import { LOCALIZED_CONTENT } from '../../../constants';
 import CheckIcon from '../../icons/CheckIcon';
 import { Star, Lightbulb } from 'lucide-react';
+import { getStoryFeedback } from '../../../services/geminiService';
 
-// ---------- Emoji utilities (no emojis anywhere) ----------
-/** Remove ALL emoji / pictographic chars (wide coverage). */
+// ---------- Helpers (no emojis anywhere) ----------
 const stripEmoji = (s: string) =>
   (s ?? '')
-    // remove emoji & variant selectors/ZWJ
     .replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F\u200D]/gu, '')
-    // common symbol prefixes just in case
     .replace(/^[\s*#♪★☆⭐✨⚠️ℹ️✅❗❕❓✳️✴️☑️➕➖➗✔️✖️•◆◇◉◈]+/u, '')
     .trim();
 
-/** Pick icon from original text (fallback Star). */
 const pickIcon = (raw: string) => {
   const t = raw?.toLowerCase() ?? '';
   if (/[💡]|lightbulb|idea|tip/.test(t)) return 'idea';
@@ -30,11 +27,15 @@ interface SideProgressBarProps {
   completedScenes: boolean[];
   onNodeClick: (index: number) => void;
 }
-
-const SideProgressBar: React.FC<SideProgressBarProps> = ({ scenes, activeSceneIndex, completedScenes, onNodeClick }) => (
+const SideProgressBar: React.FC<SideProgressBarProps> = ({
+  scenes,
+  activeSceneIndex,
+  completedScenes,
+  onNodeClick
+}) => (
   <div className="sticky top-24 h-full">
     <div className="relative h-full py-4">
-      <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 bg-foreground/20"></div>
+      <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 bg-foreground/20" />
       <div className="relative flex flex-col items-center justify-between h-full space-y-8">
         {scenes.map((_, index) => {
           const isActive = index === activeSceneIndex;
@@ -47,7 +48,7 @@ const SideProgressBar: React.FC<SideProgressBarProps> = ({ scenes, activeSceneIn
               aria-label={`Go to Scene ${index + 1}`}
               aria-current={isActive ? 'step' : undefined}
             >
-              <span className={`absolute w-full h-full rounded-full ${isActive ? 'bg-primary/30 animate-progress-node-pulse' : ''}`}></span>
+              <span className={`absolute w-full h-full rounded-full ${isActive ? 'bg-primary/30 animate-progress-node-pulse' : ''}`} />
               <span className={`relative w-4 h-4 rounded-full flex items-center justify-center transition-all duration-300 ${isCompleted ? 'bg-primary' : isActive ? 'bg-primary' : 'bg-foreground/30'}`}>
                 {isCompleted && <CheckIcon className="w-3 h-3 text-primary-foreground" />}
               </span>
@@ -66,7 +67,6 @@ interface ChoiceButtonProps {
   isMultiSelect: boolean;
   onClick: () => void;
 }
-
 const ChoiceButton: React.FC<ChoiceButtonProps> = ({ choice, isSelected, isMultiSelect, onClick }) => {
   const { language } = useContext(AppContext);
   return (
@@ -80,7 +80,7 @@ const ChoiceButton: React.FC<ChoiceButtonProps> = ({ choice, isSelected, isMulti
         }`}
     >
       <div className={`flex-shrink-0 w-6 h-6 mt-0.5 rounded-full border-2 ${isSelected ? 'border-primary-foreground' : 'border-primary'} flex items-center justify-center transition-colors`}>
-        {isSelected && <div className={`w-3 h-3 ${isMultiSelect ? 'bg-primary-foreground' : 'bg-primary-foreground'} rounded-full`}></div>}
+        {isSelected && <div className="w-3 h-3 bg-primary-foreground rounded-full" />}
       </div>
       <span className="ml-4 flex-1">{choice.text[language]}</span>
     </button>
@@ -91,28 +91,34 @@ const ChoiceButton: React.FC<ChoiceButtonProps> = ({ choice, isSelected, isMulti
 interface StoryPlayerProps {
   story: Story;
 }
-
 const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
   const { language, narratorRole, setNarratorDialogue, setNarratorState, setMode } = useContext(AppContext);
   const navigate = useNavigate();
+
   const [userSelections, setUserSelections] = useState<Record<number, string[]>>({});
   const [affirmations, setAffirmations] = useState<Record<number, string | null>>({});
   const [isFinished, setIsFinished] = useState(false);
   const [activeSceneIndex, setActiveSceneIndex] = useState(0);
 
+  const [aiFeedback, setAiFeedback] = useState<string>('');
+  const [aiLoading, setAiLoading] = useState(false);
+  const [showReflections, setShowReflections] = useState(false);
+
   const sceneRefs = useRef<(HTMLDivElement | null)[]>([]);
   const affirmationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Keep refs in sync with scene count
   useEffect(() => {
     sceneRefs.current = sceneRefs.current.slice(0, story.scenes.length);
   }, [story.scenes]);
 
+  // Track which scene is in view
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = sceneRefs.current.findIndex(ref => ref === entry.target);
+            const index = sceneRefs.current.findIndex((ref) => ref === entry.target);
             if (index !== -1) setActiveSceneIndex(index);
           }
         });
@@ -120,35 +126,55 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
       { rootMargin: '-40% 0px -60% 0px', threshold: 0.1 }
     );
 
-    sceneRefs.current.forEach(ref => { if (ref) observer.observe(ref); });
-    return () => { sceneRefs.current.forEach(ref => { if (ref) observer.unobserve(ref); }); };
+    sceneRefs.current.forEach((ref) => ref && observer.observe(ref));
+    return () => {
+      sceneRefs.current.forEach((ref) => ref && observer.unobserve(ref));
+    };
   }, [story.scenes.length]);
 
+  // Handle narrator + AI when finished
   useEffect(() => {
     if (isFinished) {
       setNarratorDialogue(story.closingAffirmation[language]);
       setNarratorState('celebrating');
+
+      (async () => {
+        try {
+          setAiLoading(true);
+          const result = await getStoryFeedback(userSelections, story, language);
+          setAiFeedback(result.feedback || '');
+        } catch (err) {
+          console.error('AI feedback error:', err);
+          setAiFeedback(''); // hide if failure
+        } finally {
+          setAiLoading(false);
+        }
+      })();
     } else {
       setNarratorDialogue('');
       setNarratorState('idle');
     }
-    return () => { if (affirmationTimeoutRef.current) clearTimeout(affirmationTimeoutRef.current); };
-  }, [isFinished, language, setNarratorDialogue, setNarratorState, story]);
 
+    return () => {
+      if (affirmationTimeoutRef.current) clearTimeout(affirmationTimeoutRef.current);
+    };
+  }, [isFinished, language, setNarratorDialogue, setNarratorState, story, userSelections]);
+
+  // Selection handling
   const handleSelection = (sceneIndex: number, choice: StoryChoice) => {
     const choiceText = choice.text[language];
     const currentChoices = userSelections[sceneIndex] || [];
-    const isMultiSelect = story.scenes[sceneIndex].choices.some(c => c.isMultiSelect);
+    const isMultiSelect = story.scenes[sceneIndex].choices.some((c) => c.isMultiSelect);
 
     let newChoices: string[];
     let affirmationToShow: string | null = null;
 
     if (isMultiSelect) {
       if (currentChoices.includes(choiceText)) {
-        newChoices = currentChoices.filter(c => c !== choiceText);
+        newChoices = currentChoices.filter((c) => c !== choiceText);
         if (newChoices.length > 0) {
           const lastSelectedText = newChoices[newChoices.length - 1];
-          const lastChoice = story.scenes[sceneIndex].choices.find(c => c.text[language] === lastSelectedText);
+          const lastChoice = story.scenes[sceneIndex].choices.find((c) => c.text[language] === lastSelectedText);
           affirmationToShow = lastChoice?.affirmation?.[language] || null;
         }
       } else {
@@ -160,10 +186,9 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
       affirmationToShow = choice.affirmation?.[language] || null;
     }
 
-    setUserSelections(prev => ({ ...prev, [sceneIndex]: newChoices }));
-    setAffirmations(prev => ({ ...prev, [sceneIndex]: affirmationToShow }));
+    setUserSelections((prev) => ({ ...prev, [sceneIndex]: newChoices }));
+    setAffirmations((prev) => ({ ...prev, [sceneIndex]: affirmationToShow }));
 
-    // Narrator speaks (emoji-free)
     if (affirmationTimeoutRef.current) clearTimeout(affirmationTimeoutRef.current);
     if (affirmationToShow) {
       const dialogueText = stripEmoji(affirmationToShow);
@@ -179,6 +204,7 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
     }
   };
 
+  // Finish / navigation handlers
   const finishStory = () => {
     if (narratorRole) {
       localStorage.setItem(`neuropilot_story_completed_${narratorRole}`, 'true');
@@ -200,12 +226,14 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
     sceneRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
+  // Completion state
   const completedScenes = story.scenes.map((_, index) => (userSelections[index] || []).length > 0);
   const isAllScenesCompleted = completedScenes.every(Boolean);
 
-  const BACK_TO_DASHBOARD =
-    (LOCALIZED_CONTENT as any)?.backToDashboard?.[language] ?? 'Back to Dashboard';
+  // i18n
+  const BACK_TO_DASHBOARD = (LOCALIZED_CONTENT as any)?.backToDashboard?.[language] ?? 'Back to Dashboard';
 
+  // Finished UI
   if (isFinished) {
     const closingRaw = story.closingAffirmation[language] || '';
     const closingIcon = pickIcon(closingRaw);
@@ -228,21 +256,71 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
           {closingText}
         </p>
 
-        <div className="my-10 h-px w-2/3 mx-auto bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+        {/* Collapsible Reflections */}
+        <div className="mt-12 text-left max-w-3xl mx-auto">
+          <button
+            onClick={() => setShowReflections((prev) => !prev)}
+            className="flex items-center justify-between w-full px-4 py-3 bg-card border border-border rounded-lg shadow-sm hover:bg-muted transition"
+            aria-expanded={showReflections}
+            aria-controls="reflections-panel"
+          >
+            <span className="text-lg font-semibold text-foreground">
+              {showReflections
+                ? LOCALIZED_CONTENT.hideChoices?.[language] || 'Hide Your Choices'
+                : LOCALIZED_CONTENT.viewChoices?.[language] || 'View Your Choices'}
+            </span>
+            <span className="text-sm text-muted-foreground">{showReflections ? '▲' : '▼'}</span>
+          </button>
+
+          {showReflections && (
+            <ul id="reflections-panel" className="mt-4 space-y-4">
+              {story.scenes.map((scene, idx) => (
+                <li key={idx} className="p-4 bg-card rounded-lg border border-border shadow-sm">
+                  <h4 className="font-semibold text-lg text-card-foreground">{scene.title[language]}</h4>
+                  <p className="text-sm text-muted-foreground">{scene.text[language]}</p>
+                  <div className="mt-2">
+                    <span className="text-sm font-semibold text-primary">
+                      {LOCALIZED_CONTENT.yourChoice?.[language] || 'Your choice:'}
+                    </span>
+                    <ul className="list-disc list-inside text-card-foreground mt-1">
+                      {(userSelections[idx] || []).map((c, i) => (
+                        <li key={i}>{c}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* AI feedback */}
+        {aiLoading && (
+          <p className="mt-8 text-muted-foreground">
+            {LOCALIZED_CONTENT.generatingFeedback?.[language] || 'Generating feedback…'}
+          </p>
+        )}
+        {aiFeedback && !aiLoading && (
+          <div className="mt-12 max-w-3xl mx-auto p-6 bg-muted/50 rounded-xl border border-border shadow-inner text-left">
+            <h3 className="text-2xl font-bold text-foreground mb-3">
+              {LOCALIZED_CONTENT.aiFeedback?.[language] || 'Feedback'}
+            </h3>
+            <p className="text-foreground/90 whitespace-pre-line">{aiFeedback}</p>
+          </div>
+        )}
+
+        <div className="my-10 h-px w-2/3 mx-auto bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={handleStartPractice}
             className="px-12 py-4 bg-primary text-primary-foreground font-bold rounded-full text-xl transform hover:scale-105 transition-all duration-300 shadow-lg ring-4 ring-primary/30 hover:ring-primary/50"
-            aria-label={LOCALIZED_CONTENT.startPractice[language]}
           >
             {LOCALIZED_CONTENT.startPractice[language]}
           </button>
-
           <button
             onClick={handleBackToDashboard}
             className="px-12 py-4 rounded-full text-xl font-semibold border-2 border-border bg-card text-card-foreground hover:bg-muted transition-all duration-200 shadow-sm"
-            aria-label={BACK_TO_DASHBOARD}
           >
             {BACK_TO_DASHBOARD}
           </button>
@@ -251,6 +329,7 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
     );
   }
 
+  // In-progress UI
   return (
     <div className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-8 md:gap-12 animate-fadeIn">
       {/* Left Column: Progress Bar */}
@@ -266,10 +345,9 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
       {/* Right Column: Story Content */}
       <div className="space-y-16">
         {story.scenes.map((scene, sceneIndex) => {
-          const isMultiSelect = scene.choices.some(c => c.isMultiSelect);
+          const isMultiSelect = scene.choices.some((c) => c.isMultiSelect);
           const options = isMultiSelect ? scene.choices.slice(1) : scene.choices;
           const rawAff = affirmations[sceneIndex];
-
           const affText = rawAff ? stripEmoji(rawAff) : '';
           const affIcon = rawAff ? pickIcon(rawAff) : 'star';
 
@@ -317,7 +395,7 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
           );
         })}
 
-        <div className="pt-8 border-t border-border">
+        <div className="pt-8 border-top border-border">
           <button
             onClick={finishStory}
             disabled={!isAllScenesCompleted}
@@ -328,7 +406,7 @@ const StoryPlayer: React.FC<StoryPlayerProps> = ({ story }) => {
           </button>
           {!isAllScenesCompleted && (
             <p className="text-center mt-3 text-sm text-foreground/80">
-              Please make a selection in every scene to finish the story.
+              {LOCALIZED_CONTENT.completeAllScenes?.[language] || 'Please make a selection in every scene to finish the story.'}
             </p>
           )}
         </div>
