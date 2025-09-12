@@ -61,7 +61,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-2">
             <LogoIcon className="h-8 w-8 text-primary" />
-            <span className="font-display font-bold text-2xl text-foreground">NeuroPilot</span>
+            <span className="font-display font-bold text-2xl text-foreground">AICC</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
