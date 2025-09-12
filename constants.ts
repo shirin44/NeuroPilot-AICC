@@ -1,5 +1,9 @@
-import { Narrator, NarratorRole, Language, Story } from './types';
+import { Narrator, NarratorRole, Language, Story, StoryEntry , PlaceholderKey, AboutSchema } from './types';
 
+
+
+
+////
 
 
 export const NARRATORS: Record<NarratorRole, Narrator> = {
@@ -135,6 +139,7 @@ export const LOCALIZED_CONTENT: Record<string, { [key in Language]: string }> = 
   dashboard: { [Language.EN]: 'Dashboard', [Language.VN]: 'Bảng Điều Khiển' },
   practice: { [Language.EN]: 'Practice', [Language.VN]: 'Luyện Tập' },
   history: { [Language.EN]: 'History', [Language.VN]: 'Lịch Sử' },
+  OurStory :{ [Language.EN]: 'Our Story', [Language.VN]: 'nhật ký' },
 
   // Parent Module
   start: { [Language.EN]: 'Start', [Language.VN]: 'Bắt đầu' },

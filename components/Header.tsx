@@ -44,6 +44,8 @@ const Header: React.FC = () => {
     { path: '/', label: LOCALIZED_CONTENT.home[language] },
     { path: '/about', label: LOCALIZED_CONTENT.about[language] },
     { path: '/contact', label: LOCALIZED_CONTENT.contact[language] },
+    { path: '/OurStory', label: LOCALIZED_CONTENT.OurStory[language] }
+
   ];
 
   const roleNavLinks = [

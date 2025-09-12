@@ -1,8 +1,15 @@
+// src/pages/AboutPage.tsx
 import React from "react";
 import Layout from "../components/Layout";
 import { AppContext } from "../App";
 import { Sparkles, Globe2, Link as LinkIcon } from "lucide-react";
 import { Linkedin, Facebook } from "lucide-react";
+import { ABOUT_PAGE_CONTENT } from "../constants/About";
+import { Language } from "../types";
+
+/* ---------- Language Helper ---------- */
+const normalizeLang = (l: unknown): Language =>
+  l === Language.VN || l === "vi" || l === "VN" ? Language.VN : Language.EN;
 
 /* ---------- Reusable Section ---------- */
 const Section: React.FC<{
@@ -20,13 +27,13 @@ const Section: React.FC<{
   </section>
 );
 
-/* ---------- Team Member Card (with image) ---------- */
+/* ---------- Team Member Card ---------- */
 type TeamMemberProps = {
   name: string;
   title: string;
   bio: string;
   portfolioUrl?: string;
-  avatarSrc?: string; // "/Images/Name.jpeg" (public folder) or imported path
+  avatarSrc?: string;
 };
 
 const TeamMemberCard: React.FC<TeamMemberProps> = ({
@@ -71,7 +78,7 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({
   );
 };
 
-/* ---------- Mentor Card (horizontal scroll, with image) ---------- */
+/* ---------- Mentor Card ---------- */
 type MentorCardProps = {
   name: string;
   role: string;
@@ -81,6 +88,7 @@ type MentorCardProps = {
     facebook?: string;
     website?: string;
   };
+  testimony?: Record<Language, string>; // NEW: language-aware testimony
 };
 
 const MentorCard: React.FC<MentorCardProps> = ({
@@ -88,7 +96,11 @@ const MentorCard: React.FC<MentorCardProps> = ({
   role,
   avatarSrc,
   socials,
+  testimony,
 }) => {
+  const { language } = React.useContext(AppContext);
+  const lang = normalizeLang(language);
+
   const fallback = `https://via.placeholder.com/160/E3EEF6/375071?text=Mentor`;
   const src = avatarSrc || fallback;
 
@@ -108,7 +120,6 @@ const MentorCard: React.FC<MentorCardProps> = ({
           <p className="mt-1 text-xs text-muted-foreground leading-snug">
             {role}
           </p>
-          {/* Social links */}
           {socials && (
             <div className="flex space-x-3 mt-2">
               {socials.linkedin && (
@@ -148,16 +159,120 @@ const MentorCard: React.FC<MentorCardProps> = ({
           )}
         </div>
       </div>
+
+      {testimony?.[lang] && (
+        <blockquote className="mt-3 text-xs italic text-muted-foreground border-l-4 border-primary/40 pl-3">
+          “{testimony[lang]}”
+        </blockquote>
+      )}
     </div>
   );
 };
 
+/* ---------- Mentors Data (with testimonies) ---------- */
+const MENTORS: MentorCardProps[] = [
+  {
+    name: "Sandy Sinn",
+    role: "Founder of CPPWB, Suicide Prevention Educator",
+    avatarSrc: "/Images/Sandy.jpg",
+    testimony: {
+      [Language.EN]:
+        "This team listens first, then builds with empathy. NeuroPilot is a rare mix of heart and rigor.",
+      [Language.VN]:
+        "Nhóm luôn lắng nghe trước khi xây dựng với sự thấu cảm. NeuroPilot là sự kết hợp hiếm có giữa trái tim và tính kỷ luật.",
+    },
+  },
+  {
+    name: "Troy Yeo",
+    role: "Founder & COO driving AI-powered automation for SMB and Enterprises",
+    avatarSrc: "/Images/Troy.jpg",
+    testimony: {
+      [Language.EN]:
+        "They iterate fast and validate with users. The shift from awareness to measurable outcomes is exactly right.",
+      [Language.VN]:
+        "Các bạn lặp nhanh và xác thực với người dùng. Chuyển từ nâng cao nhận thức sang kết quả đo lường được là hoàn toàn đúng.",
+    },
+  },
+  {
+    name: "Hieu Phung",
+    role: "Mentor / Advisor",
+    avatarSrc: "/Images/HieuPhung.jpg",
+    testimony: {
+      [Language.EN]:
+        "Practical solutions, clear roadmaps, and consistent follow-through—this is how change happens.",
+      [Language.VN]:
+        "Giải pháp thực tế, lộ trình rõ ràng và theo sát bền bỉ—đó là cách tạo ra thay đổi.",
+    },
+  },
+  {
+    name: "Ngọc Quách",
+    role: "Assistant to Ms. Simona; works with autistic teenagers",
+    avatarSrc: "/Images/NgocQuach.jpg",
+    testimony: {
+      [Language.EN]:
+        "The tools respect young people’s dignity and reduce anxiety in real interview settings.",
+      [Language.VN]:
+        "Các công cụ tôn trọng phẩm giá của các em và giảm lo âu trong bối cảnh phỏng vấn thực tế.",
+    },
+  },
+  {
+    name: "Kristen Lewis",
+    role:
+      "Accessibility Mentor, Employment Inclusion Specialist at Imago Work (Hanoi); 6 years in vocational training for young adults with intellectual disabilities",
+    avatarSrc: "/Images/KristenLewis.jpg",
+    testimony: {
+      [Language.EN]:
+        "Employer guidance is actionable and sensitive to local context—exactly what’s been missing.",
+      [Language.VN]:
+        "Hướng dẫn cho nhà tuyển dụng mang tính hành động và phù hợp bối cảnh địa phương—chính là mảnh ghép còn thiếu.",
+    },
+  },
+  {
+    name: "Thanh Thuý",
+    role: "Mentor / Community Partner",
+    avatarSrc: "/Images/ThanhThuy.jpg",
+    testimony: {
+      [Language.EN]:
+        "They collaborate openly with families and schools to unlock real opportunities.",
+      [Language.VN]:
+        "Các bạn hợp tác cởi mở với gia đình và nhà trường để mở ra cơ hội thật sự.",
+    },
+  },
+  {
+    name: "Trung VAP",
+    role: "Mentor / Industry Partner",
+    avatarSrc: "/Images/TrungVAP.jpg",
+    testimony: {
+      [Language.EN]:
+        "Strong engineering practice with a sharp focus on usability—impressive.",
+      [Language.VN]:
+        "Thực hành kỹ thuật vững và tập trung mạnh vào khả năng sử dụng—rất ấn tượng.",
+    },
+  },
+  {
+    name: "Simona Bossoni",
+    role:
+      "Head of the Child Development Department (HCMC hospital); Lecturer at National College of Education; Consultant for special schools and kindergartens",
+    avatarSrc: "/Images/SimonaBossoni.jpg",
+    testimony: {
+      [Language.EN]:
+        "Their approach is developmentally appropriate and grounded in evidence from the field.",
+      [Language.VN]:
+        "Cách tiếp cận phù hợp theo phát triển và dựa trên bằng chứng từ thực tế.",
+    },
+  },
+];
+
+/* ---------- Page ---------- */
 const AboutPage: React.FC = () => {
-  const { setNarratorDialogue } = React.useContext(AppContext);
+  const { setNarratorDialogue, language } = React.useContext(AppContext);
 
   React.useEffect(() => {
     setNarratorDialogue("");
   }, [setNarratorDialogue]);
+
+  const lang = normalizeLang(language);
+  const C = ABOUT_PAGE_CONTENT;
 
   return (
     <Layout>
@@ -165,241 +280,120 @@ const AboutPage: React.FC = () => {
         {/* Hero */}
         <div className="text-center mb-16 py-8 bg-muted/50 rounded-xl border border-border">
           <h1 className="mt-0 font-display text-4xl md:text-5xl font-extrabold text-foreground leading-tight">
-            Breaking the Barrier of Trust <br className="hidden md:block" /> for
-            Autistic Employment in Vietnam
+            {C.heroTitle[lang]}
           </h1>
           <p className="mt-4 font-display text-lg md:text-xl text-muted-foreground">
-            Together, we’re building practical, inclusive tools that move
-            Vietnam beyond awareness and into action.
+            {C.heroSubtitle[lang]}
           </p>
         </div>
 
         <div className="max-w-5xl mx-auto">
           {/* Our Story */}
-          <Section title="Our Story – Why We Started">
-            <p>
-              Vietnam has about 6.2 million people with disabilities, with
-              nearly one million autistic individuals. Yet career accessibility
-              for autistic people is far behind global progress.
-            </p>
-            <p>
-              According to the founder of the Vietnam Autism Project, after 10
-              years of work with autistic communities, accessibility remains
-              stuck at the awareness stage. The shared barrier? Trust.
-            </p>
+          <Section title={C.sections.ourStory.title[lang]}>
+            <p>{C.sections.ourStory.p1[lang]}</p>
+            <p>{C.sections.ourStory.p2[lang]}</p>
             <ul className="list-disc list-inside space-y-2 pl-4 text-muted-foreground">
-              <li>Communities pity them instead of supporting.</li>
-              <li>Firms reject them instead of hiring.</li>
-              <li>Parents protectively isolate them instead of empowering.</li>
-              <li>Autistic individuals lose hope in themselves.</li>
+              {C.sections.ourStory.list[lang].map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
             </ul>
-            <p>
-              We realized that while Vietnam must raise awareness first,
-              autistic jobseekers cannot wait. Inspired by this gap, our team
-              created NeuroPilot AICC — a bridge between awareness and career
-              accessibility, starting at the interview stage.
-            </p>
+            <p>{C.sections.ourStory.p3[lang]}</p>
           </Section>
 
           {/* Founding Team */}
-          <Section title="Who We Are – The Founding Team">
-            <p>
-              We are the Powerpuff Girls Team, a group of young innovators from
-              Vietnam, competing in ADC 2025 with a mission to design impactful,
-              inclusive technology. Our diverse backgrounds in media, software
-              engineering, and design make us the right team for this moment.
-            </p>
-
+          <Section title={C.sections.foundingTeam.title[lang]}>
+            <p>{C.sections.foundingTeam.intro[lang]}</p>
             <div className="mt-8 grid grid-cols-1 gap-8">
+              {/* Keep team member cards static since names/titles/bios are already bilingual */}
               <TeamMemberCard
                 name="Shirin Shujaa"
                 title="Software Engineering student at RMIT Vietnam (AI/ML minor, Intel Capstone Engineer)"
-                bio="Passionate about AI for good, I build smart tools and elegant interfaces — blending AI, automation, and clean design into real-world solutions. I’ve developed automation tools at Intel, built scalable platforms for startups, and crafted AI-powered applications — always with a focus on user-centered design and accessibility."
+                bio="Passionate about AI for good, I build smart tools..."
                 portfolioUrl="https://shirin44.github.io/shirin-portfolio/"
                 avatarSrc="/Images/shirin.JPG"
               />
               <TeamMemberCard
                 name="Nghi Trinh"
-                title="Digital Communication and Multimedia Design student at UEH (Ogilvy Intern, OUCRU Collaborator)"
-                bio="With a great passion for psychology and UX/UI design, I want to use that passion to support people who need it most. By combining my own experience with what the world has to offer, I hope to build bridges that open new opportunities for autistic adults. For me, a growing Vietnam means making sure no community is left behind."
-                portfolioUrl="https://drive.google.com/file/d/1ycbTzHmodeJGU4ryWYq-8wgGgkXB9WY8/view?usp=sharing"
+                title="Digital Communication and Multimedia Design student at UEH"
+                bio="With a great passion for psychology and UX/UI design..."
+                portfolioUrl="https://drive.google.com/file/d/1ycbTzHmodeJGU4ryWYq-8wgGgkXB9WY8/view"
                 avatarSrc="/Images/steph.png"
               />
               <TeamMemberCard
                 name="Thao Trinh"
-                title="3rd-year Software Engineering Student at RMIT University Viet Nam"
-                bio="Specializing in mobile and full-stack development with a keen interest in research. Dedicated to applying technical skills to create meaningful and accessible solutions."
+                title="3rd-year Software Engineering Student at RMIT"
+                bio="Specializing in mobile and full-stack development..."
                 avatarSrc="/Images/Thao.png"
               />
             </div>
           </Section>
 
           {/* Evolution */}
-          <Section title="Our Evolution – Where We Are Today">
-            <p>
-              At first, we struggled with the contradiction: how to promote
-              employment when Vietnam’s reality still demands awareness first.
-              Our solution was to combine both:
-            </p>
+          <Section title={C.sections.evolution.title[lang]}>
+            <p>{C.sections.evolution.intro[lang]}</p>
             <ul className="list-disc list-inside space-y-3 pl-4 font-semibold">
-              <li>
-                <span className="text-brand-purple-700">
-                  For Employers (Inclusion Coach):
-                </span>{" "}
-                Learn inclusion through autistic employee narrators and the
-                Question Cleaner tool.
-              </li>
-              <li>
-                <span className="text-brand-blue-700">
-                  For Autistic Jobseekers (Friendly Buddy):
-                </span>{" "}
-                Practice STAR interviews with supportive nudges and safe-space
-                guides.
-              </li>
-              <li>
-                <span className="text-brand-red-700">
-                  For Parents (Reassuring Counselor):
-                </span>{" "}
-                Access FAQs, evidence-based support, and reassurance.
-              </li>
-              <li>
-                <span className="text-brand-green-700">
-                  For Volunteers (Helpful Peer):
-                </span>{" "}
-                Train with real autistic communication styles and unlock live
-                support opportunities.
-              </li>
+              {C.sections.evolution.points[lang].map((pt, i) => (
+                <li key={i}>{pt}</li>
+              ))}
             </ul>
-            <p>
-              Through weeks of testing and iterations, we built a system that
-              addresses psychological barriers for all stakeholders.
-            </p>
+            <p>{C.sections.evolution.outro[lang]}</p>
           </Section>
 
-          {/* Mission & Vision (lucide icons instead of emojis) */}
-          <Section title="Our Mission & Vision – Where We’re Going">
+          {/* Mission & Vision */}
+          <Section title={C.sections.missionVision.title[lang]}>
             <div className="space-y-6">
               <div className="bg-gradient-to-br from-primary/10 to-card p-6 rounded-xl shadow-md border border-primary/20">
                 <h3 className="flex items-center font-display text-2xl font-bold text-foreground">
                   <Sparkles className="w-6 h-6 mr-3 text-primary" />
-                  Mission
+                  {C.sections.mission[lang]}
                 </h3>
                 <p className="mt-2 text-muted-foreground text-lg">
-                  To empower autistic individuals to take their first step into
-                  meaningful careers by breaking the trust barrier.
+                  {C.sections.missionText[lang]}
                 </p>
               </div>
-
               <div className="bg-gradient-to-br from-primary/10 to-card p-6 rounded-xl shadow-md border border-primary/20">
                 <h3 className="flex items-center font-display text-2xl font-bold text-foreground">
                   <Globe2 className="w-6 h-6 mr-3 text-primary" />
-                  Vision
+                  {C.sections.vision[lang]}
                 </h3>
                 <p className="mt-2 text-muted-foreground text-lg">
-                  To create a world where autistic jobseekers are trusted,
-                  included, and given equal opportunities — starting in Vietnam,
-                  then expanding across Southeast Asia and beyond.
+                  {C.sections.visionText[lang]}
                 </p>
               </div>
             </div>
           </Section>
 
-          {/* Acknowledgements / Mentors (horizontal scroll with images) */}
-          <Section title="Acknowledgements – With Gratitude">
-            <p>
-              We would like to thank everyone who guided, mentored, and
-              contributed to our journey. Your insights, encouragement, and
-              expertise made NeuroPilot possible.
-            </p>
+          {/* Acknowledgements */}
+          <Section title={C.sections.acknowledgements.title[lang]}>
+            <p>{C.sections.acknowledgements.text[lang]}</p>
 
             <div className="mt-6 overflow-x-auto pb-2 -mx-2">
               <div className="px-2 flex space-x-4">
-                <MentorCard
-                  name="Sandy Sinn"
-                  role="Founder of CPPWB, Suicide Prevention Educator"
-                  avatarSrc="/Images/Sandy.jpg"
-                  socials={{
-                    facebook:
-                      "https://www.facebook.com/SandySinnM.Ed?mibextid=wwXIfr&rdid=JdeO3dzFgSdPnhvD&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1JzbAJRdjc%2F%3Fmibextid%3DwwXIfr",
-                    linkedin:
-                      "https://www.linkedin.com/company/center-for-positive-psychology-wellbeing/",
-                  }}
-                />
-                <MentorCard
-                  name="Troy Yeo"
-                  role="Founder & COO driving AI-powered automation for SMB and Enterprises"
-                  avatarSrc="/Images/TroyYeo.jpeg"
-                />
-                <MentorCard
-                  name="Hieu Phung"
-                  role=""
-                  avatarSrc="/Images/HieuPhung.jpeg"
-                />
-                <MentorCard
-                  name="Ngoc Quach"
-                  role=""
-                  avatarSrc="/Images/HieuPhung.jpeg"
-                />
-                <MentorCard
-                  name="Kristen Lewis"
-                  role="Accessibility Mentor; Employment Inclusion Specialist at Imago Work (Hanoi); 6 years in vocational training for young adults with intellectual disabilities"
-                  avatarSrc="/Images/KristenLewis.jpeg"
-                />
-                <MentorCard
-                  name="Thanh Thuý"
-                  role=""
-                  avatarSrc="/Images/ThanhThuy.jpeg"
-                />
-                <MentorCard
-                  name="Trung VAP"
-                  role=""
-                  avatarSrc="/Images/TrungVAP.jpeg"
-                />
-                <MentorCard
-                  name="Simona Bossoni"
-                  role="Head of Child Development Dept (hospital, HCMC); lecturer at the National College of Education; consultant for special schools & kindergartens"
-                  avatarSrc="/Images/Simona.png"
-                  socials={{
-                    website: "https://vica.edu.vn/en/out_teams/ms-simona-bossoni/"
-                     
-                  }}
-                />
+                {MENTORS.map((m) => (
+                  <MentorCard
+                    key={m.name}
+                    name={m.name}
+                    role={m.role}
+                    avatarSrc={m.avatarSrc}
+                    socials={m.socials}
+                    testimony={m.testimony} // NEW
+                  />
+                ))}
               </div>
             </div>
           </Section>
 
-          {/* Research & Contacts */}
-          <Section title="Research & Q&A">
-            <p>
-              We ground our work in local research, interviews with autistic
-              individuals and parents, and global best practices. You can read
-              our Research & Insights section and explore our Q&A hub, where
-              parents, employers, and autistic individuals share their most
-              pressing questions.
-            </p>
+          {/* Research */}
+          <Section title={C.sections.research.title[lang]}>
+            <p>{C.sections.research.text[lang]}</p>
           </Section>
 
-          <Section title="Developers & Contacts">
+          {/* Developers */}
+          <Section title={C.sections.developers.title[lang]}>
             <ul className="list-none space-y-3 p-6 bg-muted/50 rounded-lg border border-border">
-              <li>
-                <strong>Development Team:</strong> Powerpuff Girls (ADC 2025)
-              </li>
-              <li>
-                <strong>Advisors:</strong> Mentors from RMIT University Vietnam
-                & Industry Experts
-              </li>
-              <li>
-                <strong>Contact:</strong>{" "}
-                <a
-                  href="#/contact"
-                  className="text-primary font-semibold hover:underline"
-                >
-                  neuropilotaicc@gmail.com
-                </a>
-              </li>
-              <li>
-                <strong>Location:</strong> Ho Chi Minh City, Vietnam
-              </li>
+              {C.sections.developers.lines[lang].map((line, i) => (
+                <li key={i}>{line}</li>
+              ))}
             </ul>
           </Section>
         </div>

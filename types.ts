@@ -130,3 +130,76 @@ export interface Story {
 }
 
 
+export type PlaceholderKey =
+  | "TEAM_PHOTO"
+  | "BRAINSTORM"
+  | "TEAM_CALL"
+  | "BOOTCAMP"
+  | "MEETING_THUY"
+  | "IDEA_REFINEMENT"
+  | "TEAM_LAUGH"
+  | "SANDY_WORKSHOP"
+  | "DRAFT"
+  | "TRUNG_MEETING"
+  | "SURVEY"
+  | "FEEDBACK"
+  | "PROPOSAL"
+  | "KRISTEN"
+  | "BUG"
+  | "CODING"
+  | "SIMONA"
+  | "TROY"
+  | "FINAL_SPRINT"
+  | "REFLECTION"
+  | "GALLERY";
+
+  export type StoryEntry = {
+  id: string;
+  date: { [key in Language]: string };
+  body: { [key in Language]: string };
+  placeholderKey: PlaceholderKey;
+};
+
+type Trans = Record<Language, string>;
+export interface AboutSchema {
+  heroTitle: Trans;
+  heroSubtitle: Trans;
+  sections: {
+    ourStory: {
+      title: Trans;
+      p1: Trans;
+      p2: Trans;
+      p3: Trans;
+      list: Record<Language, string[]>;
+    };
+    foundingTeam: {
+      title: Trans;
+      intro: Trans;
+    };
+    evolution: {
+      title: Trans;
+      intro: Trans;
+      points: Record<Language, string[]>;
+      outro: Trans;
+    };
+    missionVision: {
+      title: Trans;
+    };
+    mission: Trans;
+    missionText: Trans;
+    vision: Trans;
+    visionText: Trans;
+    acknowledgements: {
+      title: Trans;
+      text: Trans;
+    };
+    research: {
+      title: Trans;
+      text: Trans;
+    };
+    developers: {
+      title: Trans;
+      lines: Record<Language, string[]>;
+    };
+  };
+}
