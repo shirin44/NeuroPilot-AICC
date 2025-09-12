@@ -64,8 +64,8 @@ const MEDIA_VIDEO_MAP: Record<string, string> = {
 };
 
 // Build public URL (Vite-safe). For CRA you could use process.env.PUBLIC_URL instead.
-const publicImage = (file: string) => `${import.meta.env.BASE_URL}Images/OurStory/${file}`;
-const publicVideo = (file: string) => `${import.meta.env.BASE_URL}Videos/OurStory/${file}`;
+const publicImage = (file: string) => `${import.meta.env.BASE_URL}assets/Images/OurStory/${file}`;
+const publicVideo = (file: string) => `${import.meta.env.BASE_URL}assets/Videos/OurStory/${file}`;
 
 // --- Fallback placeholder (if no image & no video available) ---
 const PlaceholderMedia: React.FC<{ label: string }> = ({ label }) => (

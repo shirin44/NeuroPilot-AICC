@@ -174,7 +174,7 @@ const MENTORS: MentorCardProps[] = [
   {
     name: "Sandy Sinn",
     role: "Founder of CPPWB, Suicide Prevention Educator",
-    avatarSrc: "/Images/Sandy.jpg",
+    avatarSrc: "assets/Images/Sandy.jpg",
     testimony: {
       [Language.EN]:
         "This team listens first, then builds with empathy. NeuroPilot is a rare mix of heart and rigor.",
@@ -185,7 +185,7 @@ const MENTORS: MentorCardProps[] = [
   {
     name: "Troy Yeo",
     role: "Founder & COO driving AI-powered automation for SMB and Enterprises",
-    avatarSrc: "/Images/Troy.jpg",
+    avatarSrc: "assets/Images/Troy.jpg",
     testimony: {
       [Language.EN]:
         "They iterate fast and validate with users. The shift from awareness to measurable outcomes is exactly right.",
@@ -196,7 +196,7 @@ const MENTORS: MentorCardProps[] = [
   {
     name: "Hieu Phung",
     role: "Mentor / Advisor",
-    avatarSrc: "/Images/HieuPhung.jpg",
+    avatarSrc: "assets/Images/HieuPhung.jpg",
     testimony: {
       [Language.EN]:
         "Practical solutions, clear roadmaps, and consistent follow-through—this is how change happens.",
@@ -207,7 +207,7 @@ const MENTORS: MentorCardProps[] = [
   {
     name: "Ngọc Quách",
     role: "Assistant to Ms. Simona; works with autistic teenagers",
-    avatarSrc: "/Images/NgocQuach.jpg",
+    avatarSrc: "assets/Images/NgocQuach.jpg",
     testimony: {
       [Language.EN]:
         "The tools respect young people’s dignity and reduce anxiety in real interview settings.",
@@ -219,7 +219,7 @@ const MENTORS: MentorCardProps[] = [
     name: "Kristen Lewis",
     role:
       "Accessibility Mentor, Employment Inclusion Specialist at Imago Work (Hanoi); 6 years in vocational training for young adults with intellectual disabilities",
-    avatarSrc: "/Images/KristenLewis.jpg",
+    avatarSrc: "assets/Images/KristenLewis.jpg",
     testimony: {
       [Language.EN]:
         "Employer guidance is actionable and sensitive to local context—exactly what’s been missing.",
@@ -230,7 +230,7 @@ const MENTORS: MentorCardProps[] = [
   {
     name: "Thanh Thuý",
     role: "Mentor / Community Partner",
-    avatarSrc: "/Images/ThanhThuy.jpg",
+    avatarSrc: "assets/Images/ThanhThuy.jpg",
     testimony: {
       [Language.EN]:
         "They collaborate openly with families and schools to unlock real opportunities.",
@@ -241,7 +241,7 @@ const MENTORS: MentorCardProps[] = [
   {
     name: "Trung VAP",
     role: "Mentor / Industry Partner",
-    avatarSrc: "/Images/TrungVAP.jpg",
+    avatarSrc: "assets/Images/TrungVAP.jpg",
     testimony: {
       [Language.EN]:
         "Strong engineering practice with a sharp focus on usability—impressive.",
@@ -253,7 +253,7 @@ const MENTORS: MentorCardProps[] = [
     name: "Simona Bossoni",
     role:
       "Head of the Child Development Department (HCMC hospital); Lecturer at National College of Education; Consultant for special schools and kindergartens",
-    avatarSrc: "/Images/SimonaBossoni.jpg",
+    avatarSrc: "assets/Images/SimonaBossoni.jpg",
     testimony: {
       [Language.EN]:
         "Their approach is developmentally appropriate and grounded in evidence from the field.",
@@ -310,20 +310,20 @@ const AboutPage: React.FC = () => {
                 title="Software Engineering student at RMIT Vietnam (AI/ML minor, Intel Capstone Engineer)"
                 bio="Passionate about AI for good, I build smart tools..."
                 portfolioUrl="https://shirin44.github.io/shirin-portfolio/"
-                avatarSrc="/Images/shirin.JPG"
+                avatarSrc="assets/Images/shirin.JPG"
               />
               <TeamMemberCard
                 name="Nghi Trinh"
                 title="Digital Communication and Multimedia Design student at UEH"
                 bio="With a great passion for psychology and UX/UI design..."
                 portfolioUrl="https://drive.google.com/file/d/1ycbTzHmodeJGU4ryWYq-8wgGgkXB9WY8/view"
-                avatarSrc="/Images/steph.png"
+                avatarSrc="assets/Images/steph.png"
               />
               <TeamMemberCard
                 name="Thao Trinh"
                 title="3rd-year Software Engineering Student at RMIT"
                 bio="Specializing in mobile and full-stack development..."
-                avatarSrc="/Images/Thao.png"
+                avatarSrc="assets/Images/Thao.png"
               />
             </div>
           </Section>
