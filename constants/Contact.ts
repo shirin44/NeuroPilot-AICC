@@ -24,8 +24,8 @@ export const CONTACT_PAGE_CONTENT = {
   },
   narrator: {
     header: {
-      [Language.EN]: "A Message from NeuroPilot:",
-      [Language.VN]: "Thông điệp từ NeuroPilot:",
+      [Language.EN]: "A Message from AICC:",
+      [Language.VN]: "Thông điệp từ AICC:",
     },
     quote: {
       [Language.EN]:

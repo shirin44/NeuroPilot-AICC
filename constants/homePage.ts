@@ -3,20 +3,37 @@ import { Language } from "@/types";
 export const HOME_PAGE_CONTENT = {
   hero: {
     title: {
-      [Language.EN]: "Welcome to",
-      [Language.VN]: "Chào mừng đến với",
+      [Language.EN]: "This is",
+      [Language.VN]: "Đây là",
     },
     brand: {
-      [Language.EN]: "NeuroPilot AICC",
-      [Language.VN]: "NeuroPilot AICC",
+      [Language.EN]: "AICC",
+      [Language.VN]: "AICC",
     },
-    // “Welcome first words” block you asked for:
+
+    // 🔹 Keep the original whole-line string (optional / fallback)
     welcomeLead: {
       [Language.EN]:
-        "This is AICC — the world’s first all-inclusive AI interview coach for high-functioning autistic adults.",
+        "The world’s first all-inclusive AI interview coach for high-functioning autistic adults.",
       [Language.VN]:
-        "Đây là AICC — huấn luyện viên phỏng vấn AI toàn diện đầu tiên dành cho người tự kỷ chức năng cao.",
+        "Huấn luyện viên phỏng vấn AI toàn diện đầu tiên dành cho người tự kỷ chức năng cao.",
     },
+
+    // 🔹 New: split into parts so the component can inject the animated <span>
+    welcomeLeadParts: {
+      [Language.EN]: {
+        before: "The world’s ",
+        word: "first",
+        after:
+          " all-inclusive AI interview coach for high-functioning autistic adults.",
+      },
+      [Language.VN]: {
+        before: "Huấn luyện viên phỏng vấn AI toàn diện ",
+        word: "đầu tiên",
+        after: " dành cho người tự kỷ chức năng cao.",
+      },
+    },
+
     tagline: {
       [Language.EN]:
         "Build confidence, reduce anxiety, and bridge understanding for jobseekers, employers, families, and volunteers.",
@@ -25,7 +42,7 @@ export const HOME_PAGE_CONTENT = {
     },
     videoLabel: {
       [Language.EN]: "Concept Video",
-      [Language.VN]: "Video Khái niệm",
+      [Language.VN]: "Video Hướng dẫn",
     },
     videoComing: {
       [Language.EN]: "Video player coming soon!",
@@ -33,7 +50,7 @@ export const HOME_PAGE_CONTENT = {
     },
     ariaPlayVideo: {
       [Language.EN]: "Play Concept Video",
-      [Language.VN]: "Phát Video Khái niệm",
+      [Language.VN]: "Phát Video Hướng dẫn",
     },
     ariaScroll: {
       [Language.EN]: "Scroll to next section",
@@ -72,9 +89,9 @@ export const HOME_PAGE_CONTENT = {
       },
       body: {
         [Language.EN]:
-          "NeuroPilot builds skills and bridges understanding for all stakeholders.",
+          "AICC builds skills and bridges understanding for all stakeholders.",
         [Language.VN]:
-          "NeuroPilot xây năng lực và kết nối thấu hiểu cho mọi bên liên quan.",
+          "AICC xây năng lực và kết nối thấu hiểu cho mọi bên liên quan.",
       },
     },
   },

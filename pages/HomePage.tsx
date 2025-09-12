@@ -16,6 +16,9 @@ const HeroSection: React.FC = () => {
   const lang = normalizeLang(language);
   const H = HOME_PAGE_CONTENT;
 
+  // 🔹 pull the split parts for the slam effect
+  const wl = H.hero.welcomeLeadParts[lang];
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center relative bg-gradient-to-b from-background to-muted/50">
       <div className="w-full max-w-5xl px-4 animate-fadeInUp">
@@ -24,9 +27,13 @@ const HeroSection: React.FC = () => {
           <span className="text-primary">{H.hero.brand[lang]}</span>
         </h1>
 
-        {/* Optional “Welcome first words” line */}
+        {/* animated word in the middle */}
         <p className="mt-3 text-base md:text-lg text-foreground/80 font-semibold">
-          {H.hero.welcomeLead[lang]}
+          {wl.before}
+          <span className="inline-block text-4xl font-extrabold text-primary animate-slam">
+            {wl.word}
+          </span>
+          {wl.after}
         </p>
 
         <p className="mt-2 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">

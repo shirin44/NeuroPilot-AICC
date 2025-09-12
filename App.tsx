@@ -11,6 +11,7 @@ import CalmBreathingGuide from './components/CalmBreathingGuide';
 import ModeSelectionPage from './pages/ModeSelectionPage';
 import OurStoryPage from './pages/OurStoryPage';
 import { NARRATORS } from './constants';
+import "./index.css";
 
 export const AppContext = React.createContext<{
   language: Language;

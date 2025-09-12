@@ -8,17 +8,17 @@ import { Narrator, NarratorRole, Language, Story, StoryEntry , PlaceholderKey, A
 export const ABOUT_PAGE_CONTENT = {
   heroTitle: {
     [Language.EN]: "Breaking the Barrier of Trust for Autistic Employment in Vietnam",
-    [Language.VN]: "Phá Vỡ Rào Cản Niềm Tin cho Việc Làm Người Tự Kỷ tại Việt Nam",
+    [Language.VN]: "Phá Vỡ Niềm Tin hạn chế đối với Người Tự Kỷ đi làm tại Việt Nam",
   },
   heroSubtitle: {
     [Language.EN]: "Together, we’re building practical, inclusive tools that move Vietnam beyond awareness and into action.",
-    [Language.VN]: "Chúng tôi cùng nhau xây dựng những công cụ thực tế, toàn diện để đưa Việt Nam vượt khỏi nhận thức và bước vào hành động.",
+    [Language.VN]: "Chúng tôi cùng nhau xây dựng những công cụ thực tế, toàn diện để nâng cao nhận thức và bước vào hành động tại Việt Nam.",
   },
   sections: {
     ourStory: {
       title: { [Language.EN]: "Our Story – Why We Started", [Language.VN]: "Câu Chuyện – Vì Sao Chúng Tôi Bắt Đầu" },
       p1:   { [Language.EN]: "Vietnam has about 6.2 million people with disabilities, ...", [Language.VN]: "Việt Nam có khoảng 6,2 triệu người khuyết tật, ..." },
-      p2:   { [Language.EN]: "We began by listening and mapping real barriers ...",       [Language.VN]: "Chúng tôi bắt đầu bằng việc lắng nghe và lập bản đồ rào cản ..." },
+      p2:   { [Language.EN]: "We began by listening and mapping real barriers ...",       [Language.VN]: "Chúng tôi bắt đầu bằng việc lắng nghe và xác định những rào cản ..." },
       p3:   { [Language.EN]: "Those insights pushed us toward practical tools ...",         [Language.VN]: "Những hiểu biết đó dẫn chúng tôi tới các công cụ thực tiễn ..." },
       list: {
         [Language.EN]: [
@@ -27,7 +27,7 @@ export const ABOUT_PAGE_CONTENT = {
           "Actionable employer guidance"
         ],
         [Language.VN]: [
-          "Lập bản đồ rào cản theo bên liên quan",
+          "Xác định rào cản theo bên liên quan",
           "Luồng luyện phỏng vấn giảm lo âu",
           "Hướng dẫn hành động cho nhà tuyển dụng"
         ],
@@ -35,16 +35,16 @@ export const ABOUT_PAGE_CONTENT = {
     },
     foundingTeam: {
       title: { [Language.EN]: "Who We Are – The Founding Team", [Language.VN]: "Chúng Tôi Là Ai – Nhóm Sáng Lập" },
-      intro: { [Language.EN]: "We are the Powerpuff Girls Team, a group of young innovators ...", [Language.VN]: "Chúng tôi là Nhóm Powerpuff Girls, nhóm sinh viên trẻ sáng tạo ..." },
+      intro: { [Language.EN]: "We are the Powerpuff Girls Team, a group of young innovators ...", [Language.VN]: "Chúng tôi là Powerpuff Girls, nhóm sinh viên trẻ ..." },
     },
     evolution: {
-      title: { [Language.EN]: "Our Evolution – Where We Are Today", [Language.VN]: "Hành Trình – Chúng Tôi Đang Ở Đâu" },
+      title: { [Language.EN]: "Our Evolution – Where We Are Today", [Language.VN]: "Hành Trình – Chúng tôi hiện đang ở đâu?" },
       intro: { [Language.EN]: "At first, we struggled with the contradiction...", [Language.VN]: "Ban đầu chúng tôi gặp khó khăn với mâu thuẫn ..." },
       points: {
         [Language.EN]: ["Prototype → Feedback → Iteration", "Shift from awareness to action", "Employer co-design sessions"],
-        [Language.VN]: ["Nguyên mẫu → Phản hồi → Lặp", "Chuyển từ nhận thức sang hành động", "Đồng thiết kế với nhà tuyển dụng"],
+        [Language.VN]: ["Bản mẫu → Phản hồi → Lặp lại quy trình", "Chuyển từ nhận thức sang hành động", "Đồng thiết kế với nhà tuyển dụng"],
       },
-      outro: { [Language.EN]: "We now focus on measurable hiring outcomes.", [Language.VN]: "Hiện chúng tôi tập trung vào kết quả tuyển dụng đo lường được." },
+      outro: { [Language.EN]: "We now focus on measurable hiring outcomes.", [Language.VN]: "Hiện chúng tôi tập trung vào kết quả tuyển dụng có thể đo lường được." },
     },
     missionVision: {
       title: { [Language.EN]: "Mission & Vision", [Language.VN]: "Sứ mệnh & Tầm nhìn" },
@@ -57,7 +57,7 @@ export const ABOUT_PAGE_CONTENT = {
     vision: { [Language.EN]: "Vision", [Language.VN]: "Tầm nhìn" },
     visionText: {
       [Language.EN]: "A hiring ecosystem where neurodivergent talent is trusted and supported.",
-      [Language.VN]: "Một hệ sinh thái tuyển dụng nơi tài năng đa dạng thần kinh được tin tưởng và hỗ trợ.",
+      [Language.VN]: "Một hệ sinh thái tuyển dụng nơi mọi người đều được tin tưởng và hỗ trợ.",
     },
     acknowledgements: {
       title: { [Language.EN]: "Acknowledgements – With Gratitude", [Language.VN]: "Tri Ân – Lời Cảm Ơn" },
@@ -65,7 +65,7 @@ export const ABOUT_PAGE_CONTENT = {
     },
     research: {
       title: { [Language.EN]: "Research & Q&A", [Language.VN]: "Nghiên Cứu & Hỏi Đáp" },
-      text:  { [Language.EN]: "Key takeaways from literature and field interviews.", [Language.VN]: "Điểm chính từ tài liệu và phỏng vấn thực địa." },
+      text:  { [Language.EN]: "Key takeaways from literature and field interviews.", [Language.VN]: "Tóm tắt từ tài liệu và phỏng vấn thực tế." },
     },
     developers: {
       title: { [Language.EN]: "Developers & Contacts", [Language.VN]: "Nhà Phát Triển & Liên Hệ" },
