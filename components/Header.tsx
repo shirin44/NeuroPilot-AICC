@@ -51,7 +51,7 @@ const Header: React.FC = () => {
   const roleNavLinks = [
     { role: NarratorRole.Jobseeker, label: HEADER_CONTENT.roles.jobseeker[language], theme: 'blue', colorClass: 'hover:text-brand-blue-400' },
     { role: NarratorRole.Employer, label: HEADER_CONTENT.roles.employer[language], theme: 'purple', colorClass: 'hover:text-brand-purple-400' },
-    { role: NarratorRole.Parent, label: HEADER_CONTENT.roles.parent[language], theme: 'red', colorClass: 'hover:text-brand-red-300' },
+    { role: NarratorRole.CareGiver, label: HEADER_CONTENT.roles.CareGiver[language], theme: 'red', colorClass: 'hover:text-brand-red-300' },
     { role: NarratorRole.Volunteer, label: HEADER_CONTENT.roles.volunteer[language], theme: 'green', colorClass: 'hover:text-brand-green-400' },
   ];
 

@@ -107,7 +107,7 @@ const NarratorSelection: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
         <NarratorCard narrator={NARRATORS[NarratorRole.Jobseeker]} />
         <NarratorCard narrator={NARRATORS[NarratorRole.Employer]} />
-        <NarratorCard narrator={NARRATORS[NarratorRole.Parent]} />
+        <NarratorCard narrator={NARRATORS[NarratorRole.CareGiver]} />
         <NarratorCard narrator={NARRATORS[NarratorRole.Volunteer]} />
       </div>
     </section>

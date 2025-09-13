@@ -19,7 +19,7 @@ export type Story = {
 export enum NarratorRole {
   Jobseeker = 'Jobseeker',
   Employer = 'Employer',
-  Parent = 'Parent',
+  CareGiver = 'CareGiver',
   Volunteer = 'Volunteer',
 }
 
@@ -75,7 +75,7 @@ export interface SavedQuestion {
 export enum NarratorRole {
   Jobseeker = 'Jobseeker',
   Employer = 'Employer',
-  Parent = 'Parent',
+  CareGiver = 'CareGiver',
   Volunteer = 'Volunteer',
 }
 

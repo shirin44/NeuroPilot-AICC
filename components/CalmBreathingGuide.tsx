@@ -153,7 +153,7 @@ const TracingBreaths: React.FC = () => {
 
 // --- Practice: Gentle Color Flow (aurora blobs + soft arpeggio) ---
 const GentleColorFlow: React.FC = () => {
-  // Audio is started by parent upon practice selection (user gesture).
+  // Audio is started by CareGiver upon practice selection (user gesture).
   return (
     <div className="absolute inset-0 overflow-hidden bg-gray-900">
       <div className="relative w-full h-full">

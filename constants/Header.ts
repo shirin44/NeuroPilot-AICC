@@ -28,8 +28,8 @@ export const HEADER_CONTENT = {
       [Language.EN]: "Employer",
       [Language.VN]: "Nhà tuyển dụng",
     },
-    parent: {
-      [Language.EN]: "Parent",
+    CareGiver: {
+      [Language.EN]: "CareGiver",
       [Language.VN]: "Phụ huynh",
     },
     volunteer: {

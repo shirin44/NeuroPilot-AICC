@@ -37,8 +37,8 @@ export const NARRATORS: Record<NarratorRole, Narrator> = {
     },
     theme: 'purple'
   },
-  [NarratorRole.Parent]: {
-    role: NarratorRole.Parent,
+  [NarratorRole.CareGiver]: {
+    role: NarratorRole.CareGiver,
     name: { [Language.EN]: 'Care partner', [Language.VN]: 'Người đồng hành che chở' },
     intro: {
       [Language.EN]: 'Hello, I’m your Care partner. I’ll share practical strategies to support your child’s independence.',
@@ -81,15 +81,15 @@ export const DIALOGUE: Record<string, any> = {
   // Employer
   employerIntro: { [Language.EN]: 'Welcome. Use this tool to rewrite interview questions to be more inclusive and clear. Let\'s start.', [Language.VN]: 'Chào mừng bạn. Hãy sử dụng công cụ này để viết lại các câu hỏi phỏng vấn sao cho hòa nhập và rõ ràng hơn. Bắt đầu nào.' },
 
-  // Parent
-  parentIntro: { [Language.EN]: 'I’m your Care partner. I’ll share simple steps to support your child’s interview practice. You’re not alone; small steps build great confidence.', [Language.VN]: 'Tôi là Người đồng hành che chở của bạn. Tôi sẽ chia sẻ những bước đơn giản để hỗ trợ con bạn luyện tập phỏng vấn. Bạn không đơn độc; những bước nhỏ sẽ xây dựng sự tự tin lớn.' },
-  parentOverview: { [Language.EN]: 'Here are a few short lessons to guide you. Each one takes just a few minutes. Pick one to start!', [Language.VN]: 'Dưới đây là một vài bài học ngắn để hướng dẫn bạn. Mỗi bài chỉ mất vài phút. Hãy chọn một bài để bắt đầu!' },
-  parentModule1: { [Language.EN]: 'Let\'s start with the basics. Understanding these key points can make a world of difference in an interview setting.', [Language.VN]: 'Hãy bắt đầu với những điều cơ bản. Hiểu được những điểm chính này có thể tạo ra sự khác biệt lớn trong môi trường phỏng vấn.' },
-  parentModule2: { [Language.EN]: 'The STAR method is a great tool. Let\'s practice how you can coach your child to use it with this simple script.', [Language.VN]: 'Phương pháp STAR là một công cụ tuyệt vời. Hãy thực hành cách bạn có thể hướng dẫn con mình sử dụng nó với kịch bản đơn giản này.' },
-  parentModule3: { [Language.EN]: 'A calm environment is key. Here are some tools to manage sensory needs and anxiety before an interview.', [Language.VN]: 'Một môi trường yên tĩnh là chì khóa. Dưới đây là một số công cụ để quản lý nhu cầu cảm giác và lo lắng trước một cuộc phỏng vấn.' },
-  parentModule4: { [Language.EN]: 'How we give feedback matters. Let\'s learn how to offer positive, specific praise that builds independence.', [Language.VN]: 'Cách chúng ta đưa ra phản hồi rất quan trọng. Hãy học cách đưa ra lời khen ngợi tích cực, cụ thể để xây dựng sự độc lập.' },
-  parentFAQ: { [Language.EN]: 'Many parents have similar questions. Here are some quick, evidence-informed answers.', [Language.VN]: 'Nhiều phụ huynh có những câu hỏi tương tự. Dưới đây là một số câu trả lời nhanh, có cơ sở khoa học.' },
-  parentResources: { [Language.EN]: 'You are part of a larger community. Here are some trusted local organizations in Vietnam for more support.', [Language.VN]: 'Bạn là một phần của một cộng đồng lớn hơn. Dưới đây là một số tổ chức địa phương đáng tin cậy tại Việt Nam để được hỗ trợ thêm.' },
+  // CareGiver
+  CareGiverIntro: { [Language.EN]: 'I’m your Care partner. I’ll share simple steps to support your child’s interview practice. You’re not alone; small steps build great confidence.', [Language.VN]: 'Tôi là Người đồng hành che chở của bạn. Tôi sẽ chia sẻ những bước đơn giản để hỗ trợ con bạn luyện tập phỏng vấn. Bạn không đơn độc; những bước nhỏ sẽ xây dựng sự tự tin lớn.' },
+  CareGiverOverview: { [Language.EN]: 'Here are a few short lessons to guide you. Each one takes just a few minutes. Pick one to start!', [Language.VN]: 'Dưới đây là một vài bài học ngắn để hướng dẫn bạn. Mỗi bài chỉ mất vài phút. Hãy chọn một bài để bắt đầu!' },
+  CareGiverModule1: { [Language.EN]: 'Let\'s start with the basics. Understanding these key points can make a world of difference in an interview setting.', [Language.VN]: 'Hãy bắt đầu với những điều cơ bản. Hiểu được những điểm chính này có thể tạo ra sự khác biệt lớn trong môi trường phỏng vấn.' },
+  CareGiverModule2: { [Language.EN]: 'The STAR method is a great tool. Let\'s practice how you can coach your child to use it with this simple script.', [Language.VN]: 'Phương pháp STAR là một công cụ tuyệt vời. Hãy thực hành cách bạn có thể hướng dẫn con mình sử dụng nó với kịch bản đơn giản này.' },
+  CareGiverModule3: { [Language.EN]: 'A calm environment is key. Here are some tools to manage sensory needs and anxiety before an interview.', [Language.VN]: 'Một môi trường yên tĩnh là chì khóa. Dưới đây là một số công cụ để quản lý nhu cầu cảm giác và lo lắng trước một cuộc phỏng vấn.' },
+  CareGiverModule4: { [Language.EN]: 'How we give feedback matters. Let\'s learn how to offer positive, specific praise that builds independence.', [Language.VN]: 'Cách chúng ta đưa ra phản hồi rất quan trọng. Hãy học cách đưa ra lời khen ngợi tích cực, cụ thể để xây dựng sự độc lập.' },
+  CareGiverFAQ: { [Language.EN]: 'Many parents have similar questions. Here are some quick, evidence-informed answers.', [Language.VN]: 'Nhiều phụ huynh có những câu hỏi tương tự. Dưới đây là một số câu trả lời nhanh, có cơ sở khoa học.' },
+  CareGiverResources: { [Language.EN]: 'You are part of a larger community. Here are some trusted local organizations in Vietnam for more support.', [Language.VN]: 'Bạn là một phần của một cộng đồng lớn hơn. Dưới đây là một số tổ chức địa phương đáng tin cậy tại Việt Nam để được hỗ trợ thêm.' },
 
 
   // Volunteer
@@ -105,7 +105,7 @@ export const DIALOGUE: Record<string, any> = {
       [Language.EN]: 'To build a truly inclusive process, I recommend experiencing this short story first. It highlights perspectives you might not have considered.',
       [Language.VN]: 'Để xây dựng một quy trình thực sự hòa nhập, tôi khuyên bạn nên trải nghiệm câu chuyện ngắn này trước. Nó làm nổi bật những góc nhìn mà bạn có thể chưa xem xét.'
     },
-    [NarratorRole.Parent]: {
+    [NarratorRole.CareGiver]: {
       [Language.EN]: 'To best support your child, I suggest starting with our shared story. It provides context for all the practical steps we\'ll take.',
       [Language.VN]: 'Để hỗ trợ con bạn tốt nhất, tôi đề nghị bắt đầu với câu chuyện chung của chúng ta. Nó cung cấp bối cảnh cho tất cả các bước thực tế mà chúng ta sẽ thực hiện.'
     },
@@ -1156,14 +1156,14 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
     },
   },
 
-  [NarratorRole.Parent]: {
+  [NarratorRole.CareGiver]: {
     title: {
       [Language.EN]: "Climbing Together",
       [Language.VN]: "Cùng nhau vượt khó",
     },
     description: {
       [Language.EN]:
-        "I’m a parent supporting my neurodivergent child into work. Hopes and challenges. Step by step.",
+        "I’m a CareGiver supporting my neurodivergent child into work. Hopes and challenges. Step by step.",
       [Language.VN]:
         "Tôi là phụ huynh hỗ trợ con khác biệt thần kinh vào làm việc. Hy vọng và thử thách. Từng bước.",
     },

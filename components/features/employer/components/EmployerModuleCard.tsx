@@ -30,7 +30,7 @@ const EmployerModuleCard: React.FC<Props> = ({
           )}
         </div>
 
-        {/* Circle indicator (consistent with Parent UI) */}
+      
         <div
           className={`flex items-center justify-center w-6 h-6 rounded-full border-2 transition-colors
                       ${isCompleted ? "bg-primary border-primary" : "border-border"}`}
