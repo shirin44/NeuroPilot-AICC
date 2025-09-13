@@ -366,10 +366,6 @@ export const VOLUNTEER_SCENARIOS = [
 
 
 
-
-
-
-
 export const STORY_CONTENT: Record<NarratorRole, Story> = {
   [NarratorRole.Employer]: {
     title: {
@@ -390,9 +386,9 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• I greet Linh.\n• I ask: “Tell me about yourself.”\n• She looks down. Short answer: “I studied accounting. I like organizing files.”\n• No smile. Little eye contact.",
+            "I greet Linh and ask, “Tell me about yourself.” She looks down and answers briefly: “I studied accounting. I like organizing files.” She doesn’t smile and makes little eye contact.",
           [Language.VN]:
-            "• Tôi chào Linh.\n• Tôi hỏi: “Giới thiệu về bạn.”\n• Cô ấy nhìn xuống. Trả lời ngắn: “Tôi học kế toán. Tôi thích sắp xếp hồ sơ.”\n• Ít cười. Ít nhìn mắt.",
+            "Tôi chào Linh và hỏi: “Giới thiệu về bạn.” Cô ấy nhìn xuống, trả lời ngắn: “Tôi học kế toán. Tôi thích sắp xếp hồ sơ.” Ít cười và ít nhìn mắt.",
         },
         choices: [
           {
@@ -401,10 +397,8 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
               [Language.VN]: "Cô ấy ít nói. Có lẽ không hứng thú.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 Quiet can mean processing. Not disinterest.",
-              [Language.VN]:
-                "🌟 Im lặng có thể là đang xử lý. Không phải thiếu hứng thú.",
+              [Language.EN]: "Quiet can mean thinking, not disinterest.",
+              [Language.VN]: "Im lặng có thể là đang suy nghĩ, không phải thiếu hứng thú.",
             },
           },
           {
@@ -415,36 +409,28 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
                 "Có thể cô ấy lo. Tôi tiếp tục và xem cô ấy thoải mái hơn không.",
             },
             affirmation: {
-              [Language.EN]: "🌟 Seeing nerves as normal shows empathy.",
-              [Language.VN]: "🌟 Xem lo lắng là bình thường cho thấy thấu cảm.",
+              [Language.EN]: "Seeing nerves as normal shows empathy.",
+              [Language.VN]: "Xem lo lắng là bình thường cho thấy thấu cảm.",
             },
           },
           {
             text: {
-              [Language.EN]:
-                "I don’t have much to judge yet. I need a task.",
-              [Language.VN]:
-                "Chưa đủ để đánh giá. Tôi cần một bài tập.",
+              [Language.EN]: "I don’t have much to judge yet. I need a task.",
+              [Language.VN]: "Chưa đủ để đánh giá. Tôi cần một bài tập.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 Tasks show real skill more than small talk.",
-              [Language.VN]:
-                "🌟 Bài tập thể hiện kỹ năng thật hơn lời xã giao.",
+              [Language.EN]: "Practical tasks reveal real skill.",
+              [Language.VN]: "Bài tập thực tế thể hiện kỹ năng thật.",
             },
           },
           {
             text: {
-              [Language.EN]:
-                "She seems direct. Maybe she likes to get to the point.",
-              [Language.VN]:
-                "Cô ấy thẳng. Có lẽ thích đi thẳng vấn đề.",
+              [Language.EN]: "She seems direct. Maybe she likes to get to the point.",
+              [Language.VN]: "Cô ấy thẳng. Có lẽ thích đi thẳng vấn đề.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 Directness = clarity. Not rudeness.",
-              [Language.VN]:
-                "🌟 Thẳng = rõ. Không phải thô lỗ.",
+              [Language.EN]: "Directness is clarity, not rudeness.",
+              [Language.VN]: "Thẳng thắn là rõ ràng, không phải thô lỗ.",
             },
           },
         ],
@@ -456,9 +442,9 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• I ask: “If your manager asks you to lead a team, what do you do?”\n• Linh pauses: “I’ve never done that. I’m not sure.”",
+            "I ask, “If your manager asks you to lead a team, what do you do?” Linh pauses and says, “I’ve never done that. I’m not sure.”",
           [Language.VN]:
-            "• Tôi hỏi: “Nếu quản lý bảo bạn dẫn dắt nhóm, bạn làm gì?”\n• Linh dừng lại: “Tôi chưa làm. Tôi chưa chắc.”",
+            "Tôi hỏi: “Nếu quản lý bảo bạn dẫn dắt nhóm, bạn làm gì?” Linh dừng lại: “Tôi chưa làm. Tôi chưa chắc.”",
         },
         choices: [
           {
@@ -467,10 +453,8 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
               [Language.VN]: "Chưa chuẩn bị. Có thể thiếu linh hoạt.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 Abstract questions are hard. Reframing helps.",
-              [Language.VN]:
-                "🌟 Câu hỏi trừu tượng khó. Đặt lại câu hỏi sẽ giúp hơn.",
+              [Language.EN]: "Abstract questions can be hard. Reframing helps.",
+              [Language.VN]: "Câu hỏi trừu tượng khó. Đặt lại câu hỏi sẽ giúp hơn.",
             },
           },
           {
@@ -479,21 +463,18 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
               [Language.VN]: "Cô ấy thành thật. Nhiều người sẽ bịa.",
             },
             affirmation: {
-              [Language.EN]: "🌟 Honesty builds trust.",
-              [Language.VN]: "🌟 Thành thật tạo niềm tin.",
+              [Language.EN]: "Honesty builds trust.",
+              [Language.VN]: "Thành thật tạo niềm tin.",
             },
           },
           {
             text: {
-              [Language.EN]:
-                "This role doesn’t need leadership anyway.",
+              [Language.EN]: "This role doesn’t need leadership anyway.",
               [Language.VN]: "Vai trò này đâu cần lãnh đạo.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 Match questions to the job’s real needs.",
-              [Language.VN]:
-                "🌟 Hỏi đúng điều công việc cần.",
+              [Language.EN]: "Match questions to the job’s real needs.",
+              [Language.VN]: "Hãy hỏi đúng điều công việc cần.",
             },
           },
           {
@@ -502,8 +483,8 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
               [Language.VN]: "Cô ấy kẹt. Tôi sẽ hỏi lại cho dễ.",
             },
             affirmation: {
-              [Language.EN]: "🌟 Flexible questions reveal strengths.",
-              [Language.VN]: "🌟 Linh hoạt khi hỏi sẽ lộ thế mạnh.",
+              [Language.EN]: "Flexible questions reveal strengths.",
+              [Language.VN]: "Linh hoạt khi hỏi sẽ lộ thế mạnh.",
             },
           },
         ],
@@ -515,22 +496,19 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• I give a quick exercise: sort invoices.\n• Linh focuses. Fast, accurate.\n• She suggests a clearer label system.",
+            "I give a quick exercise: sort invoices. Linh focuses and works fast and accurately. She suggests a clearer labeling system.",
           [Language.VN]:
-            "• Tôi giao bài nhanh: sắp xếp hóa đơn.\n• Linh tập trung. Nhanh, chính xác.\n• Cô ấy đề xuất cách dán nhãn rõ hơn.",
+            "Tôi giao bài nhanh: sắp xếp hóa đơn. Linh tập trung, làm nhanh và chính xác. Cô ấy đề xuất cách dán nhãn rõ hơn.",
         },
         choices: [
           {
             text: {
-              [Language.EN]:
-                "She’s better with tasks than small talk.",
+              [Language.EN]: "She’s better with tasks than small talk.",
               [Language.VN]: "Cô ấy làm bài tốt hơn nói chuyện.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 Real work shows real talent.",
-              [Language.VN]:
-                "🌟 Việc thật cho thấy tài thật.",
+              [Language.EN]: "Real work shows real talent.",
+              [Language.VN]: "Việc thật cho thấy tài thật.",
             },
           },
           {
@@ -539,8 +517,8 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
               [Language.VN]: "Tôi không ngờ độ chính xác này.",
             },
             affirmation: {
-              [Language.EN]: "🌟 Precision deserves credit.",
-              [Language.VN]: "🌟 Chính xác xứng đáng ghi nhận.",
+              [Language.EN]: "Precision deserves credit.",
+              [Language.VN]: "Chính xác xứng đáng ghi nhận.",
             },
           },
           {
@@ -549,8 +527,8 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
               [Language.VN]: "Cô ấy tìm cách hay hơn của tôi.",
             },
             affirmation: {
-              [Language.EN]: "🌟 Real-time improvement is gold.",
-              [Language.VN]: "🌟 Cải tiến ngay lúc làm là vàng.",
+              [Language.EN]: "Improving in the moment is valuable.",
+              [Language.VN]: "Cải tiến ngay lúc làm là rất quý.",
             },
           },
           {
@@ -559,10 +537,8 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
               [Language.VN]: "Tôi vẫn nghĩ về sự gượng gạo lúc đầu.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 Don’t let awkward moments hide results.",
-              [Language.VN]:
-                "🌟 Đừng để vài phút gượng gạo che kết quả.",
+              [Language.EN]: "Don’t let early awkwardness hide results.",
+              [Language.VN]: "Đừng để vài phút gượng gạo che kết quả.",
             },
           },
         ],
@@ -574,62 +550,49 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• I review notes.\n• Small talk: hard. Abstract: hard.\n• Concrete tasks: strong.",
+            "I review my notes. Small talk was hard. Abstract questions were hard. Concrete tasks were strong.",
           [Language.VN]:
-            "• Tôi xem lại ghi chú.\n• Xã giao: khó. Trừu tượng: khó.\n• Nhiệm vụ cụ thể: mạnh.",
+            "Tôi xem lại ghi chú. Xã giao khó. Câu hỏi trừu tượng khó. Nhiệm vụ cụ thể mạnh.",
         },
         choices: [
           {
             text: {
-              [Language.EN]:
-                "Trust my first impression. Style matters.",
+              [Language.EN]: "Trust my first impression. Style matters.",
               [Language.VN]: "Tin ấn tượng ban đầu. Cách nói vẫn quan trọng.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 First impressions often favor extroverts. Be fair.",
-              [Language.VN]:
-                "🌟 Ấn tượng đầu thường thiên về người hướng ngoại. Hãy công bằng.",
+              [Language.EN]: "First impressions often favor extroverts. Be fair.",
+              [Language.VN]: "Ấn tượng đầu thường thiên về người hướng ngoại. Hãy công bằng.",
             },
           },
           {
             text: {
-              [Language.EN]:
-                "My interview style might limit her. I can adjust.",
-              [Language.VN]:
-                "Cách phỏng vấn của tôi có thể hạn chế cô ấy. Tôi có thể chỉnh.",
+              [Language.EN]: "My interview style might limit her. I can adjust.",
+              [Language.VN]: "Cách phỏng vấn của tôi có thể hạn chế cô ấy. Tôi có thể chỉnh.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 Noticing limits is leadership.",
-              [Language.VN]:
-                "🌟 Nhận ra hạn chế là lãnh đạo.",
+              [Language.EN]: "Noticing limits is leadership.",
+              [Language.VN]: "Nhận ra hạn chế là lãnh đạo.",
             },
           },
           {
             text: {
-              [Language.EN]:
-                "I’m unsure. Strengths and concerns both exist.",
+              [Language.EN]: "I’m unsure. Strengths and concerns both exist.",
               [Language.VN]: "Tôi còn phân vân. Có cả điểm mạnh lẫn lo.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 Pausing to reflect shows care.",
-              [Language.VN]:
-                "🌟 Dừng lại suy nghĩ cho thấy bạn quan tâm.",
+              [Language.EN]: "Pausing to reflect shows care.",
+              [Language.VN]: "Dừng lại suy nghĩ cho thấy bạn quan tâm.",
             },
           },
           {
             text: {
-              [Language.EN]:
-                "I’m curious about adjusting interviews.",
+              [Language.EN]: "I’m curious about adjusting interviews.",
               [Language.VN]: "Tôi muốn thử cách phỏng vấn linh hoạt hơn.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 Curiosity drives inclusion.",
-              [Language.VN]:
-                "🌟 Sự tò mò thúc đẩy hòa nhập.",
+              [Language.EN]: "Curiosity drives inclusion.",
+              [Language.VN]: "Sự tò mò thúc đẩy hòa nhập.",
             },
           },
         ],
@@ -637,9 +600,9 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
     ],
     closingAffirmation: {
       [Language.EN]:
-        "💡 Openness changes hiring. Look past labels. Unlock real potential.",
+        "Openness changes hiring. Look past labels to unlock real potential.",
       [Language.VN]:
-        "💡 Cởi mở sẽ đổi cách tuyển dụng. Vượt qua nhãn dán. Mở ra tiềm năng thật.",
+        "Cởi mở sẽ đổi cách tuyển dụng. Vượt qua nhãn dán để mở ra tiềm năng thật.",
     },
   },
 
@@ -662,64 +625,41 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• Each morning, before work, I ask: “Should I act like everyone else today?”",
+            "Each morning before work I ask myself: should I act like everyone else today?",
           [Language.VN]:
-            "• Mỗi sáng trước giờ làm, tôi tự hỏi: “Hôm nay có nên giống mọi người không?”",
+            "Mỗi sáng trước giờ làm, tôi tự hỏi: hôm nay có nên giống mọi người không?",
         },
         choices: [
+          { text: { [Language.EN]: "How do I respond?", [Language.VN]: "Tôi phản ứng thế nào?" }, isMultiSelect: true },
           {
             text: {
-              [Language.EN]: "How do I respond?",
-              [Language.VN]: "Tôi phản ứng thế nào?",
-            },
-            isMultiSelect: true,
-          },
-          {
-            text: {
-              [Language.EN]:
-                "• I force eye contact and copy others. It drains me.",
-              [Language.VN]:
-                "• Tôi cố nhìn mắt và bắt chước người khác. Rất mệt.",
+              [Language.EN]: "I force eye contact and copy others. It drains me.",
+              [Language.VN]: "Tôi cố nhìn mắt và bắt chước người khác. Rất mệt.",
             },
             affirmation: {
-              [Language.EN]:
-                "🌟 Fitting in takes energy. Your worth isn’t imitation.",
-              [Language.VN]:
-                "🌟 Cố hòa nhập tốn sức. Giá trị của bạn không nằm ở bắt chước.",
+              [Language.EN]: "Fitting in takes energy. Your worth isn’t imitation.",
+              [Language.VN]: "Cố hòa nhập tốn sức. Giá trị của bạn không nằm ở bắt chước.",
             },
           },
           {
-            text: {
-              [Language.EN]: "• I stay quiet. People think I’m distant.",
-              [Language.VN]: "• Tôi im lặng. Người khác nghĩ tôi xa cách.",
-            },
+            text: { [Language.EN]: "I stay quiet. People think I’m distant.", [Language.VN]: "Tôi im lặng. Người khác nghĩ tôi xa cách." },
             affirmation: {
-              [Language.EN]:
-                "🌟 Silence can be care and caution, not coldness.",
-              [Language.VN]:
-                "🌟 Im lặng có thể là cẩn trọng, không phải lạnh lùng.",
+              [Language.EN]: "Silence can be care and caution, not coldness.",
+              [Language.VN]: "Im lặng có thể là cẩn trọng, không phải lạnh lùng.",
             },
           },
           {
-            text: {
-              [Language.EN]: "• I switch styles based on who’s around.",
-              [Language.VN]: "• Tôi đổi cách nói tùy người xung quanh.",
-            },
+            text: { [Language.EN]: "I switch styles based on who’s around.", [Language.VN]: "Tôi đổi cách nói tùy người xung quanh." },
             affirmation: {
-              [Language.EN]:
-                "🌟 Adaptable, yes. But you don’t need to split yourself.",
-              [Language.VN]:
-                "🌟 Linh hoạt là tốt. Nhưng không cần chia nhỏ bản thân.",
+              [Language.EN]: "Adapt when needed, but you don’t have to split yourself.",
+              [Language.VN]: "Linh hoạt là tốt, nhưng không cần chia nhỏ bản thân.",
             },
           },
           {
-            text: {
-              [Language.EN]: "• I mask less now.",
-              [Language.VN]: "• Tôi ít phải che giấu hơn.",
-            },
+            text: { [Language.EN]: "I mask less now.", [Language.VN]: "Tôi ít phải che giấu hơn." },
             affirmation: {
-              [Language.EN]: "🌟 Showing your real self is brave.",
-              [Language.VN]: "🌟 Là chính mình là dũng cảm.",
+              [Language.EN]: "Showing your real self is brave.",
+              [Language.VN]: "Là chính mình là dũng cảm.",
             },
           },
         ],
@@ -731,69 +671,34 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• Office is loud and bright. Many smells. My body tenses.",
+            "The office is loud and bright with many smells. My body tenses.",
           [Language.VN]:
-            "• Văn phòng ồn, sáng chói, nhiều mùi. Cơ thể tôi căng.",
+            "Văn phòng ồn, sáng chói, nhiều mùi. Cơ thể tôi căng.",
         },
         choices: [
+          { text: { [Language.EN]: "What hits me most?", [Language.VN]: "Điều gì làm tôi khó nhất?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]: "What hits me most?",
-              [Language.VN]: "Điều gì làm tôi khó nhất?",
-            },
-            isMultiSelect: true,
-          },
-          {
-            text: {
-              [Language.EN]: "• Bright lights → headache.",
-              [Language.VN]: "• Đèn chói → đau đầu.",
-            },
+            text: { [Language.EN]: "Bright lights → headache.", [Language.VN]: "Đèn chói → đau đầu." },
             affirmation: {
-              [Language.EN]:
-                "🌟 Your body’s signals are valid. Listen to them.",
-              [Language.VN]:
-                "🌟 Tín hiệu cơ thể là thật. Hãy lắng nghe.",
+              [Language.EN]: "Your body’s signals are valid.",
+              [Language.VN]: "Tín hiệu cơ thể là thật.",
             },
           },
           {
-            text: {
-              [Language.EN]: "• Constant noise → overwhelm.",
-              [Language.VN]: "• Ồn liên tục → quá tải.",
-            },
-            affirmation: {
-              [Language.EN]: "🌟 You deserve calm spaces.",
-              [Language.VN]: "🌟 Bạn xứng đáng có không gian yên.",
-            },
+            text: { [Language.EN]: "Constant noise → overwhelm.", [Language.VN]: "Ồn liên tục → quá tải." },
+            affirmation: { [Language.EN]: "You deserve calm spaces.", [Language.VN]: "Bạn xứng đáng có không gian yên." },
           },
           {
-            text: {
-              [Language.EN]: "• Strong smells → can’t focus.",
-              [Language.VN]: "• Mùi nồng → khó tập trung.",
-            },
-            affirmation: {
-              [Language.EN]: "🌟 Your senses work uniquely.",
-              [Language.VN]: "🌟 Giác quan của bạn là riêng biệt.",
-            },
+            text: { [Language.EN]: "Strong smells → can’t focus.", [Language.VN]: "Mùi nồng → khó tập trung." },
+            affirmation: { [Language.EN]: "Your senses work uniquely.", [Language.VN]: "Giác quan của bạn là riêng biệt." },
           },
           {
-            text: {
-              [Language.EN]: "• Crowds → I shut down.",
-              [Language.VN]: "• Đông người → tôi thu mình.",
-            },
-            affirmation: {
-              [Language.EN]: "🌟 Many feel this. You’re not alone.",
-              [Language.VN]: "🌟 Nhiều người cũng vậy. Bạn không cô đơn.",
-            },
+            text: { [Language.EN]: "Crowds → I shut down.", [Language.VN]: "Đông người → tôi thu mình." },
+            affirmation: { [Language.EN]: "You’re not alone.", [Language.VN]: "Nhiều người cũng vậy. Bạn không cô đơn." },
           },
           {
-            text: {
-              [Language.EN]: "• I’m okay. Not overloaded often.",
-              [Language.VN]: "• Tôi ổn. Không quá tải thường xuyên.",
-            },
-            affirmation: {
-              [Language.EN]: "🌟 That balance is a strength.",
-              [Language.VN]: "🌟 Sự cân bằng đó là điểm mạnh.",
-            },
+            text: { [Language.EN]: "I’m okay. Not overloaded often.", [Language.VN]: "Tôi ổn. Không quá tải thường xuyên." },
+            affirmation: { [Language.EN]: "That balance is a strength.", [Language.VN]: "Sự cân bằng đó là điểm mạnh." },
           },
         ],
       },
@@ -804,69 +709,27 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• At home, my parents talk about my future. It stings, even if they mean well.",
+            "At home my parents talk about my future. It stings even if they mean well.",
           [Language.VN]:
-            "• Ở nhà, bố mẹ nói về tương lai của tôi. Lời nói làm tôi nhói, dù họ có ý tốt.",
+            "Ở nhà, bố mẹ nói về tương lai của tôi. Lời nói làm tôi nhói, dù họ có ý tốt.",
         },
         choices: [
+          { text: { [Language.EN]: "What do I hear?", [Language.VN]: "Tôi nghe gì?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]: "What do I hear?",
-              [Language.VN]: "Tôi nghe gì?",
-            },
-            isMultiSelect: true,
+            text: { [Language.EN]: "“You’re smart but not social. You won’t succeed.”", [Language.VN]: "“Con thông minh nhưng không hòa đồng. Sẽ khó thành công.”" },
+            affirmation: { [Language.EN]: "Worth isn’t the same as being social.", [Language.VN]: "Giá trị của bạn không nằm ở “hòa đồng”." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• “You’re smart but not social. You won’t succeed.”",
-              [Language.VN]:
-                "• “Con thông minh nhưng không hòa đồng. Sẽ khó thành công.”",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Your worth is not “being social.”",
-              [Language.VN]:
-                "🌟 Giá trị của bạn không nằm ở “hòa đồng”.",
-            },
+            text: { [Language.EN]: "“Marry first, career later.”", [Language.VN]: "“Cưới trước, rồi tính sự nghiệp.”" },
+            affirmation: { [Language.EN]: "Your path is yours.", [Language.VN]: "Con đường là của bạn." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• “Marry first, career later.”",
-              [Language.VN]:
-                "• “Cưới trước, rồi tính sự nghiệp.”",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Your path is yours to build.",
-              [Language.VN]:
-                "🌟 Con đường là của bạn.",
-            },
+            text: { [Language.EN]: "They compare me to cousins.", [Language.VN]: "Họ so tôi với họ hàng." },
+            affirmation: { [Language.EN]: "Comparison is unfair. Your pace is valid.", [Language.VN]: "So sánh là không công bằng. Nhịp của bạn là đúng." },
           },
           {
-            text: {
-              [Language.EN]: "• They compare me to cousins.",
-              [Language.VN]: "• Họ so tôi với họ hàng.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Comparison is unfair. Your pace is valid.",
-              [Language.VN]:
-                "🌟 So sánh là không công bằng. Nhịp của bạn là đúng.",
-            },
-          },
-          {
-            text: {
-              [Language.EN]: "• They support me without judgment.",
-              [Language.VN]: "• Họ ủng hộ tôi, không phán xét.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 That support is rare. Treasure it.",
-              [Language.VN]:
-                "🌟 Sự ủng hộ đó hiếm. Hãy trân trọng.",
-            },
+            text: { [Language.EN]: "They support me without judgment.", [Language.VN]: "Họ ủng hộ tôi, không phán xét." },
+            affirmation: { [Language.EN]: "That support is rare. Treasure it.", [Language.VN]: "Sự ủng hộ đó hiếm. Hãy trân trọng." },
           },
         ],
       },
@@ -877,69 +740,27 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• One week later, I go to an interview.\n• Smiles at first. Then many questions.",
+            "A week later I go to an interview. People smile at first, then the questions come quickly.",
           [Language.VN]:
-            "• Một tuần sau, tôi đi phỏng vấn.\n• Ban đầu mỉm cười. Rồi nhiều câu hỏi dồn dập.",
+            "Một tuần sau, tôi đi phỏng vấn. Ban đầu mỉm cười. Rồi nhiều câu hỏi dồn dập.",
         },
         choices: [
+          { text: { [Language.EN]: "What happens to me?", [Language.VN]: "Điều gì xảy ra với tôi?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]: "What happens to me?",
-              [Language.VN]: "Điều gì xảy ra với tôi?",
-            },
-            isMultiSelect: true,
+            text: { [Language.EN]: "Vague questions confuse me.", [Language.VN]: "Câu hỏi mơ hồ làm tôi rối." },
+            affirmation: { [Language.EN]: "Tasks show value better than abstractions.", [Language.VN]: "Bài tập thực tế thể hiện giá trị rõ hơn." },
           },
           {
-            text: {
-              [Language.EN]: "• Vague questions confuse me.",
-              [Language.VN]: "• Câu hỏi mơ hồ làm tôi rối.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Abstract isn’t fair for everyone. Real tasks show value.",
-              [Language.VN]:
-                "🌟 Trừu tượng không công bằng với mọi người. Bài tập thực tế thể hiện giá trị.",
-            },
+            text: { [Language.EN]: "I freeze on strengths and weaknesses.", [Language.VN]: "Tôi đứng hình khi hỏi điểm mạnh/yếu." },
+            affirmation: { [Language.EN]: "Freezing doesn’t erase strengths.", [Language.VN]: "Bối rối không làm mất điểm mạnh." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I freeze on “strengths and weaknesses.”",
-              [Language.VN]:
-                "• Tôi “đứng hình” khi hỏi điểm mạnh/ yếu.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Freezing doesn’t erase your strengths.",
-              [Language.VN]:
-                "🌟 Bối rối không làm mất điểm mạnh.",
-            },
+            text: { [Language.EN]: "I know answers but speak slowly.", [Language.VN]: "Tôi biết câu trả lời nhưng nói chậm." },
+            affirmation: { [Language.EN]: "Deep thinking takes time.", [Language.VN]: "Suy nghĩ sâu cần thời gian." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I know answers but can’t speak fast.",
-              [Language.VN]:
-                "• Tôi biết câu trả lời nhưng nói chậm.",
-            },
-            affirmation: {
-              [Language.EN]: "🌟 Deep thinking takes time.",
-              [Language.VN]: "🌟 Suy nghĩ sâu cần thời gian.",
-            },
-          },
-          {
-            text: {
-              [Language.EN]:
-                "• I shine more with practical tasks.",
-              [Language.VN]:
-                "• Tôi tỏa sáng hơn với bài thực hành.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Hands-on skills speak louder than words.",
-              [Language.VN]:
-                "🌟 Kỹ năng thực hành nói lên tất cả.",
-            },
+            text: { [Language.EN]: "I shine more with practical tasks.", [Language.VN]: "Tôi tỏa sáng hơn với bài thực hành." },
+            affirmation: { [Language.EN]: "Hands-on skills speak clearly.", [Language.VN]: "Kỹ năng thực hành nói lên tất cả." },
           },
         ],
       },
@@ -950,65 +771,27 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• Weeks of trying to fit in. My body feels heavy. Anxiety grows.",
+            "After weeks of trying to fit in, my body feels heavy and anxiety grows.",
           [Language.VN]:
-            "• Nhiều tuần cố hòa nhập. Cơ thể nặng nề. Lo âu tăng.",
+            "Nhiều tuần cố hòa nhập, cơ thể nặng nề và lo âu tăng.",
         },
         choices: [
+          { text: { [Language.EN]: "How does it show up?", [Language.VN]: "Biểu hiện thế nào?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]: "How does it show up?",
-              [Language.VN]: "Biểu hiện thế nào?",
-            },
-            isMultiSelect: true,
+            text: { [Language.EN]: "I’m exhausted after masking all day.", [Language.VN]: "Tôi kiệt sức vì đeo mặt nạ cả ngày." },
+            affirmation: { [Language.EN]: "Tired means you tried, not that you failed.", [Language.VN]: "Mệt là vì bạn đã nỗ lực, không phải thất bại." },
           },
           {
-            text: {
-              [Language.EN]: "• I’m exhausted after masking all day.",
-              [Language.VN]: "• Tôi kiệt sức vì “đeo mặt nạ” cả ngày.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Tired = effort given. Not failure.",
-              [Language.VN]:
-                "🌟 Mệt = bạn đã nỗ lực. Không phải thất bại.",
-            },
+            text: { [Language.EN]: "I panic before deadlines.", [Language.VN]: "Tôi hoảng trước hạn chót." },
+            affirmation: { [Language.EN]: "Anxiety shows you care to do well.", [Language.VN]: "Lo âu cho thấy bạn muốn làm tốt." },
           },
           {
-            text: {
-              [Language.EN]: "• I panic before deadlines.",
-              [Language.VN]: "• Tôi hoảng trước hạn chót.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Anxiety shows you care to do well.",
-              [Language.VN]:
-                "🌟 Lo âu cho thấy bạn muốn làm tốt.",
-            },
+            text: { [Language.EN]: "I skip social events to recharge.", [Language.VN]: "Tôi tránh sự kiện để nạp năng lượng." },
+            affirmation: { [Language.EN]: "Rest is self-respect.", [Language.VN]: "Nghỉ ngơi là tôn trọng bản thân." },
           },
           {
-            text: {
-              [Language.EN]: "• I skip social events to recharge.",
-              [Language.VN]: "• Tôi tránh sự kiện để nạp năng lượng.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Rest is self-respect.",
-              [Language.VN]:
-                "🌟 Nghỉ ngơi là tôn trọng bản thân.",
-            },
-          },
-          {
-            text: {
-              [Language.EN]: "• I rarely burn out.",
-              [Language.VN]: "• Tôi hiếm khi kiệt sức.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Balance protects you.",
-              [Language.VN]:
-                "🌟 Cân bằng đang bảo vệ bạn.",
-            },
+            text: { [Language.EN]: "I rarely burn out.", [Language.VN]: "Tôi hiếm khi kiệt sức." },
+            affirmation: { [Language.EN]: "Balance protects you.", [Language.VN]: "Cân bằng đang bảo vệ bạn." },
           },
         ],
       },
@@ -1019,69 +802,27 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• At night, I read about autism in adults. The stories sound like mine.",
+            "At night I read about autism in adults. The stories sound like mine.",
           [Language.VN]:
-            "• Buổi tối, tôi đọc về tự kỷ ở người lớn. Câu chuyện giống tôi.",
+            "Buổi tối, tôi đọc về tự kỷ ở người lớn. Câu chuyện giống tôi.",
         },
         choices: [
+          { text: { [Language.EN]: "What feels familiar?", [Language.VN]: "Điều gì quen thuộc?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]: "What feels familiar?",
-              [Language.VN]: "Điều gì quen thuộc?",
-            },
-            isMultiSelect: true,
+            text: { [Language.EN]: "Called “lazy” or “different” as a kid.", [Language.VN]: "Từng bị gọi “lười” hay “khác biệt”." },
+            affirmation: { [Language.EN]: "That was a misunderstanding, not you.", [Language.VN]: "Đó là họ hiểu sai, không phải bạn." },
           },
           {
-            text: {
-              [Language.EN]: "• Called “lazy” or “different” as a kid.",
-              [Language.VN]: "• Từng bị gọi “lười” hay “khác biệt”.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 That was their misunderstanding, not you.",
-              [Language.VN]:
-                "🌟 Đó là họ hiểu sai, không phải bạn.",
-            },
+            text: { [Language.EN]: "People saw me as rude or too shy.", [Language.VN]: "Người khác nghĩ tôi thô lỗ hoặc quá nhút nhát." },
+            affirmation: { [Language.EN]: "Opinions vary. Keep what cares for you.", [Language.VN]: "Ý kiến khác nhau. Giữ điều tốt cho bạn." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• People saw me as rude or too shy.",
-              [Language.VN]:
-                "• Người khác nghĩ tôi thô lỗ hoặc quá nhút nhát.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Opinions vary. Keep what cares for you.",
-              [Language.VN]:
-                "🌟 Ý kiến khác nhau. Giữ điều tốt cho bạn.",
-            },
+            text: { [Language.EN]: "I learned about autism after 20.", [Language.VN]: "Tôi biết mình là tự kỷ sau 20 tuổi." },
+            affirmation: { [Language.EN]: "Late answers still bring power.", [Language.VN]: "Biết muộn vẫn mang lại sức mạnh." },
           },
           {
-            text: {
-              [Language.EN]: "• I learned about autism after 20.",
-              [Language.VN]: "• Tôi biết mình là tự kỷ sau 20 tuổi.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Late answers still bring power.",
-              [Language.VN]:
-                "🌟 Biết muộn vẫn mang lại sức mạnh.",
-            },
-          },
-          {
-            text: {
-              [Language.EN]:
-                "• I still suspect. No diagnosis yet.",
-              [Language.VN]:
-                "• Tôi nghi ngờ. Chưa có chẩn đoán.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Your lived experience is valid.",
-              [Language.VN]:
-                "🌟 Trải nghiệm của bạn là có giá trị.",
-            },
+            text: { [Language.EN]: "I still suspect. No diagnosis yet.", [Language.VN]: "Tôi nghi ngờ. Chưa có chẩn đoán." },
+            affirmation: { [Language.EN]: "Your lived experience is valid.", [Language.VN]: "Trải nghiệm của bạn là có giá trị." },
           },
         ],
       },
@@ -1092,67 +833,32 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• A hard project. Others get stuck.\n• I quietly organize steps. I see patterns.\n• My manager says: “Lan, you see what others can’t.”\n• I feel seen for my true ability.",
+            "A hard project stalls the team. I quietly organize steps and notice patterns. My manager says, “Lan, you see what others can’t.” I feel seen for my true ability.",
           [Language.VN]:
-            "• Dự án khó. Người khác bối rối.\n• Tôi sắp xếp từng bước. Tôi thấy quy luật.\n• Quản lý nói: “Lan, em thấy điều người khác không thấy.”\n• Tôi được nhìn nhận đúng khả năng.",
+            "Dự án khó làm cả nhóm bối rối. Tôi sắp xếp từng bước và thấy quy luật. Quản lý nói: “Lan, em thấy điều người khác không thấy.” Tôi được nhìn nhận đúng khả năng.",
         },
         choices: [
+          { text: { [Language.EN]: "Have I felt this?", [Language.VN]: "Tôi đã có khoảnh khắc này chưa?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]: "Have I felt this?",
-              [Language.VN]: "Tôi đã có khoảnh khắc này chưa?",
-            },
-            isMultiSelect: true,
+            text: { [Language.EN]: "Yes. My talent was recognized.", [Language.VN]: "Rồi. Tài năng của tôi được công nhận." },
+            affirmation: { [Language.EN]: "Your mind holds real strengths.", [Language.VN]: "Bạn có những điểm mạnh thật sự." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Yes. My talent was recognized.",
-              [Language.VN]: "• Rồi. Tài năng của tôi được công nhận.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Your mind holds real strengths.",
-              [Language.VN]:
-                "🌟 Bạn có những điểm mạnh thật sự.",
-            },
+            text: { [Language.EN]: "Someone noticed my focus or creativity.", [Language.VN]: "Có người thấy khả năng tập trung hay sáng tạo của tôi." },
+            affirmation: { [Language.EN]: "Recognition confirms what’s there.", [Language.VN]: "Sự công nhận xác nhận điều vốn có." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Someone noticed my focus or creativity.",
-              [Language.VN]:
-                "• Có người thấy khả năng tập trung hay sáng tạo của tôi.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Recognition confirms what’s there.",
-              [Language.VN]:
-                "🌟 Sự công nhận xác nhận điều vốn có.",
-            },
-          },
-          {
-            text: {
-              [Language.EN]:
-                "• I’m still waiting for that moment.",
-              [Language.VN]:
-                "• Tôi vẫn chờ khoảnh khắc ấy.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Your gifts are real. The moment will come.",
-              [Language.VN]:
-                "🌟 Tài năng của bạn là thật. Khoảnh khắc sẽ đến.",
-            },
+            text: { [Language.EN]: "I’m still waiting for that moment.", [Language.VN]: "Tôi vẫn chờ khoảnh khắc ấy." },
+            affirmation: { [Language.EN]: "Your gifts are real. The moment will come.", [Language.VN]: "Tài năng của bạn là thật. Khoảnh khắc sẽ đến." },
           },
         ],
       },
     ],
     closingAffirmation: {
       [Language.EN]:
-        "💡 You deserve to be seen for who you are — not how well you pretend.",
+        "You deserve to be seen for who you are — not how well you pretend.",
       [Language.VN]:
-        "💡 Bạn xứng đáng được nhìn nhận vì chính mình — không phải vì bạn “giả vờ” giỏi.",
+        "Bạn xứng đáng được nhìn nhận vì chính mình — không phải vì bạn giả vờ giỏi.",
     },
   },
 
@@ -1163,9 +869,9 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
     },
     description: {
       [Language.EN]:
-        "I’m a CareGiver supporting my neurodivergent child into work. Hopes and challenges. Step by step.",
+        "I’m a caregiver supporting my neurodivergent child into work. Hopes and challenges, step by step.",
       [Language.VN]:
-        "Tôi là phụ huynh hỗ trợ con khác biệt thần kinh vào làm việc. Hy vọng và thử thách. Từng bước.",
+        "Tôi là phụ huynh hỗ trợ con khác biệt thần kinh vào làm việc. Hy vọng và thử thách, từng bước.",
     },
     scenes: [
       {
@@ -1175,52 +881,22 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• Noise outside. Shirt is tricky.\n• Many small battles each morning.",
+            "Noise outside. The shirt is tricky. Mornings bring many small hurdles.",
           [Language.VN]:
-            "• Ồn ào bên ngoài. Áo khó mặc.\n• Nhiều thử thách nhỏ mỗi sáng.",
+            "Bên ngoài ồn ào. Áo khó mặc. Buổi sáng có nhiều thử thách nhỏ.",
         },
         choices: [
           {
-            text: {
-              [Language.EN]:
-                "• I breathe. Guide step by step. Celebrate small wins.",
-              [Language.VN]:
-                "• Tôi hít sâu. Hướng dẫn từng bước. Ăn mừng điều nhỏ.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Small wins build pride and skill.",
-              [Language.VN]:
-                "🌟 Thắng nhỏ tạo tự hào và kỹ năng.",
-            },
+            text: { [Language.EN]: "I breathe, guide step by step, celebrate small wins.", [Language.VN]: "Tôi hít sâu, hướng dẫn từng bước, ăn mừng điều nhỏ." },
+            affirmation: { [Language.EN]: "Small wins build pride and skill.", [Language.VN]: "Thắng nhỏ tạo tự hào và kỹ năng." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I pause. Progress is slow but steady.",
-              [Language.VN]:
-                "• Tôi dừng lại. Tiến bộ chậm mà chắc.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Patience shows deep love.",
-              [Language.VN]:
-                "🌟 Kiên nhẫn thể hiện tình yêu sâu sắc.",
-            },
+            text: { [Language.EN]: "I pause. Progress is slow but steady.", [Language.VN]: "Tôi dừng lại. Tiến bộ chậm mà chắc." },
+            affirmation: { [Language.EN]: "Patience shows deep love.", [Language.VN]: "Kiên nhẫn thể hiện tình yêu sâu sắc." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I make it a game. We laugh and finish.",
-              [Language.VN]:
-                "• Tôi biến thành trò chơi. Vừa cười vừa xong.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Joy turns struggle into connection.",
-              [Language.VN]:
-                "🌟 Niềm vui biến khó thành gắn kết.",
-            },
+            text: { [Language.EN]: "I make it a game. We laugh and finish.", [Language.VN]: "Tôi biến thành trò chơi. Vừa cười vừa xong." },
+            affirmation: { [Language.EN]: "Joy turns struggle into connection.", [Language.VN]: "Niềm vui biến khó thành gắn kết." },
           },
         ],
       },
@@ -1231,52 +907,22 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• At the table, I plan the week: therapy, rent, food.\n• It feels like a puzzle.",
+            "At the table I plan the week: therapy, rent, food. It feels like a puzzle.",
           [Language.VN]:
-            "• Tôi lên kế hoạch tuần: trị liệu, tiền nhà, ăn uống.\n• Giống như ghép hình.",
+            "Tôi lên kế hoạch tuần: trị liệu, tiền nhà, ăn uống. Giống như ghép hình.",
         },
         choices: [
           {
-            text: {
-              [Language.EN]:
-                "• I prioritize bus fare to class. It helps him grow.",
-              [Language.VN]:
-                "• Tôi ưu tiên tiền xe đến lớp. Giúp con phát triển.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Investing in growth builds independence.",
-              [Language.VN]:
-                "🌟 Đầu tư cho phát triển giúp con tự lập.",
-            },
+            text: { [Language.EN]: "I prioritize bus fare to class. It helps him grow.", [Language.VN]: "Tôi ưu tiên tiền xe đến lớp. Giúp con phát triển." },
+            affirmation: { [Language.EN]: "Investing in growth builds independence.", [Language.VN]: "Đầu tư cho phát triển giúp con tự lập." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I find creative ways to save and care.",
-              [Language.VN]:
-                "• Tôi tìm cách tiết kiệm mà vẫn chăm lo.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Creative solutions show care for all.",
-              [Language.VN]:
-                "🌟 Giải pháp khéo léo cho thấy bạn yêu thương cả nhà.",
-            },
+            text: { [Language.EN]: "I find creative ways to save and care.", [Language.VN]: "Tôi tìm cách tiết kiệm mà vẫn chăm lo." },
+            affirmation: { [Language.EN]: "Creative solutions can serve everyone.", [Language.VN]: "Giải pháp khéo léo tốt cho cả nhà." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I ask community for support when needed.",
-              [Language.VN]:
-                "• Cần thì tôi nhờ cộng đồng giúp.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Reaching out is strength.",
-              [Language.VN]:
-                "🌟 Chủ động nhờ giúp là sức mạnh.",
-            },
+            text: { [Language.EN]: "I ask the community for support when needed.", [Language.VN]: "Cần thì tôi nhờ cộng đồng giúp." },
+            affirmation: { [Language.EN]: "Reaching out is strength.", [Language.VN]: "Chủ động nhờ giúp là sức mạnh." },
           },
         ],
       },
@@ -1287,50 +933,22 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• Family event. Someone whispers: “Why can’t Minh be like others?”",
+            "At a family event someone whispers, “Why can’t Minh be like others?”",
           [Language.VN]:
-            "• Gặp gỡ gia đình. Có người thì thầm: “Sao Minh không như người khác?”",
+            "Gặp gỡ gia đình, có người thì thầm: “Sao Minh không như người khác?”",
         },
         choices: [
           {
-            text: {
-              [Language.EN]: "• I share his new skills gently.",
-              [Language.VN]: "• Tôi nhẹ nhàng kể về kỹ năng mới của con.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Show progress. Shift stigma to strength.",
-              [Language.VN]:
-                "🌟 Nêu tiến bộ. Biến định kiến thành điểm mạnh.",
-            },
+            text: { [Language.EN]: "I gently share his new skills.", [Language.VN]: "Tôi nhẹ nhàng kể về kỹ năng mới của con." },
+            affirmation: { [Language.EN]: "Show progress and shift stigma to strength.", [Language.VN]: "Nêu tiến bộ để biến định kiến thành điểm mạnh." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I ignore and focus on his joy now.",
-              [Language.VN]:
-                "• Tôi bỏ qua và tập trung vào niềm vui của con.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Joy matters more than judgment.",
-              [Language.VN]:
-                "🌟 Niềm vui quan trọng hơn phán xét.",
-            },
+            text: { [Language.EN]: "I ignore it and focus on his joy now.", [Language.VN]: "Tôi bỏ qua và tập trung vào niềm vui của con." },
+            affirmation: { [Language.EN]: "Joy matters more than judgment.", [Language.VN]: "Niềm vui quan trọng hơn phán xét." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I say calmly: “He’s on his path. We’re proud.”",
-              [Language.VN]:
-                "• Tôi nói bình tĩnh: “Con đi con đường riêng. Chúng tôi tự hào.”",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Pride teaches others about acceptance.",
-              [Language.VN]:
-                "🌟 Tự hào giúp người khác hiểu sự chấp nhận.",
-            },
+            text: { [Language.EN]: "I say calmly: “He’s on his path. We’re proud.”", [Language.VN]: "Tôi nói bình tĩnh: “Con đi con đường riêng. Chúng tôi tự hào.”" },
+            affirmation: { [Language.EN]: "Pride teaches acceptance.", [Language.VN]: "Tự hào giúp người khác hiểu sự chấp nhận." },
           },
         ],
       },
@@ -1341,52 +959,22 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• We visit workplaces. Some hesitate.",
+            "We visit workplaces. Some hesitate.",
           [Language.VN]:
-            "• Tôi và con đi nhiều nơi làm việc. Có nơi do dự.",
+            "Tôi và con đi nhiều nơi làm việc. Có nơi do dự.",
         },
         choices: [
           {
-            text: {
-              [Language.EN]:
-                "• I thank them. The right chance will come.",
-              [Language.VN]:
-                "• Tôi cảm ơn. Cơ hội đúng rồi sẽ đến.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Hope keeps us moving.",
-              [Language.VN]:
-                "🌟 Hy vọng giúp ta đi tiếp.",
-            },
+            text: { [Language.EN]: "I thank them. The right chance will come.", [Language.VN]: "Tôi cảm ơn. Cơ hội đúng rồi sẽ đến." },
+            affirmation: { [Language.EN]: "Hope keeps us moving.", [Language.VN]: "Hy vọng giúp ta đi tiếp." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I advocate: what he can do, not just struggles.",
-              [Language.VN]:
-                "• Tôi lên tiếng: con làm được gì, không chỉ khó khăn.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Show abilities. Change old views.",
-              [Language.VN]:
-                "🌟 Cho thấy năng lực. Đổi định kiến cũ.",
-            },
+            text: { [Language.EN]: "I advocate for what he can do, not just struggles.", [Language.VN]: "Tôi lên tiếng về điều con làm được, không chỉ khó khăn." },
+            affirmation: { [Language.EN]: "Show abilities to change old views.", [Language.VN]: "Cho thấy năng lực để đổi định kiến cũ." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I tell him: “Not here yet. Next time might be.”",
-              [Language.VN]:
-                "• Tôi nói: “Chưa phải nơi này. Lần tới có thể hợp.”",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Encouragement grows resilience.",
-              [Language.VN]:
-                "🌟 Động viên nuôi dưỡng kiên cường.",
-            },
+            text: { [Language.EN]: "I tell him: “Not here yet. Next time might be.”", [Language.VN]: "Tôi nói: “Chưa phải nơi này. Lần tới có thể hợp.”" },
+            affirmation: { [Language.EN]: "Encouragement grows resilience.", [Language.VN]: "Động viên nuôi dưỡng kiên cường." },
           },
         ],
       },
@@ -1397,46 +985,22 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• Long day. Quiet kitchen. I’m tired, but I keep going.",
+            "After a long day the kitchen is quiet. I’m tired but keep going.",
           [Language.VN]:
-            "• Ngày dài. Bếp yên. Tôi mệt, nhưng vẫn cố gắng.",
+            "Ngày dài, bếp yên. Tôi mệt nhưng vẫn cố gắng.",
         },
         choices: [
           {
-            text: {
-              [Language.EN]: "• I write one small win.",
-              [Language.VN]: "• Tôi viết một điều tốt nhỏ.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Small wins fuel tomorrow.",
-              [Language.VN]:
-                "🌟 Điều nhỏ tốt đẹp nuôi ngày mai.",
-            },
+            text: { [Language.EN]: "I write one small win.", [Language.VN]: "Tôi viết một điều tốt nhỏ." },
+            affirmation: { [Language.EN]: "Small wins fuel tomorrow.", [Language.VN]: "Điều nhỏ tốt đẹp nuôi ngày mai." },
           },
           {
-            text: {
-              [Language.EN]: "• I do a short breathing exercise.",
-              [Language.VN]: "• Tôi thở ngắn để hồi sức.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 A pause is strength.",
-              [Language.VN]:
-                "🌟 Dừng lại là sức mạnh.",
-            },
+            text: { [Language.EN]: "I do a short breathing exercise.", [Language.VN]: "Tôi thở ngắn để hồi sức." },
+            affirmation: { [Language.EN]: "A pause is strength.", [Language.VN]: "Dừng lại là sức mạnh." },
           },
           {
-            text: {
-              [Language.EN]: "• I rest. Self-care helps me care for him.",
-              [Language.VN]: "• Tôi nghỉ. Chăm mình để chăm con.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Rest sustains your love.",
-              [Language.VN]:
-                "🌟 Nghỉ ngơi giữ vững tình yêu.",
-            },
+            text: { [Language.EN]: "I rest. Self-care helps me care for him.", [Language.VN]: "Tôi nghỉ. Chăm mình để chăm con." },
+            affirmation: { [Language.EN]: "Rest sustains your love.", [Language.VN]: "Nghỉ ngơi giữ vững tình yêu." },
           },
         ],
       },
@@ -1447,50 +1011,22 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• Minh joins a bakery class.\n• Clumsy at first. Slowly better. I watch with hope.",
+            "Minh joins a bakery class. He’s clumsy at first, then slowly better. I watch with hope.",
           [Language.VN]:
-            "• Minh học làm bánh.\n• Lúc đầu vụng. Dần khá hơn. Tôi hy vọng.",
+            "Minh học làm bánh. Lúc đầu vụng, dần khá hơn. Tôi hy vọng.",
         },
         choices: [
           {
-            text: {
-              [Language.EN]: "• I’m proud of each small step.",
-              [Language.VN]: "• Tôi tự hào về từng bước nhỏ.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Pride builds momentum.",
-              [Language.VN]:
-                "🌟 Tự hào tạo đà tiến bộ.",
-            },
+            text: { [Language.EN]: "I’m proud of each small step.", [Language.VN]: "Tôi tự hào về từng bước nhỏ." },
+            affirmation: { [Language.EN]: "Pride builds momentum.", [Language.VN]: "Tự hào tạo đà tiến bộ." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I talk with the teacher about how he learns best.",
-              [Language.VN]:
-                "• Tôi trao đổi với cô giáo về cách con học tốt nhất.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Teamwork makes a stronger path.",
-              [Language.VN]:
-                "🌟 Đồng hành tạo con đường vững hơn.",
-            },
+            text: { [Language.EN]: "I talk with the teacher about how he learns best.", [Language.VN]: "Tôi trao đổi với cô giáo về cách con học tốt nhất." },
+            affirmation: { [Language.EN]: "Teamwork makes a stronger path.", [Language.VN]: "Đồng hành tạo con đường vững hơn." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I imagine new doors for his future.",
-              [Language.VN]:
-                "• Tôi nghĩ về cánh cửa tương lai của con.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Hope shapes chances.",
-              [Language.VN]:
-                "🌟 Hy vọng tạo cơ hội.",
-            },
+            text: { [Language.EN]: "I imagine new doors for his future.", [Language.VN]: "Tôi nghĩ về cánh cửa tương lai của con." },
+            affirmation: { [Language.EN]: "Hope shapes chances.", [Language.VN]: "Hy vọng tạo cơ hội." },
           },
         ],
       },
@@ -1501,52 +1037,22 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• First day at a café. Small mistakes. Remembers key steps.",
+            "First day at a café. He makes small mistakes but remembers the key steps.",
           [Language.VN]:
-            "• Ngày đầu ở quán. Lỗi nhỏ. Vẫn nhớ bước chính.",
+            "Ngày đầu ở quán. Có lỗi nhỏ nhưng con vẫn nhớ bước chính.",
         },
         choices: [
           {
-            text: {
-              [Language.EN]:
-                "• I cheer from the side. He stands on his own.",
-              [Language.VN]:
-                "• Tôi động viên bên ngoài. Con tự lập.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Quiet support = more confidence.",
-              [Language.VN]:
-                "🌟 Ủng hộ lặng lẽ = tự tin hơn.",
-            },
+            text: { [Language.EN]: "I cheer from the side. He stands on his own.", [Language.VN]: "Tôi động viên bên ngoài. Con tự lập." },
+            affirmation: { [Language.EN]: "Quiet support grows confidence.", [Language.VN]: "Ủng hộ lặng lẽ giúp tự tin hơn." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Learning takes time. Mistakes teach.",
-              [Language.VN]:
-                "• Học cần thời gian. Sai để học.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 See errors as lessons.",
-              [Language.VN]:
-                "🌟 Xem lỗi như bài học.",
-            },
+            text: { [Language.EN]: "Learning takes time. Mistakes teach.", [Language.VN]: "Học cần thời gian. Sai để học." },
+            affirmation: { [Language.EN]: "Treat errors as lessons.", [Language.VN]: "Xem lỗi như bài học." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I’m grateful for a patient manager.",
-              [Language.VN]:
-                "• Tôi biết ơn quản lý kiên nhẫn.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Allies strengthen support.",
-              [Language.VN]:
-                "🌟 Đồng minh giúp hệ hỗ trợ mạnh hơn.",
-            },
+            text: { [Language.EN]: "I’m grateful for a patient manager.", [Language.VN]: "Tôi biết ơn quản lý kiên nhẫn." },
+            affirmation: { [Language.EN]: "Allies strengthen support.", [Language.VN]: "Đồng minh giúp hệ hỗ trợ mạnh hơn." },
           },
         ],
       },
@@ -1557,61 +1063,31 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• Minh serves coffee. Customer smiles: “Thank you.”\n• Minh beams. I feel proud today. Hopeful for tomorrow.",
+            "Minh serves coffee. A customer smiles and says thank you. Minh beams. I feel proud today and hopeful for tomorrow.",
           [Language.VN]:
-            "• Minh đưa cà phê. Khách mỉm cười: “Cảm ơn.”\n• Minh rạng rỡ. Tôi tự hào hôm nay. Hy vọng cho ngày mai.",
+            "Minh đưa cà phê. Khách mỉm cười cảm ơn. Minh rạng rỡ. Tôi tự hào hôm nay và hy vọng cho ngày mai.",
         },
         choices: [
           {
-            text: {
-              [Language.EN]:
-                "• I celebrate. This shows what’s possible.",
-              [Language.VN]:
-                "• Tôi ăn mừng. Điều này cho thấy điều có thể.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Today’s win grows belief.",
-              [Language.VN]:
-                "🌟 Thành công hôm nay nuôi niềm tin.",
-            },
+            text: { [Language.EN]: "I celebrate. This shows what’s possible.", [Language.VN]: "Tôi ăn mừng. Điều này cho thấy điều có thể." },
+            affirmation: { [Language.EN]: "Today’s win grows belief.", [Language.VN]: "Thành công hôm nay nuôi niềm tin." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I reflect on how far he’s come.",
-              [Language.VN]:
-                "• Tôi nhìn lại con đã đi xa thế nào.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Love + patience took you here.",
-              [Language.VN]:
-                "🌟 Tình yêu + kiên nhẫn đưa bạn đến đây.",
-            },
+            text: { [Language.EN]: "I reflect on how far he’s come.", [Language.VN]: "Tôi nhìn lại con đã đi xa thế nào." },
+            affirmation: { [Language.EN]: "Love and patience brought you here.", [Language.VN]: "Tình yêu và kiên nhẫn đưa bạn đến đây." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I wish more people saw this and believed.",
-              [Language.VN]:
-                "• Tôi ước nhiều người thấy và tin.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 That wish is where change starts.",
-              [Language.VN]:
-                "🌟 Ước muốn đó bắt đầu thay đổi.",
-            },
+            text: { [Language.EN]: "I wish more people saw this and believed.", [Language.VN]: "Tôi ước nhiều người thấy và tin." },
+            affirmation: { [Language.EN]: "That wish is where change starts.", [Language.VN]: "Ước muốn đó bắt đầu thay đổi." },
           },
         ],
       },
     ],
     closingAffirmation: {
       [Language.EN]:
-        "💡 Openness can change hiring in Vietnam. Look beyond bias. Unlock potential.",
+        "Openness can change hiring in Vietnam. Look beyond bias to unlock potential.",
       [Language.VN]:
-        "💡 Cởi mở có thể đổi cách tuyển dụng. Vượt qua định kiến. Mở tiềm năng.",
+        "Cởi mở có thể đổi cách tuyển dụng. Vượt qua định kiến để mở tiềm năng.",
     },
   },
 
@@ -1634,75 +1110,27 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• I arrive at the center. I look around the rooms and tools.",
+            "I arrive at the center and look around the rooms and tools.",
           [Language.VN]:
-            "• Tôi đến trung tâm. Nhìn quanh phòng học và dụng cụ.",
+            "Tôi đến trung tâm, nhìn quanh phòng học và dụng cụ.",
         },
         choices: [
+          { text: { [Language.EN]: "What was my impression?", [Language.VN]: "Ấn tượng của tôi là gì?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]:
-                "What was my impression? (Select all that apply)",
-              [Language.VN]:
-                "Ấn tượng của tôi là gì? (Chọn tất cả phù hợp)",
-            },
-            isMultiSelect: true,
+            text: { [Language.EN]: "It felt organized with clear instructions.", [Language.VN]: "Mọi thứ gọn gàng, hướng dẫn rõ." },
+            affirmation: { [Language.EN]: "Structure gave you confidence.", [Language.VN]: "Cấu trúc rõ ràng giúp bạn tự tin." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• It felt organized. I had clear instructions.",
-              [Language.VN]:
-                "• Mọi thứ gọn gàng. Tôi có hướng dẫn rõ.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Structure gave you confidence.",
-              [Language.VN]:
-                "🌟 Cấu trúc rõ ràng giúp bạn tự tin.",
-            },
+            text: { [Language.EN]: "I felt underprepared and figured out a lot myself.", [Language.VN]: "Tôi chưa chuẩn bị kỹ và phải tự mò nhiều." },
+            affirmation: { [Language.EN]: "You kept going. That matters.", [Language.VN]: "Bạn vẫn tiếp tục. Điều đó rất quý." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I felt underprepared. I figured out a lot myself.",
-              [Language.VN]:
-                "• Tôi chưa chuẩn bị kỹ. Phải tự mò nhiều.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 You kept going. That matters.",
-              [Language.VN]:
-                "🌟 Bạn vẫn tiếp tục. Điều đó rất quý.",
-            },
+            text: { [Language.EN]: "There were few staff and resources.", [Language.VN]: "Ít nhân sự và nguồn lực." },
+            affirmation: { [Language.EN]: "You saw the gaps and still helped.", [Language.VN]: "Thấy thiếu thốn mà vẫn giúp." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• So few staff and resources. I was surprised.",
-              [Language.VN]:
-                "• Ít nhân sự và nguồn lực. Tôi bất ngờ.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 You saw the gaps and still helped.",
-              [Language.VN]:
-                "🌟 Thấy thiếu thốn mà vẫn giúp.",
-            },
-          },
-          {
-            text: {
-              [Language.EN]:
-                "• My expectations didn’t match reality.",
-              [Language.VN]:
-                "• Kỳ vọng không khớp thực tế.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Seeing reality is caring.",
-              [Language.VN]:
-                "🌟 Thấy thực tế là quan tâm.",
-            },
+            text: { [Language.EN]: "My expectations didn’t match reality.", [Language.VN]: "Kỳ vọng không khớp thực tế." },
+            affirmation: { [Language.EN]: "Seeing reality is caring.", [Language.VN]: "Thấy thực tế là quan tâm." },
           },
         ],
       },
@@ -1713,75 +1141,27 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• First mock interview. The autistic adult avoids eye contact. Open questions are hard.",
+            "In the first mock interview an autistic adult avoids eye contact. Open questions are hard.",
           [Language.VN]:
-            "• Phỏng vấn thử đầu tiên. Người tham gia tránh nhìn mắt. Câu hỏi mở khó.",
+            "Trong buổi phỏng vấn thử đầu tiên, người tham gia tránh nhìn mắt. Câu hỏi mở khó.",
         },
         choices: [
+          { text: { [Language.EN]: "How did I respond?", [Language.VN]: "Tôi phản ứng thế nào?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]:
-                "How did I respond? (Select all that apply)",
-              [Language.VN]:
-                "Tôi phản ứng thế nào? (Chọn tất cả phù hợp)",
-            },
-            isMultiSelect: true,
+            text: { [Language.EN]: "I used what I learned in training.", [Language.VN]: "Tôi áp dụng điều đã học trong đào tạo." },
+            affirmation: { [Language.EN]: "Preparation gave you tools.", [Language.VN]: "Chuẩn bị cho bạn công cụ." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I knew what to do from training.",
-              [Language.VN]:
-                "• Tôi biết làm gì nhờ đào tạo.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Preparation gave you tools.",
-              [Language.VN]:
-                "🌟 Chuẩn bị cho bạn công cụ.",
-            },
+            text: { [Language.EN]: "I improvised with visuals, roleplay, and smaller steps.", [Language.VN]: "Tôi ứng biến với hình ảnh, đóng vai, chia nhỏ bước." },
+            affirmation: { [Language.EN]: "Creativity filled the gaps.", [Language.VN]: "Sự sáng tạo bù lỗ hổng." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I improvised: visuals, roleplay, smaller steps.",
-              [Language.VN]:
-                "• Tôi ứng biến: hình ảnh, đóng vai, chia nhỏ bước.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Creativity filled the gaps.",
-              [Language.VN]:
-                "🌟 Sự sáng tạo bù lỗ hổng.",
-            },
+            text: { [Language.EN]: "I felt stuck and didn’t know how to help.", [Language.VN]: "Tôi bế tắc và chưa biết hỗ trợ sao." },
+            affirmation: { [Language.EN]: "The struggle shows you care.", [Language.VN]: "Bối rối cho thấy bạn rất quan tâm." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I felt stuck. Didn’t know how to help.",
-              [Language.VN]:
-                "• Tôi bế tắc. Chưa biết hỗ trợ sao.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 The struggle shows you care.",
-              [Language.VN]:
-                "🌟 Bối rối cho thấy bạn rất quan tâm.",
-            },
-          },
-          {
-            text: {
-              [Language.EN]:
-                "• Family presence made independence harder.",
-              [Language.VN]:
-                "• Có gia đình nên khó tự lập hơn.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 You noticed hidden barriers.",
-              [Language.VN]:
-                "🌟 Bạn thấy rào cản khó thấy.",
-            },
+            text: { [Language.EN]: "Family presence made independence harder.", [Language.VN]: "Có gia đình nên khó tự lập hơn." },
+            affirmation: { [Language.EN]: "You noticed hidden barriers.", [Language.VN]: "Bạn thấy rào cản khó thấy." },
           },
         ],
       },
@@ -1792,75 +1172,27 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• NGO links to employers. Few are interested. Some call it charity.",
+            "Our NGO links to employers. Few are interested. Some call it charity.",
           [Language.VN]:
-            "• Tổ chức kết nối với doanh nghiệp. Ít nơi quan tâm. Có nơi xem như từ thiện.",
+            "Tổ chức kết nối với doanh nghiệp. Ít nơi quan tâm, có nơi xem như từ thiện.",
         },
         choices: [
+          { text: { [Language.EN]: "What did I observe?", [Language.VN]: "Tôi thấy gì?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]:
-                "What did I observe? (Select all that apply)",
-              [Language.VN]:
-                "Tôi thấy gì? (Chọn tất cả phù hợp)",
-            },
-            isMultiSelect: true,
+            text: { [Language.EN]: "Some employers were open. Hope!", [Language.VN]: "Có nhà tuyển dụng cởi mở. Có hy vọng!" },
+            affirmation: { [Language.EN]: "Openness means change is possible.", [Language.VN]: "Cởi mở nghĩa là có thể thay đổi." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Some employers were open. Hope!",
-              [Language.VN]:
-                "• Có nhà tuyển dụng cởi mở. Có hy vọng!",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Openness means change is possible.",
-              [Language.VN]:
-                "🌟 Cởi mở nghĩa là có thể thay đổi.",
-            },
+            text: { [Language.EN]: "Too few chances. I felt frustrated.", [Language.VN]: "Cơ hội quá ít. Tôi nản." },
+            affirmation: { [Language.EN]: "Frustration comes from wanting fairness.", [Language.VN]: "Nản vì bạn muốn công bằng." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Too few chances. I felt frustrated.",
-              [Language.VN]:
-                "• Cơ hội quá ít. Tôi nản.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Frustration comes from wanting fairness.",
-              [Language.VN]:
-                "🌟 Nản vì bạn muốn công bằng.",
-            },
+            text: { [Language.EN]: "Minds changed after real contact.", [Language.VN]: "Giao tiếp thật làm họ đổi ý." },
+            affirmation: { [Language.EN]: "You witnessed change. It matters.", [Language.VN]: "Bạn thấy sự đổi thay. Quan trọng lắm." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Minds changed after real contact.",
-              [Language.VN]:
-                "• Giao tiếp thật làm họ đổi ý.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 You witnessed change. It matters.",
-              [Language.VN]:
-                "🌟 Bạn thấy sự đổi thay. Quan trọng lắm.",
-            },
-          },
-          {
-            text: {
-              [Language.EN]:
-                "• Systems (stigma, policy) felt stronger than us.",
-              [Language.VN]:
-                "• Hệ thống (định kiến, thiếu chính sách) mạnh hơn chúng tôi.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Systems must shift, not just people.",
-              [Language.VN]:
-                "🌟 Cần đổi hệ thống, không chỉ cá nhân.",
-            },
+            text: { [Language.EN]: "Systems felt stronger than us.", [Language.VN]: "Hệ thống (định kiến, thiếu chính sách) mạnh hơn chúng tôi." },
+            affirmation: { [Language.EN]: "Systems must shift, not just people.", [Language.VN]: "Cần đổi hệ thống, không chỉ cá nhân." },
           },
         ],
       },
@@ -1871,75 +1203,27 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• Weeks pass. I notice how this work affects me.",
+            "Weeks pass and I notice how this work affects me.",
           [Language.VN]:
-            "• Nhiều tuần trôi. Tôi thấy công việc ảnh hưởng đến mình.",
+            "Nhiều tuần trôi và tôi thấy công việc ảnh hưởng đến mình.",
         },
         choices: [
+          { text: { [Language.EN]: "How did I feel?", [Language.VN]: "Tôi thấy thế nào?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]:
-                "How did I feel? (Select all that apply)",
-              [Language.VN]:
-                "Tôi thấy thế nào? (Chọn tất cả phù hợp)",
-            },
-            isMultiSelect: true,
+            text: { [Language.EN]: "Energized by small wins.", [Language.VN]: "Được tiếp năng lượng bởi thắng nhỏ." },
+            affirmation: { [Language.EN]: "Giving also nourishes you.", [Language.VN]: "Cho đi cũng nuôi dưỡng bạn." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Energized by small wins.",
-              [Language.VN]:
-                "• Được tiếp năng lượng bởi thắng nhỏ.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Giving also nourishes you.",
-              [Language.VN]:
-                "🌟 Cho đi cũng nuôi dưỡng bạn.",
-            },
+            text: { [Language.EN]: "Exhausted, near burnout sometimes.", [Language.VN]: "Kiệt sức, đôi lúc gần kiệt quệ." },
+            affirmation: { [Language.EN]: "Rest is part of service.", [Language.VN]: "Nghỉ ngơi là một phần phục vụ." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Exhausted. Near burnout sometimes.",
-              [Language.VN]:
-                "• Kiệt sức. Đôi lúc gần kiệt quệ.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Rest is part of service.",
-              [Language.VN]:
-                "🌟 Nghỉ ngơi là một phần phục vụ.",
-            },
+            text: { [Language.EN]: "Will my impact last after I leave?", [Language.VN]: "Ảnh hưởng của tôi có còn sau khi rời đi?" },
+            affirmation: { [Language.EN]: "Seeds of change were planted.", [Language.VN]: "Hạt giống thay đổi đã gieo." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Will my impact last after I leave?",
-              [Language.VN]:
-                "• Ảnh hưởng của tôi có còn sau khi rời đi?",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Seeds of change were planted.",
-              [Language.VN]:
-                "🌟 Hạt giống thay đổi đã gieo.",
-            },
-          },
-          {
-            text: {
-              [Language.EN]:
-                "• I felt alone when others left early.",
-              [Language.VN]:
-                "• Tôi thấy cô đơn khi người khác rời sớm.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Even alone, you made a difference.",
-              [Language.VN]:
-                "🌟 Dù một mình, bạn vẫn tạo khác biệt.",
-            },
+            text: { [Language.EN]: "I felt alone when others left early.", [Language.VN]: "Tôi thấy cô đơn khi người khác rời sớm." },
+            affirmation: { [Language.EN]: "Even alone, you made a difference.", [Language.VN]: "Dù một mình, bạn vẫn tạo khác biệt." },
           },
         ],
       },
@@ -1950,75 +1234,27 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• One day, a participant answers clearly and confidently.\n• The employer starts to see potential.",
+            "One day a participant answers clearly and confidently. An employer starts to see potential.",
           [Language.VN]:
-            "• Một ngày, người tham gia trả lời rõ và tự tin.\n• Nhà tuyển dụng bắt đầu thấy tiềm năng.",
+            "Một ngày, người tham gia trả lời rõ và tự tin. Nhà tuyển dụng bắt đầu thấy tiềm năng.",
         },
         choices: [
+          { text: { [Language.EN]: "Did I witness this?", [Language.VN]: "Tôi có thấy điều này không?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]:
-                "Did I witness this? (Select all that apply)",
-              [Language.VN]:
-                "Tôi có thấy điều này không? (Chọn tất cả phù hợp)",
-            },
-            isMultiSelect: true,
+            text: { [Language.EN]: "Yes. I felt proud of the progress.", [Language.VN]: "Có. Tôi tự hào về tiến bộ." },
+            affirmation: { [Language.EN]: "Transformation stays with you.", [Language.VN]: "Khoảnh khắc đổi thay sẽ theo bạn." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Yes. I felt proud of the progress.",
-              [Language.VN]:
-                "• Có. Tôi tự hào về tiến bộ.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Transformation stays with you.",
-              [Language.VN]:
-                "🌟 Khoảnh khắc đổi thay sẽ theo bạn.",
-            },
+            text: { [Language.EN]: "I never saw a big breakthrough. I felt frustrated.", [Language.VN]: "Tôi chưa thấy bước đột phá. Tôi nản." },
+            affirmation: { [Language.EN]: "Your effort still mattered.", [Language.VN]: "Nỗ lực của bạn vẫn có ý nghĩa." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• I never saw a big breakthrough. I felt frustrated.",
-              [Language.VN]:
-                "• Tôi chưa thấy bước đột phá. Tôi nản.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Your effort still mattered.",
-              [Language.VN]:
-                "🌟 Nỗ lực của bạn vẫn có ý nghĩa.",
-            },
+            text: { [Language.EN]: "Small gains, but not enough to change minds.", [Language.VN]: "Có tiến bộ nhỏ, nhưng chưa đổi được suy nghĩ." },
+            affirmation: { [Language.EN]: "Small progress is still progress.", [Language.VN]: "Tiến bộ nhỏ vẫn là tiến bộ." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Small gains, but not enough to change minds.",
-              [Language.VN]:
-                "• Có tiến bộ nhỏ, nhưng chưa đổi được suy nghĩ.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Small progress is real progress.",
-              [Language.VN]:
-                "🌟 Tiến bộ nhỏ vẫn là tiến bộ.",
-            },
-          },
-          {
-            text: {
-              [Language.EN]:
-                "• I believe small wins matter.",
-              [Language.VN]:
-                "• Tôi tin thắng nhỏ là quan trọng.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Belief keeps hope alive.",
-              [Language.VN]:
-                "🌟 Niềm tin giữ hy vọng.",
-            },
+            text: { [Language.EN]: "I believe small wins matter.", [Language.VN]: "Tôi tin thắng nhỏ là quan trọng." },
+            affirmation: { [Language.EN]: "Belief keeps hope alive.", [Language.VN]: "Niềm tin giữ hy vọng." },
           },
         ],
       },
@@ -2029,84 +1265,36 @@ export const STORY_CONTENT: Record<NarratorRole, Story> = {
         },
         text: {
           [Language.EN]:
-            "• End of my placement. I look back.",
+            "At the end of my placement I look back.",
           [Language.VN]:
-            "• Kết thúc đợt tình nguyện. Tôi nhìn lại.",
+            "Kết thúc đợt tình nguyện, tôi nhìn lại.",
         },
         choices: [
+          { text: { [Language.EN]: "How do I feel?", [Language.VN]: "Tôi cảm thấy thế nào?" }, isMultiSelect: true },
           {
-            text: {
-              [Language.EN]:
-                "How do I feel? (Select all that apply)",
-              [Language.VN]:
-                "Tôi cảm thấy thế nào? (Chọn tất cả phù hợp)",
-            },
-            isMultiSelect: true,
+            text: { [Language.EN]: "Fulfilled, with a stronger commitment to inclusion.", [Language.VN]: "Mãn nguyện, cam kết hòa nhập mạnh hơn." },
+            affirmation: { [Language.EN]: "You grew as much as they did.", [Language.VN]: "Bạn cũng trưởng thành như họ." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Fulfilled. Stronger commitment to inclusion.",
-              [Language.VN]:
-                "• Mãn nguyện. Cam kết hòa nhập mạnh hơn.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 You grew as much as they did.",
-              [Language.VN]:
-                "🌟 Bạn cũng trưởng thành như họ.",
-            },
+            text: { [Language.EN]: "Frustrated. The system needs deeper change.", [Language.VN]: "Nản. Hệ thống cần đổi sâu hơn." },
+            affirmation: { [Language.EN]: "Your vision for change matters.", [Language.VN]: "Tầm nhìn đổi thay của bạn rất quý." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Frustrated. The system needs deeper change.",
-              [Language.VN]:
-                "• Nản. Hệ thống cần đổi sâu hơn.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Your vision for change matters. Keep it.",
-              [Language.VN]:
-                "🌟 Tầm nhìn đổi thay của bạn rất quý. Giữ lấy.",
-            },
+            text: { [Language.EN]: "Mixed: rewarding and draining.", [Language.VN]: "Lẫn lộn: vui mà cũng mệt." },
+            affirmation: { [Language.EN]: "Both joy and struggle are valid.", [Language.VN]: "Niềm vui và khó khăn đều xứng đáng được ghi nhận." },
           },
           {
-            text: {
-              [Language.EN]:
-                "• Mixed: rewarding and draining.",
-              [Language.VN]:
-                "• Lẫn lộn: vui mà cũng mệt.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Both joy and struggle are valid.",
-              [Language.VN]:
-                "🌟 Niềm vui và khó khăn đều xứng đáng được ghi nhận.",
-            },
-          },
-          {
-            text: {
-              [Language.EN]:
-                "• I have ideas to help future volunteers.",
-              [Language.VN]:
-                "• Tôi có ý tưởng cho tình nguyện viên sau.",
-            },
-            affirmation: {
-              [Language.EN]:
-                "🌟 Your ideas light the path.",
-              [Language.VN]:
-                "🌟 Ý tưởng của bạn soi đường.",
-            },
+            text: { [Language.EN]: "I have ideas to help future volunteers.", [Language.VN]: "Tôi có ý tưởng cho tình nguyện viên sau." },
+            affirmation: { [Language.EN]: "Your ideas light the path.", [Language.VN]: "Ý tưởng của bạn soi đường." },
           },
         ],
       },
     ],
     closingAffirmation: {
       [Language.EN]:
-        "💡 Your time planted seeds of change. Some bloom soon, some later — all thanks to you.",
+        "Your time planted seeds of change. Some bloom soon, some later — all thanks to you.",
       [Language.VN]:
-        "💡 Thời gian của bạn đã gieo hạt thay đổi. Có hạt nảy sớm, có hạt muộn — đều nhờ bạn.",
+        "Thời gian của bạn đã gieo hạt thay đổi. Có hạt nảy sớm, có hạt muộn — đều nhờ bạn.",
     },
   },
 };

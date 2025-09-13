@@ -135,7 +135,7 @@ const DashboardPage: React.FC = () => {
           </Suspense>
         );
 
-      case NarratorRole.Parent:
+      case NarratorRole.CareGiver:
         return <ParentGuidance />;
 
       case NarratorRole.Volunteer:

@@ -16,7 +16,7 @@ export const PARENT_CONTENT = {
     },
     {
       q: { [Language.EN]: 'How to handle "stimming" (self-stimulatory behavior)?', [Language.VN]: 'Làm thế nào để xử lý hành vi tự kích thích?' },
-      a: { [Language.EN]: "Stimming is a natural way to regulate anxiety. As long as it's not harmful, it's best to allow it. A small, quiet fidget tool can be helpful.", [Language.VN]: 'Hành vi tự kích thích là một cách tự nhiên để điều chỉnh sự lo lắng. Miễn là nó không gây hại, tốt nhất là cho phép nó. Một công cụ nhỏ, yên tĩnh có thể hữu ích.' }
+      a: { [Language.EN]: "Stimming is a natural way to regulate anxiety. As long as it's not harmful, it's best to allow it. A small, quiet fidget tool can be helpful.", [Language.VN]: 'Hành vi tự kích thích là một cách tự nhiên để điều chỉnh sự lo âu. Miễn là nó không gây hại, tốt nhất là cho phép nó. Một công cụ nhỏ, yên tĩnh có thể hữu ích.' }
     },
     {
       q: { [Language.EN]: 'Should they disclose their autism?', [Language.VN]: 'Con có nên tiết lộ về chứng tự kỷ của mình không?' },
@@ -83,7 +83,7 @@ export const PARENT_CONTENT = {
     },
   ],
 
-  // NEW: Psychologists directory (sample entries)
+  // Psychologists directory (sample entries)
   psychologists: [
     {
       id: 'psy1',
@@ -135,7 +135,6 @@ export const PARENT_CONTENT = {
       [Language.VN]: 'Video sẽ có sớm!',
     },
 
-    // NEW: Psychologists section labels / controls
     psychologistsTitle: {
       [Language.EN]: 'Psychologists',
       [Language.VN]: 'Chuyên gia tâm lý',
@@ -164,5 +163,22 @@ export const PARENT_CONTENT = {
       [Language.EN]: 'Book',
       [Language.VN]: 'Đặt lịch',
     },
+  },
+
+  practiceWithChild: {
+    [Language.EN]: "Practice with your child",
+    [Language.VN]: "Luyện tập cùng con",
+  },
+  jobseekerCoachLine: {
+    [Language.EN]: "Open the Jobseeker coach to role-play interview answers together.",
+    [Language.VN]: "Mở công cụ Người tìm việc để luyện trả lời phỏng vấn cùng nhau.",
+  },
+  allLessonsDone: {
+    [Language.EN]: "Great work! You finished all lessons.",
+    [Language.VN]: "Tuyệt lắm! Bạn đã hoàn thành tất cả bài học.",
+  },
+  readyToPracticeQ: {
+    [Language.EN]: "Ready to practice together? Jump into the Jobseeker coach.",
+    [Language.VN]: "Sẵn sàng luyện tập cùng nhau? Hãy mở công cụ Người tìm việc.",
   },
 };

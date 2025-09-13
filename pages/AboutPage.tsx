@@ -177,54 +177,55 @@ const MENTORS: MentorCardProps[] = [
     avatarSrc: "assets/Images/Sandy.jpg",
     testimony: {
       [Language.EN]:
-        "This team listens first, then builds with empathy. NeuroPilot is a rare mix of heart and rigor.",
+        "The team listens deeply and builds with empathy. NeuroPilot is a rare blend of compassion and discipline.",
       [Language.VN]:
-        "Nhóm luôn lắng nghe trước khi xây dựng với sự thấu cảm. NeuroPilot là sự kết hợp hiếm có giữa trái tim và tính kỷ luật.",
+        "Nhóm lắng nghe sâu sắc và xây dựng với sự thấu cảm. NeuroPilot là sự kết hợp hiếm có giữa lòng nhân ái và tính kỷ luật.",
     },
   },
   {
     name: "Troy Yeo",
-    role: "Founder & COO driving AI-powered automation for SMB and Enterprises",
+    role: "Founder & COO, AI-powered automation for SMB and Enterprises",
     avatarSrc: "assets/Images/Troy.jpg",
     testimony: {
       [Language.EN]:
-        "They iterate fast and validate with users. The shift from awareness to measurable outcomes is exactly right.",
+        "They move fast, validate with users, and focus on outcomes. The shift from awareness to measurable impact is exactly what’s needed.",
       [Language.VN]:
-        "Các bạn lặp nhanh và xác thực với người dùng. Chuyển từ nâng cao nhận thức sang kết quả đo lường được là hoàn toàn đúng.",
+        "Các bạn tiến hành nhanh, xác thực với người dùng và tập trung vào kết quả. Việc chuyển từ nhận thức sang tác động đo lường được là điều cần thiết.",
     },
   },
   {
     name: "Hieu Phung",
     role: "Mentor / Advisor",
-    avatarSrc: "assets/Images/HieuPhung.jpg",
+    avatarSrc: "assets/Images/Hieu.jpg",
     testimony: {
       [Language.EN]:
-        "Practical solutions, clear roadmaps, and consistent follow-through—this is how change happens.",
+        "Practical solutions, clear roadmaps, and steady follow-through—this is how real change begins.",
       [Language.VN]:
-        "Giải pháp thực tế, lộ trình rõ ràng và theo sát bền bỉ—đó là cách tạo ra thay đổi.",
+        "Giải pháp thực tế, lộ trình rõ ràng và sự theo sát bền bỉ—đây là cách thay đổi thật sự bắt đầu.",
     },
   },
   {
     name: "Ngọc Quách",
-    role: "Assistant to Ms. Simona; works with autistic teenagers",
+    role:
+      "Psychologist since 2017, supporting autistic teenagers and families in communication, emotional regulation, and self-advocacy",
     avatarSrc: "assets/Images/NgocQuach.jpg",
     testimony: {
       [Language.EN]:
-        "The tools respect young people’s dignity and reduce anxiety in real interview settings.",
+        "This app gives autistic teenagers a safe way to practice and grow confident for real interviews.",
       [Language.VN]:
-        "Các công cụ tôn trọng phẩm giá của các em và giảm lo âu trong bối cảnh phỏng vấn thực tế.",
+        "Ứng dụng này mang đến cho thanh thiếu niên tự kỷ một cách an toàn để luyện tập và tự tin hơn trong phỏng vấn thực tế.",
     },
   },
   {
     name: "Kristen Lewis",
     role:
       "Accessibility Mentor, Employment Inclusion Specialist at Imago Work (Hanoi); 6 years in vocational training for young adults with intellectual disabilities",
-    avatarSrc: "assets/Images/KristenLewis.jpg",
+    avatarSrc: "assets/Images/Kristen.jpg",
     testimony: {
       [Language.EN]:
-        "Employer guidance is actionable and sensitive to local context—exactly what’s been missing.",
+        "Employer guidance is practical and sensitive to local context—exactly what’s been missing until now.",
       [Language.VN]:
-        "Hướng dẫn cho nhà tuyển dụng mang tính hành động và phù hợp bối cảnh địa phương—chính là mảnh ghép còn thiếu.",
+        "Hướng dẫn cho nhà tuyển dụng vừa thực tế vừa phù hợp bối cảnh địa phương—chính là điều còn thiếu từ trước đến nay.",
     },
   },
   {
@@ -233,9 +234,9 @@ const MENTORS: MentorCardProps[] = [
     avatarSrc: "assets/Images/Thuy.jpg",
     testimony: {
       [Language.EN]:
-        "They collaborate openly with families and schools to unlock real opportunities.",
+        "They work hand in hand with families and schools to open real opportunities for young people.",
       [Language.VN]:
-        "Các bạn hợp tác cởi mở với gia đình và nhà trường để mở ra cơ hội thật sự.",
+        "Các bạn làm việc chặt chẽ với gia đình và nhà trường để mở ra cơ hội thật sự cho các em.",
     },
   },
   {
@@ -244,24 +245,25 @@ const MENTORS: MentorCardProps[] = [
     avatarSrc: "assets/Images/TrungVAP.jpg",
     testimony: {
       [Language.EN]:
-        "Strong engineering practice with a sharp focus on usability—impressive.",
+        "Strong technical execution with sharp attention to usability—very impressive work.",
       [Language.VN]:
-        "Thực hành kỹ thuật vững và tập trung mạnh vào khả năng sử dụng—rất ấn tượng.",
+        "Thực hành kỹ thuật vững vàng với sự chú trọng cao đến khả năng sử dụng—rất ấn tượng.",
     },
   },
   {
     name: "Simona Bossoni",
     role:
-      "Head of the Child Development Department (HCMC hospital); Lecturer at National College of Education; Consultant for special schools and kindergartens",
-    avatarSrc: "assets/Images/SimonaBossoni.jpg",
+      "Head of Child Development Department (HCMC hospital); Lecturer at National College of Education; Consultant for special schools and kindergartens",
+    avatarSrc: "assets/Images/Simona.png",
     testimony: {
       [Language.EN]:
-        "Their approach is developmentally appropriate and grounded in evidence from the field.",
+        "Their methods are developmentally appropriate and firmly grounded in real-world evidence.",
       [Language.VN]:
-        "Cách tiếp cận phù hợp theo phát triển và dựa trên bằng chứng từ thực tế.",
+        "Cách tiếp cận của họ phù hợp với sự phát triển và dựa chắc chắn trên bằng chứng thực tế.",
     },
   },
 ];
+
 
 /* ---------- Page ---------- */
 const AboutPage: React.FC = () => {

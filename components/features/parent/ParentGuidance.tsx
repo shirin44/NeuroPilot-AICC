@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../../App";
 import { DIALOGUE, LOCALIZED_CONTENT } from "../../../constants";
 import { PARENT_CONTENT } from "@/constants/Parent";
@@ -13,10 +14,9 @@ import Toast from "./components/Toast";
 import VideoModal from "./components/VideoModal";
 import TestimonialsCarousel from "./components/TestimonialsCarousel";
 import ResourceCard from "./components/ResourceCard";
-// ✅ fix casing to match the actual filename
 import PsychologistCard from "./components/PsychologistCard";
 
-import { Language } from "@/types";
+import { Language, NarratorRole } from "@/types";
 
 type ParentScreen =
   | "intro"
@@ -33,12 +33,20 @@ type ParentScreen =
 const normalizeLang = (l: unknown): Language =>
   l === Language.VN || l === "vi" || l === "VN" ? Language.VN : Language.EN;
 
-const pick = <T extends Record<Language, string>>(obj: T, lang: Language) =>
+const pick = <T extends Record<Language, string> | undefined>(obj: T, lang: Language) =>
   obj?.[lang] ?? obj?.[Language.EN] ?? "";
 
 /* ---------------------------------- */
 const ParentGuidance: React.FC = () => {
-  const { language, setNarratorDialogue, setNarratorState } = useContext(AppContext);
+  const {
+    language,
+    setNarratorDialogue,
+    setNarratorState,
+    setNarratorRole,
+    setMode,
+  } = useContext(AppContext);
+
+  const navigate = useNavigate();
   const lang = normalizeLang(language);
 
   const [screen, setScreen] = useState<ParentScreen>("intro");
@@ -56,6 +64,14 @@ const ParentGuidance: React.FC = () => {
   const [psySearch, setPsySearch] = useState("");
   const [onlyAvailable, setOnlyAvailable] = useState(false);
 
+  // 👉 one-tap switch to Jobseeker practice
+  const goToJobseekerPractice = () => {
+    setNarratorRole(NarratorRole.Jobseeker);
+    setMode("practice");
+    navigate("/dashboard"); // adjust if your route differs
+  };
+
+  // Guarded narrator dialogue setter (prevents "reading 'en'" crash)
   useEffect(() => {
     let dialogueKey = "";
     switch (screen) {
@@ -69,8 +85,15 @@ const ParentGuidance: React.FC = () => {
       case "resources": dialogueKey = "parentResources"; break;
       case "testimonials": dialogueKey = ""; break;
     }
-    if (dialogueKey) setNarratorDialogue(DIALOGUE[dialogueKey][lang]);
-    setNarratorState("talking");
+
+    const nextLine = dialogueKey ? DIALOGUE?.[dialogueKey]?.[lang] : "";
+    if (nextLine && typeof nextLine === "string") {
+      setNarratorDialogue(nextLine);
+      setNarratorState("talking");
+    } else {
+      setNarratorDialogue("");
+      setNarratorState("idle");
+    }
   }, [screen, lang, setNarratorDialogue, setNarratorState]);
 
   useEffect(() => {
@@ -82,6 +105,8 @@ const ParentGuidance: React.FC = () => {
     () => Math.round((completedModules.length / Math.max(1, totalModules)) * 100),
     [completedModules.length, totalModules]
   );
+
+  const allDone = completedModules.length >= totalModules;
 
   const handleModuleComplete = (moduleId: string) => {
     if (!completedModules.includes(moduleId)) {
@@ -95,6 +120,21 @@ const ParentGuidance: React.FC = () => {
       setScreen("overview");
     }
   };
+
+  // Small shared CTA block (localized)
+  const PracticeWithChildCTA = () => (
+    <div className="mt-6 flex flex-col sm:flex-row items-center gap-3">
+      <button
+        onClick={goToJobseekerPractice}
+        className="px-6 py-3 rounded-full bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition"
+      >
+        {pick(PARENT_CONTENT.practiceWithChild, lang)}
+      </button>
+      <span className="text-sm text-muted-foreground">
+        {pick(PARENT_CONTENT.jobseekerCoachLine, lang)}
+      </span>
+    </div>
+  );
 
   const renderScreen = () => {
     switch (screen) {
@@ -137,7 +177,20 @@ const ParentGuidance: React.FC = () => {
                 />
               ))}
             </div>
-            <div className="flex flex-wrap justify-center gap-3">
+
+            {allDone && (
+              <div className="p-5 rounded-2xl border border-emerald-200 bg-emerald-50">
+                <h3 className="font-semibold text-emerald-800">
+                  {pick(PARENT_CONTENT.allLessonsDone, lang)}
+                </h3>
+                <p className="text-emerald-700 mt-1">
+                  {pick(PARENT_CONTENT.readyToPracticeQ, lang)}
+                </p>
+                <PracticeWithChildCTA />
+              </div>
+            )}
+
+            <div className="flex flex-wrap justify-center gap-3 mt-6">
               <button
                 onClick={() => setScreen("faq")}
                 className="px-8 py-3 bg-card border border-primary text-primary font-semibold rounded-full hover:bg-primary/10"
@@ -259,17 +312,26 @@ const ParentGuidance: React.FC = () => {
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => handleModuleComplete("module4")}
-              className="mt-6 px-8 py-3 bg-primary text-primary-foreground font-bold rounded-full hover:bg-primary/90"
-            >
-              {pick(LOCALIZED_CONTENT.finishAndReturn, lang)}
-            </button>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <button
+                onClick={() => handleModuleComplete("module4")}
+                className="px-8 py-3 bg-primary text-primary-foreground font-bold rounded-full hover:bg-primary/90"
+              >
+                {pick(LOCALIZED_CONTENT.finishAndReturn, lang)}
+              </button>
+
+              {/* parent → jobseeker handoff */}
+              <button
+                onClick={goToJobseekerPractice}
+                className="px-8 py-3 bg-emerald-600 text-white font-semibold rounded-full hover:bg-emerald-700"
+              >
+                {pick(PARENT_CONTENT.practiceWithChild, lang)}
+              </button>
+            </div>
           </div>
         );
 
       case "faq":
-        // ✅ this was missing — without it you got a blank page.
         return (
           <div>
             <h2 className="font-display text-3xl font-bold mb-6">
@@ -299,7 +361,6 @@ const ParentGuidance: React.FC = () => {
               {pick(LOCALIZED_CONTENT.resources, lang)}
             </h2>
 
-            {/* resources list */}
             <div className="space-y-4 mb-10">
               {PARENT_CONTENT.resources.map((r) => (
                 <ResourceCard
@@ -311,7 +372,6 @@ const ParentGuidance: React.FC = () => {
               ))}
             </div>
 
-            {/* psychologists directory */}
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-display text-2xl font-bold">
                 {pick(PARENT_CONTENT.ui.psychologistsTitle, lang)}
@@ -342,11 +402,9 @@ const ParentGuidance: React.FC = () => {
                   const q = psySearch.trim().toLowerCase();
                   if (!q) return true;
                   const hay = `${pick(p.name as Record<Language, string>, lang)} ${pick(
-                    p.title as Record<Language, string>,
-                    lang
+                    p.title as Record<Language, string>, lang
                   )} ${pick(p.org as Record<Language, string>, lang)} ${pick(
-                    p.location as Record<Language, string>,
-                    lang
+                    p.location as Record<Language, string>, lang
                   )} ${(p.specialties?.join(" ") ?? "").toLowerCase()}`.toLowerCase();
                   return hay.includes(q);
                 })
@@ -376,7 +434,7 @@ const ParentGuidance: React.FC = () => {
         );
 
       case "testimonials":
-        const items = PARENT_CONTENT.testimonials.map((t) => ({
+        const items = (PARENT_CONTENT.testimonials ?? []).map((t) => ({
           id: t.id,
           name: pick(t.name as Record<Language, string>, lang),
           role: pick(t.role as Record<Language, string>, lang),
