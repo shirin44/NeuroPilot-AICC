@@ -1,33 +1,34 @@
 import React, { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AppContext } from '../App';
-import { LOCALIZED_CONTENT, NARRATORS } from '../constants';
+import { HEADER_CONTENT } from '@/constants/Header';  
 import { Language, NarratorRole } from '../types';
 import LogoIcon from './icons/LogoIcon';
 import Tooltip from './Tooltip';
 
 const LanguageToggle: React.FC = () => {
-    const { language, setLanguage } = useContext(AppContext);
+  const { language, setLanguage } = useContext(AppContext);
+  const toggleLanguage = () => {
+    setLanguage(language === Language.EN ? Language.VN : Language.EN);
+  };
 
-    const toggleLanguage = () => {
-        setLanguage(language === Language.EN ? Language.VN : Language.EN);
-    };
-
-    return (
-        <Tooltip tip={language === Language.EN ? "Chuyển sang tiếng Việt" : "Switch to English"} position="bottom">
-            <button
-                onClick={toggleLanguage}
-                className="flex items-center space-x-2 px-3 py-2 border border-border rounded-full text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
-                aria-label="Toggle language"
-            >
-                <span className={language === Language.EN ? 'font-bold text-primary' : ''}>EN</span>
-                <span>/</span>
-                <span className={language === Language.VN ? 'font-bold text-primary' : ''}>VN</span>
-            </button>
-        </Tooltip>
-    );
+  return (
+    <Tooltip
+      tip={language === Language.EN ? "Chuyển sang tiếng Việt" : "Switch to English"}
+      position="bottom"
+    >
+      <button
+        onClick={toggleLanguage}
+        className="flex items-center space-x-2 px-3 py-2 border border-border rounded-full text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
+        aria-label="Toggle language"
+      >
+        <span className={language === Language.EN ? 'font-bold text-primary' : ''}>EN</span>
+        <span>/</span>
+        <span className={language === Language.VN ? 'font-bold text-primary' : ''}>VN</span>
+      </button>
+    </Tooltip>
+  );
 };
-
 
 const Header: React.FC = () => {
   const { language, setNarratorRole, setMode } = useContext(AppContext);
@@ -41,19 +42,18 @@ const Header: React.FC = () => {
   };
 
   const navLinks = [
-    { path: '/', label: LOCALIZED_CONTENT.home[language] },
-    { path: '/about', label: LOCALIZED_CONTENT.about[language] },
-    { path: '/contact', label: LOCALIZED_CONTENT.contact[language] },
-    { path: '/OurStory', label: LOCALIZED_CONTENT.OurStory[language] }
-
+    { path: '/', label: HEADER_CONTENT.nav.home[language] },
+    { path: '/about', label: HEADER_CONTENT.nav.about[language] },
+    { path: '/contact', label: HEADER_CONTENT.nav.contact[language] },
+    { path: '/OurStory', label: HEADER_CONTENT.nav.ourStory[language] },
   ];
 
   const roleNavLinks = [
-      { role: NarratorRole.Jobseeker, theme: 'blue', colorClass: 'hover:text-brand-blue-400' },
-      { role: NarratorRole.Employer, theme: 'purple', colorClass: 'hover:text-brand-purple-400' },
-      { role: NarratorRole.Parent, theme: 'red', colorClass: 'hover:text-brand-red-300' },
-      { role: NarratorRole.Volunteer, theme: 'green', colorClass: 'hover:text-brand-green-400' },
-  ]
+    { role: NarratorRole.Jobseeker, label: HEADER_CONTENT.roles.jobseeker[language], theme: 'blue', colorClass: 'hover:text-brand-blue-400' },
+    { role: NarratorRole.Employer, label: HEADER_CONTENT.roles.employer[language], theme: 'purple', colorClass: 'hover:text-brand-purple-400' },
+    { role: NarratorRole.Parent, label: HEADER_CONTENT.roles.parent[language], theme: 'red', colorClass: 'hover:text-brand-red-300' },
+    { role: NarratorRole.Volunteer, label: HEADER_CONTENT.roles.volunteer[language], theme: 'green', colorClass: 'hover:text-brand-green-400' },
+  ];
 
   return (
     <header className="force-light-theme bg-card/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
@@ -79,14 +79,14 @@ const Header: React.FC = () => {
             ))}
             <div className="h-6 w-px bg-border"></div>
             {roleNavLinks.map(link => (
-                <button
-                    key={link.role}
-                    onClick={() => handleSelectRole(link.role)}
-                    aria-label={`Select ${link.role} role`}
-                    className={`font-medium transition-colors text-muted-foreground ${link.colorClass}`}
-                >
-                    {link.role}
-                </button>
+              <button
+                key={link.role}
+                onClick={() => handleSelectRole(link.role)}
+                aria-label={`Select ${link.label} role`}
+                className={`font-medium transition-colors text-muted-foreground ${link.colorClass}`}
+              >
+                {link.label}
+              </button>
             ))}
           </nav>
           <div className="flex items-center">

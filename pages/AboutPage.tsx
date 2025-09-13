@@ -230,7 +230,7 @@ const MENTORS: MentorCardProps[] = [
   {
     name: "Thanh Thuý",
     role: "Mentor / Community Partner",
-    avatarSrc: "assets/Images/ThanhThuy.jpg",
+    avatarSrc: "assets/Images/Thuy.jpg",
     testimony: {
       [Language.EN]:
         "They collaborate openly with families and schools to unlock real opportunities.",

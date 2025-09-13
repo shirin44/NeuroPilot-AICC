@@ -1,4 +1,20 @@
 
+export type Story = {
+  title: Record<Language, string>;
+  description: Record<Language, string>;
+  scenes: Array<{
+    title: Record<Language, string>;
+    text: Record<Language, string>;
+    choices: Array<{
+      text: Record<Language, string>;
+      affirmation?: Record<Language, string>;
+      isMultiSelect?: boolean;
+    }>;
+  }>;
+  closingAffirmation: Record<Language, string>;
+};
+
+
 
 export enum NarratorRole {
   Jobseeker = 'Jobseeker',
@@ -104,12 +120,12 @@ export interface StoryScene {
   choices: StoryChoice[];
 }
 
-export interface Story {
-  title: { [key in Language]: string };
-  description: { [key in Language]: string };
-  scenes: StoryScene[];
-  closingAffirmation: { [key in Language]: string };
-}
+// export interface Story {
+//   title: { [key in Language]: string };
+//   description: { [key in Language]: string };
+//   scenes: StoryScene[];
+//   closingAffirmation: { [key in Language]: string };
+// }
 export interface StoryChoice {
   text: { [key in Language]: string };
   isMultiSelect?: boolean; // Indicates the 'title' of a multi-select group
@@ -122,12 +138,12 @@ export interface StoryScene {
   choices: StoryChoice[];
 }
 
-export interface Story {
-  title: { [key in Language]: string };
-  description: { [key in Language]: string };
-  scenes: StoryScene[];
-  closingAffirmation: { [key in Language]: string };
-}
+// export interface Story {
+//   title: { [key in Language]: string };
+//   description: { [key in Language]: string };
+//   scenes: StoryScene[];
+//   closingAffirmation: { [key in Language]: string };
+// }
 
 
 export type PlaceholderKey =

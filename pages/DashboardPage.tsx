@@ -1,19 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { AppContext } from '../App';
 import { NarratorRole } from '../types';
 import { NARRATORS, LOCALIZED_CONTENT, STORY_CONTENT } from '../constants';
+
 import InterviewPractice from '../components/features/jobseeker/InterviewPractice';
 import SessionHistory from '../components/features/jobseeker/SessionHistory';
 import SpeakerIcon from '../components/icons/SpeakerIcon';
-import QuestionCleaner from '../components/features/employer/QuestionCleaner';
 import ParentGuidance from '../components/features/parent/ParentGuidance';
 import StoryPlayer from '../components/features/common/StoryPlayer';
 import PracticeIcon from '../components/icons/PracticeIcon';
 import HistoryIcon from '../components/icons/HistoryIcon';
 import Tooltip from '../components/Tooltip';
 import VolunteerPractice from '../components/features/volunteer/VolunteerPractice';
+
+// ✅ Lazy-load EmployerGuide for faster initial load
+const EmployerGuide = lazy(() => import('../components/features/employer/EmployerGuide'));
 
 const DashboardPage: React.FC = () => {
   const { narratorRole, mode, language, setNarratorDialogue, setNarratorState } = useContext(AppContext);
@@ -123,12 +126,21 @@ const DashboardPage: React.FC = () => {
             )}
           </div>
         );
+
       case NarratorRole.Employer:
-        return <QuestionCleaner />;
+        // ✅ Now goes to the full Employer guide (welcome → overview → modules)
+        return (
+          <Suspense fallback={<div className="p-6">Loading…</div>}>
+            <EmployerGuide />
+          </Suspense>
+        );
+
       case NarratorRole.Parent:
         return <ParentGuidance />;
+
       case NarratorRole.Volunteer:
         return <VolunteerPractice />;
+
       default:
         return <p className="text-slate-900">No content available for this role.</p>;
     }
@@ -184,9 +196,7 @@ const DashboardPage: React.FC = () => {
         )}
 
         {/* Content */}
-        <div>
-          {renderContent()}
-        </div>
+        <div>{renderContent()}</div>
       </div>
     </Layout>
   );
