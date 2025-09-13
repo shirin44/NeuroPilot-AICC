@@ -1,6 +1,18 @@
-import { Narrator, NarratorRole, Language, Story, StoryEntry, PlaceholderKey /*, AboutSchema*/ } from "@/types";
+// src/constants/Ourstory.ts
+import { Language, StoryEntry, PlaceholderKey } from "@/types";
 
-export const OUR_STORY_CONTENT: {
+/** Per-tile media schema for the gallery. */
+export type GalleryItem = {
+  type: "image" | "video";
+  /** File name inside assets/Images/OurStory or assets/Videos/OurStory, OR a full URL */
+  file: string;
+  /** Optional poster image for videos (file name or URL) */
+  poster?: string;
+  /** Localized caption */
+  caption: Record<Language, string>;
+};
+
+export interface OurStoryContent {
   ui: {
     heroTitle: Record<Language, string>;
     diary: Record<Language, string>;
@@ -13,8 +25,13 @@ export const OUR_STORY_CONTENT: {
   entries: StoryEntry[];
   reflections: Record<Language, string>;
   appreciation: Record<Language, string[]>;
-  gallery: Record<Language, string[]>;
-} = {
+  /** Legacy captions-only gallery (kept for backward compatibility). */
+  gallery?: Record<Language, string[]>;
+  /** New per-item gallery that supports images & videos. */
+  galleryItems: GalleryItem[];
+}
+
+export const OUR_STORY_CONTENT: OurStoryContent = {
   ui: {
     heroTitle: {
       [Language.EN]: "🌍 Our Story – NeuroPilot AICC Journey",
@@ -271,20 +288,74 @@ export const OUR_STORY_CONTENT: {
     ],
   },
 
+  // (Optional) Legacy captions-only list kept for backward compatibility.
   gallery: {
     [Language.EN]: [
       "Bootcamp Highlights",
       "Mentor Workshops",
       "Proposal Refinement Nights",
       "Prototype Screenshots",
-      "Final Team Video",
+      "Filming The Video",
     ],
     [Language.VN]: [
       "Điểm nhấn từ Bootcamp",
       "Workshop cùng Mentor",
       "Những đêm chỉnh sửa đề xuất",
       "Ảnh chụp sản phẩm mẫu",
-      "Video nhóm",
+      "Quay video",
     ],
   },
+
+  // NEW: Per-item gallery (use this going forward)
+  galleryItems: [
+    {
+      type: "image",
+      file: "bootcamp.jpg",
+      caption: {
+        [Language.EN]: "Bootcamp Highlights",
+        [Language.VN]: "Điểm nhấn Bootcamp",
+      },
+    },
+    {
+      type: "video",
+      file: "sandy_workshop.mp4",
+      poster: "sandy_workshop.jpg",
+      caption: {
+        [Language.EN]: "Mentor Workshop with Sandy",
+        [Language.VN]: "Workshop cùng cô Sandy",
+      },
+    },
+    {
+      type: "video",
+      file: "proposal.mov",
+      caption: {
+        [Language.EN]: "Proposal Refinement Nights",
+        [Language.VN]: "Những đêm chỉnh sửa đề xuất",
+      },
+    },
+    {
+      type: "image",
+      file: "prototype_screen.jpg",
+      caption: {
+        [Language.EN]: "Prototype Screens",
+        [Language.VN]: "Ảnh chụp prototype",
+      },
+    },
+    {
+      type: "video",
+      file: "filming.mov",
+      caption: {
+        [Language.EN]: "Filming The Video",
+        [Language.VN]: "Quay video",
+      },
+    },
+    {
+      type: "image",
+      file: "team_laugh.jpg",
+      caption: {
+        [Language.EN]: "Late-night Debugging",
+        [Language.VN]: "Sửa lỗi đêm muộn",
+      },
+    },
+  ],
 };

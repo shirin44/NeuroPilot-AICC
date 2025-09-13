@@ -6,6 +6,12 @@ import { HOME_PAGE_CONTENT } from "@/constants/homePage";
 import { NarratorRole, Language } from "../types";
 import { AppContext } from "../App";
 
+// If your video lives under src/assets/... use this import:
+// import homeVideo from "@/assets/Videos/home.mp4";
+
+// Import the logo image
+
+
 /* ---------- Language Helper ---------- */
 const normalizeLang = (l: unknown): Language =>
   l === Language.VN || l === "vi" || l === "VN" ? Language.VN : Language.EN;
@@ -16,15 +22,40 @@ const HeroSection: React.FC = () => {
   const lang = normalizeLang(language);
   const H = HOME_PAGE_CONTENT;
 
-  // 🔹 pull the split parts for the slam effect
+  // Split parts used for the "slam" animation word
   const wl = H.hero.welcomeLeadParts[lang];
+
+  // Video controls
+  const videoRef = React.useRef<HTMLVideoElement | null>(null);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  const togglePlay = async () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      try {
+        await v.play();
+        setIsPlaying(true);
+      } catch {
+        v.setAttribute("controls", "true");
+      }
+    } else {
+      v.pause();
+      setIsPlaying(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center relative bg-gradient-to-b from-background to-muted/50">
       <div className="w-full max-w-5xl px-4 animate-fadeInUp">
-        <h1 className="font-display text-4xl md:text-6xl font-extrabold text-foreground">
-          {H.hero.title[lang]}{" "}
-          <span className="text-primary">{H.hero.brand[lang]}</span>
+        {/* Heading: "This is" + LOGO image (no brand text) */}
+        <h1 className="font-display text-4xl md:text-6xl font-extrabold text-foreground flex items-center justify-center gap-3 md:gap-4">
+          <span>{H.hero.title[lang]}</span>
+          <img
+            src='assets/Images/logo.png'
+            alt="AICC logo"
+            className="h-24 md:h-124 w-auto align-middle"
+          />
         </h1>
 
         {/* animated word in the middle */}
@@ -40,28 +71,47 @@ const HeroSection: React.FC = () => {
           {H.hero.tagline[lang]}
         </p>
 
-        <div
-          className="mt-12 w-full max-w-4xl mx-auto aspect-video bg-card/50 backdrop-blur-sm rounded-2xl shadow-2xl border-2 border-border flex items-center justify-center relative group cursor-pointer overflow-hidden"
-          onClick={() => alert(H.hero.videoComing[lang])}
-          role="button"
-          aria-label={H.hero.ariaPlayVideo[lang]}
-        >
-          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors z-10" />
-          <div className="relative z-20 w-20 h-20 bg-background/80 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-            <svg
-              className="w-10 h-10 text-foreground ml-1"
-              fill="currentColor"
-              viewBox="0 0 20 20"
+        {/* ---------- Video Card (no autoplay + no dark overlay) ---------- */}
+        <div className="mt-12 w-full max-w-4xl mx-auto aspect-video rounded-2xl shadow-2xl border-2 border-border relative overflow-hidden">
+          <video
+            ref={videoRef}
+            src="/assets/Videos/home.mp4"
+            // Or, if importing from src: src={homeVideo}
+            className="absolute inset-0 w-full h-full object-cover"
+            playsInline
+            muted
+            preload="metadata"
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onClick={togglePlay} // click video to play/pause
+            aria-label={H.hero.ariaPlayVideo[lang]}
+          />
+
+          {/* Center play button (only when paused). No dark overlay. */}
+          {!isPlaying && (
+            <button
+              onClick={togglePlay}
+              className="absolute inset-0 m-auto z-10 w-20 h-20 bg-background/80 rounded-full flex items-center justify-center shadow-xl transition-transform duration-300"
+              aria-label={H.hero.ariaPlayVideo[lang]}
             >
-              <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path>
-            </svg>
-          </div>
-          <p className="absolute bottom-4 right-4 z-20 text-white/80 text-sm font-semibold backdrop-blur-sm p-1 rounded">
+              <svg
+                className="w-10 h-10 text-foreground ml-1"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path>
+              </svg>
+            </button>
+          )}
+
+          {/* Label bottom-right */}
+          <p className="absolute bottom-4 right-4 z-10 text-white/90 text-sm font-semibold drop-shadow px-2 py-1 rounded">
             {H.hero.videoLabel[lang]}
           </p>
         </div>
       </div>
 
+      {/* Scroll cue */}
       <a
         href="#narrators"
         aria-label={HOME_PAGE_CONTENT.hero.ariaScroll[lang]}

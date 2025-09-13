@@ -1,9 +1,8 @@
-// src/pages/OurStoryPage.tsx
 import React, { useContext, useState } from "react";
 import Layout from "../components/Layout";
 import { AppContext } from "../App";
 import { Language } from "../types";
-import { OUR_STORY_CONTENT } from "../constants/Ourstory";
+import { OUR_STORY_CONTENT } from "@/constants/OurStory";
 
 // --- Normalize language (enum or string) ---
 const normalizeLang = (l: unknown): Language =>
@@ -13,14 +12,14 @@ const normalizeLang = (l: unknown): Language =>
  *  - public/Images/OurStory/<file>
  *  - public/Videos/OurStory/<file>
  *
- *  Rename these to match your real assets.
+ *  These are still used for hero/timeline sections.
  */
 const MEDIA_IMAGE_MAP: Record<string, string> = {
   TEAM_PHOTO: "team_photo.jpg",
   BRAINSTORM: "brainstorm.jpg",
   TEAM_CALL: "team_call.jpg",
   BOOTCAMP: "bootcamp.jpg",
-  MEETING_THUY: "meeting_thuy.jpg",
+  MEETING_THUY: "meeting_thuy.png",
   IDEA_REFINEMENT: "idea_refinement.jpg",
   TEAM_LAUGH: "team_laugh.jpg",
   SANDY_WORKSHOP: "sandy_workshop.jpg",
@@ -36,7 +35,7 @@ const MEDIA_IMAGE_MAP: Record<string, string> = {
   TROY: "troy.jpg",
   FINAL_SPRINT: "final_sprint.jpg",
   REFLECTION: "reflection.jpg",
-  GALLERY: "gallery_bootcamp.jpg", // default image for gallery tiles
+  GALLERY: "gallery_bootcamp.jpg", // legacy default (fallback only)
 };
 
 const MEDIA_VIDEO_MAP: Record<string, string> = {
@@ -60,7 +59,7 @@ const MEDIA_VIDEO_MAP: Record<string, string> = {
   TROY: "troy.mp4",
   FINAL_SPRINT: "final_sprint.mp4",
   REFLECTION: "reflection.mp4",
-  GALLERY: "gallery_bootcamp.mp4", // default video for gallery tiles
+  GALLERY: "gallery_bootcamp.mp4", // legacy default (fallback only)
 };
 
 // Build public URL (Vite-safe). For CRA you could use process.env.PUBLIC_URL instead.
@@ -78,13 +77,11 @@ const PlaceholderMedia: React.FC<{ label: string }> = ({ label }) => (
   </div>
 );
 
-/** Media block that tries image first; if the <img> fails to load (404), it falls back to <video>.
- *  If neither is present in the maps, it renders the placeholder label.
- */
+/** Media block for timeline/hero that tries image then video by placeholderKey. */
 const MediaBlock: React.FC<{
   placeholderKey: string;
   alt: string;
-  placeholderLabel: string; // localized label from UI.placeholders
+  placeholderLabel: string;
 }> = ({ placeholderKey, alt, placeholderLabel }) => {
   const [useVideo, setUseVideo] = useState(false);
 
@@ -93,12 +90,8 @@ const MediaBlock: React.FC<{
   const hasImg = Boolean(imgFile);
   const hasVid = Boolean(vidFile);
 
-  // If we have neither file configured, render placeholder immediately
-  if (!hasImg && !hasVid) {
-    return <PlaceholderMedia label={placeholderLabel} />;
-  }
+  if (!hasImg && !hasVid) return <PlaceholderMedia label={placeholderLabel} />;
 
-  // If image is configured and we haven't switched to video yet, try image
   if (hasImg && !useVideo) {
     return (
       <img
@@ -106,32 +99,76 @@ const MediaBlock: React.FC<{
         alt={alt}
         className="w-full h-auto rounded-xl object-cover"
         onError={() => {
-          // Only fall back to video if there is one configured
           if (hasVid) setUseVideo(true);
         }}
       />
     );
   }
 
-  // Otherwise, try video (autoplay muted inline looks nice on hero; here keep controls)
   if (hasVid) {
     return (
-      <video
-        className="w-full h-auto rounded-xl"
-        controls
-        playsInline
-        // poster could be provided too if you have a matching image
-        src={publicVideo(vidFile)}
-      >
-        {/* As a super-hard fallback (if video fails), show label */}
+      <video className="w-full h-auto rounded-xl" controls playsInline src={publicVideo(vidFile)}>
         <track kind="captions" />
         Sorry, your browser doesn't support embedded videos.
       </video>
     );
   }
 
-  // Last resort
   return <PlaceholderMedia label={placeholderLabel} />;
+};
+
+/* =========================
+   NEW: Per-item Gallery components
+   - Each item declares image OR video.
+   - All tiles render in the same-size frame.
+   ========================= */
+type GalleryItem = {
+  type: "image" | "video";
+  /** file name inside assets/Images/OurStory or assets/Videos/OurStory, OR a full URL */
+  file: string;
+  /** optional poster image for videos (file name or URL) */
+  poster?: string;
+  /** localized caption */
+  caption: Record<Language, string>;
+};
+
+const resolveSrc = (type: GalleryItem["type"], file: string) => {
+  if (/^https?:\/\//i.test(file)) return file;
+  return type === "image" ? publicImage(file) : publicVideo(file);
+};
+
+const resolvePoster = (poster?: string) => {
+  if (!poster) return undefined;
+  return /^https?:\/\//i.test(poster) ? poster : publicImage(poster);
+};
+
+/** Fixed-aspect frame so images & videos look identical in size */
+const GalleryMedia: React.FC<{ item: GalleryItem; alt: string }> = ({ item, alt }) => {
+  const src = resolveSrc(item.type, item.file);
+  const poster = resolvePoster(item.poster);
+
+  return (
+    <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl bg-slate-100">
+      {item.type === "image" ? (
+        <img
+          src={src}
+          alt={alt}
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+        />
+      ) : (
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          controls
+          playsInline
+          poster={poster}
+          src={src}
+        >
+          <track kind="captions" />
+        </video>
+      )}
+    </div>
+  );
 };
 
 const OurStoryPage: React.FC = () => {
@@ -140,6 +177,18 @@ const OurStoryPage: React.FC = () => {
 
   const UI = OUR_STORY_CONTENT.ui;
   const P = UI.placeholders;
+
+  // Fallback builder if you keep legacy `gallery` string[] temporarily
+  const legacyEN = OUR_STORY_CONTENT.gallery?.[Language.EN] ?? [];
+  const legacyVN = OUR_STORY_CONTENT.gallery?.[Language.VN] ?? [];
+
+  const galleryItems: GalleryItem[] =
+    (OUR_STORY_CONTENT as any).galleryItems ??
+    legacyEN.map((en, i) => ({
+      type: "image",
+      file: MEDIA_IMAGE_MAP.GALLERY,
+      caption: { [Language.EN]: en, [Language.VN]: legacyVN[i] ?? en },
+    }));
 
   return (
     <Layout>
@@ -241,17 +290,12 @@ const OurStoryPage: React.FC = () => {
           {UI.media[lang]}
         </h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {OUR_STORY_CONTENT.gallery[lang].map((g, i) => (
-            <div
-              key={i}
-              className="rounded-2xl border border-border bg-white p-4 shadow-sm"
-            >
-              <MediaBlock
-                placeholderKey="GALLERY" // default gallery asset (image/video)
-                alt={g}
-                placeholderLabel={P.GALLERY[lang]}
-              />
-              <p className="mt-2 text-center text-sm font-medium text-slate-700">{g}</p>
+          {galleryItems.map((item, i) => (
+            <div key={i} className="rounded-2xl border border-border bg-white p-4 shadow-sm">
+              <GalleryMedia item={item} alt={item.caption[lang]} />
+              <p className="mt-2 text-center text-sm font-medium text-slate-700">
+                {item.caption[lang]}
+              </p>
             </div>
           ))}
         </div>
