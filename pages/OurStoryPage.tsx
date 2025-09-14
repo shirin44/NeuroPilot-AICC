@@ -26,7 +26,7 @@ const MEDIA_IMAGE_MAP: Record<string, string> = {
   TEAM_LAUGH: "team_laugh.jpg",
   SANDY_WORKSHOP: "sandy_workshop.jpg",
   DRAFT: "draft.jpg",
-  TRUNG_MEETING: "trung_meeting.jpg",
+  TRUNG_MEETING: "trung.jpg",
   SURVEY: "survey.jpg",
   FEEDBACK: "feedback.jpg",
   PROPOSAL: "proposal.jpg",
