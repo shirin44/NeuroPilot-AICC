@@ -5,7 +5,7 @@ import { NARRATORS } from "../constants";
 import { HOME_PAGE_CONTENT } from "@/constants/homePage";
 import { NarratorRole, Language } from "../types";
 import { AppContext } from "../App";
-
+import { asset } from "@/utils/asset";
 // If your video lives under src/assets/... use this import:
 // import homeVideo from "@/assets/Videos/home.mp4";
 
@@ -52,7 +52,7 @@ const HeroSection: React.FC = () => {
         <h1 className="font-display text-4xl md:text-6xl font-extrabold text-foreground flex items-center justify-center gap-3 md:gap-4">
           <span>{H.hero.title[lang]}</span>
           <img
-            src='assets/Images/logo.png'
+            src={asset("assets/Images/logo.png")}
             alt="AICC logo"
             className="h-24 md:h-124 w-auto align-middle"
           />
