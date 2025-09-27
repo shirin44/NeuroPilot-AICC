@@ -4,9 +4,14 @@ import { Language, StoryEntry, PlaceholderKey } from "@/types";
 /** Per-tile media schema for the gallery. */
 export type GalleryItem = {
   type: "image" | "video";
-  /** File name inside src/assets/images/OurStory or assets/Videos/OurStory, OR a full URL */
+  /**
+   * Basename inside:
+   *   - images: src/assets/images/OurStory
+   *   - videos: src/assets/videos/OurStory
+   * or a full http(s) URL.
+   */
   file: string;
-  /** Optional poster image for videos (file name or URL) */
+  /** Optional poster image for videos (basename or URL) */
   poster?: string;
   /** Localized caption */
   caption: Record<Language, string>;
@@ -280,7 +285,7 @@ export const OUR_STORY_CONTENT: OurStoryContent = {
       "Sandy Sinn – Nhà sáng lập CPPWB và nhà giáo dục phòng ngừa tự tử, người đã nhắc chúng tôi rằng sự hòa nhập không chỉ là một mục cần đánh dấu mà là một cách suy nghĩ. Những buổi workshop của cô đã thắp lửa cho hành trình của chúng tôi.",
       "Troy Yeo – Nhà sáng lập & COO về tự động hoá AI cho SME và doanh nghiệp, người đã thúc đẩy chúng tôi suy nghĩ về khả năng mở rộng, tính bền vững và tác động lâu dài. Những phản hồi thẳng thắn của anh đã giúp chúng tôi tinh chỉnh chiến lược và củng cố quyết tâm thực hiện dự án.",
       "Hiếu Phùng – Những hướng dẫn và góc nhìn quý giá của anh trong các buổi cố vấn đã giúp chúng tôi định hình hướng đi một cách rõ ràng và có mục đích.",
-      "Ngọc Quách – TLà một nhà tâm lý học hành nghề từ năm 2017, cô chuyên hỗ trợ thanh thiếu niên tự kỷ, người lớn tuổi và gia đình của họ. Công việc của cô tập trung vào giao tiếp, điều hòa cảm xúc, kỹ năng xã hội và động lực gia đình. Cô tận tâm trao quyền cho các gia đình, củng cố kết nối và khuyến khích sự tự vận động khi những người trẻ tuổi bước vào tuổi trưởng thành.",
+      "Ngọc Quách – Là một nhà tâm lý học hành nghề từ năm 2017, cô chuyên hỗ trợ thanh thiếu niên tự kỷ, người lớn tuổi và gia đình của họ. Công việc của cô tập trung vào giao tiếp, điều hòa cảm xúc, kỹ năng xã hội và động lực gia đình. Cô tận tâm trao quyền cho các gia đình, củng cố kết nối và khuyến khích sự tự vận động khi những người trẻ tuổi bước vào tuổi trưởng thành.",
       "Kristen Lewis – Người cố vấn về tiếp cận và chuyên gia hòa nhập việc làm tại Imago Work ở Hà Nội, với sáu năm kinh nghiệm đào tạo nghề cho thanh niên mắc khuyết tật trí tuệ. Kiến thức chuyên môn của cô đã định hình các tính năng hướng tới nhà tuyển dụng trong dự án của chúng tôi và nhắc nhở chúng tôi rằng cần thiết kế để cả hai bên – ứng viên và nhà tuyển dụng – đều sẵn sàng cho quá trình tuyển dụng.",
       "Thanh Thuý – Một nhân viên xã hội tự kỷ đến từ Đà Nẵng, người đã cởi mở và chân thành chia sẻ những trải nghiệm sống của mình. Những câu chuyện của cô đã giúp dự án của chúng tôi gắn liền với thực tế và tiếp thêm cho chúng tôi can đảm để đối mặt với những rào cản vô hình.",
       "Anh Trung – Sáng lập Dự án Tự kỷ Việt Nam, với kinh nghiệm hơn 10 năm, xác nhận “khoảng cách niềm tin” là cốt lõi vấn đề. Nhận định này trở thành xương sống cho đề xuất của chúng tôi.",
@@ -306,7 +311,7 @@ export const OUR_STORY_CONTENT: OurStoryContent = {
     ],
   },
 
-  // NEW: Per-item gallery (use this going forward)
+  // NEW: Per-item gallery (uses filenames that match /src/assets/videos/OurStory and images/OurStory)
   galleryItems: [
     {
       type: "video",
@@ -326,7 +331,7 @@ export const OUR_STORY_CONTENT: OurStoryContent = {
     },
     {
       type: "video",
-      file: "proposal.mov",
+      file: "proposal.MOV", // ✅ case per repo
       caption: {
         [Language.EN]: "Proposal Refinement Nights",
         [Language.VN]: "Những đêm chỉnh sửa đề xuất",
@@ -342,7 +347,7 @@ export const OUR_STORY_CONTENT: OurStoryContent = {
     },
     {
       type: "video",
-      file: "filming.mov",
+      file: "filming.MOV", // ✅ case per repo
       caption: {
         [Language.EN]: "Filming The Video",
         [Language.VN]: "Quay video",
@@ -350,7 +355,7 @@ export const OUR_STORY_CONTENT: OurStoryContent = {
     },
     {
       type: "video",
-      file: "late.mov",
+      file: "late.MOV", // ✅ case per repo
       caption: {
         [Language.EN]: "Late-night Debugging",
         [Language.VN]: "Sửa lỗi đêm muộn",

@@ -2,67 +2,93 @@
 import React, { useContext, useState } from "react";
 import Layout from "../components/Layout";
 import { AppContext } from "../App";
-import { Language /*, PlaceholderKey */ } from "../types";
+import { Language } from "../types";
 import { OUR_STORY_CONTENT } from "../constants/Ourstory";
 
 // --- Normalize language (enum or string) ---
 const normalizeLang = (l: unknown): Language =>
   l === Language.VN || l === "vi" || l === "VN" ? Language.VN : Language.EN;
 
-const MEDIA_IMAGE_MAP: Record<string, string> = {
-  TEAM_PHOTO: "us.png",
-  BRAINSTORM:  "team_photo.jpg",
-  TEAM_CALL: "team_call.jpg",
-  BOOTCAMP: "bootcamp.jpg",
+/* -----------------------------------------------------------
+   EAGERLY LOAD ALL MEDIA (base-aware, GH Pages safe)
+----------------------------------------------------------- */
+const imgMods = import.meta.glob("/src/assets/images/OurStory/*", {
+  eager: true,
+  as: "url",
+});
+const vidMods = import.meta.glob("/src/assets/videos/OurStory/*", {
+  eager: true,
+  as: "url",
+});
+
+const byBasename = (mods: Record<string, string>) => {
+  const out: Record<string, string> = {};
+  for (const p in mods) {
+    const name = p.split("/").pop()!;
+    out[name] = mods[p];
+  }
+  return out;
+};
+
+const IMAGES = byBasename(imgMods);
+const VIDEOS = byBasename(vidMods);
+
+// Return a url or empty string (so <img> can trigger onError)
+const imageUrl = (file?: string) => (file && IMAGES[file]) || "";
+const videoUrl = (file?: string) => (file && VIDEOS[file]) || "";
+
+/* -----------------------------------------------------------
+   Declarative mapping from placeholder keys → filenames
+   (ensure these match real files in src/assets/* with CORRECT case)
+----------------------------------------------------------- */
+const MEDIA_IMAGE_MAP: Record<string, string | undefined> = {
+  TEAM_PHOTO: "us.png",     // ✅ exists per your repo
+  BRAINSTORM: "team_photo.jpg",     // fallback if you don’t have a separate brainstorm photo
+  TEAM_CALL: "team_photo.jpg",      // adjust if you add team_call.jpg later
+  BOOTCAMP: "bootcamp.jpg",         // adjust if you store a bootcamp still
   MEETING_THUY: "meeting_thuy.png",
-  IDEA_REFİNEMENT: "idea_refinement.jpg", // keep your exact filename; left here for safety if renamed
+  IDEA_REFİNEMENT: "idea_refinement.jpg", // keep if old key is used somewhere
   IDEA_REFINEMENT: "idea_refinement.jpg",
-  TEAM_LAUGH: "team_laugh.jpg",
+  TEAM_LAUGH: "team_photo.jpg",
   SANDY_WORKSHOP: "sandy_workshop.jpg",
-  DRAFT: "draft.jpg",
+  DRAFT: "proposal.JPG",            // use an existing still if draft.jpg doesn’t exist
   TRUNG_MEETING: "trung.jpg",
-  SURVEY: "survey.jpg",
+  SURVEY: "team_photo.jpg",
   FEEDBACK: "feedback.jpg",
-  PROPOSAL: "proposal.jpg",
+  PROPOSAL: "proposal.JPG",
   KRISTEN: "kristen.png",
-  BUG: "bug.jpg",
+  BUG: "prototype.png",             // use a close still if bug.jpg doesn’t exist
   CODING: "coding.jpg",
   SIMONA: "simona.png",
   TROY: "troy.jpg",
-  FINAL_SPRINT: "final_sprint.jpg",
-  REFLECTION: "reflection.jpg",
-  GALLERY: "gallery_bootcamp.jpg", // default image for gallery tiles
+  FINAL_SPRINT: "final_sprint.JPG", // ✅ case from your git status
+  REFLECTION: "reflection.jpg",     // if you don’t have a jpg, this will fall back to video
+  GALLERY: "gallery_bootcamp.jpg",  // optional default still if you add one
 };
 
-const MEDIA_VIDEO_MAP: Record<string, string> = {
-  TEAM_PHOTO: "team_photo.mp4",
-  BRAINSTORM: "brainstorm.mp4",
-  TEAM_CALL: "team_call.mp4",
+const MEDIA_VIDEO_MAP: Record<string, string | undefined> = {
+  TEAM_PHOTO: undefined,
+  BRAINSTORM: undefined,
+  TEAM_CALL: undefined,
   BOOTCAMP: "bootcamp.mov",
-  MEETING_THUY: "meeting_thuy.mp4",
+  MEETING_THUY: undefined,
   IDEA_REFINEMENT: "debate.mov",
   TEAM_LAUGH: "team_laugh.mov",
-  SANDY_WORKSHOP: "sandy_workshop.mp4",
-  DRAFT: "draft.mp4",
-  TRUNG_MEETING: "trung_meeting.mp4",
-  SURVEY: "survey.mp4",
-  FEEDBACK: "feedback.mp4",
-  PROPOSAL: "proposal.mp4",
-  KRISTEN: "kristen.mp4",
-  BUG: "bug.mp4",
-  CODING: "coding.mp4",
-  SIMONA: "simona.mp4",
-  TROY: "troy.mp4",
-  FINAL_SPRINT: "final_sprint.mp4",
-  REFLECTION: "reflection.mp4",
-  GALLERY: "gallery_bootcamp.mp4", // default video for gallery tiles
+  SANDY_WORKSHOP: undefined,
+  DRAFT: undefined,
+  TRUNG_MEETING: undefined,
+  SURVEY: undefined,
+  FEEDBACK: undefined,
+  PROPOSAL: "proposal.MOV",   // change to your actual case if needed
+  KRISTEN: undefined,
+  BUG: undefined,
+  CODING: undefined,
+  SIMONA: undefined,
+  TROY: undefined,
+  FINAL_SPRINT: undefined,
+  REFLECTION: "reflection.MP4", // ✅ case from your git status
+  GALLERY: "bootcamp.mp4",
 };
-
-// Build public URL (Vite-safe). For CRA you could use process.env.PUBLIC_URL instead.
-const publicImage = (file: string) =>
-  `${import.meta.env.BASE_URL}assets/Images/OurStory/${file}`;
-const publicVideo = (file: string) =>
-  `${import.meta.env.BASE_URL}assets/Videos/OurStory/${file}`;
 
 /* -----------------------------------------------------------
    PLACEHOLDER (supports fixed aspect ratio via aspectClass)
@@ -87,31 +113,31 @@ const PlaceholderMedia: React.FC<{
 
 /* -----------------------------------------------------------
    MEDIABLOCK
-   - Tries image; falls back to video if img 404.
-   - NEW: frameAspectClass enforces identical visible size.
-   - NEW: fit = "cover" (crop to fill) | "contain" (letterbox)
+   - Tries image; falls back to video if img 404/empty.
+   - frameAspectClass enforces identical visible size.
+   - fit = "cover" | "contain"
 ----------------------------------------------------------- */
 const MediaBlock: React.FC<{
   placeholderKey: string;
   alt: string;
   placeholderLabel: string;
-  frameAspectClass?: string; // e.g. "aspect-[4/3]", "aspect-video", "aspect-square"
-  fit?: "cover" | "contain"; // default cover
+  frameAspectClass?: string;
+  fit?: "cover" | "contain";
 }> = ({ placeholderKey, alt, placeholderLabel, frameAspectClass, fit = "cover" }) => {
   const [useVideo, setUseVideo] = useState(false);
 
   const imgFile = MEDIA_IMAGE_MAP[placeholderKey];
   const vidFile = MEDIA_VIDEO_MAP[placeholderKey];
-  const hasImg = Boolean(imgFile);
-  const hasVid = Boolean(vidFile);
+  const imgSrc = imageUrl(imgFile);
+  const vidSrc = videoUrl(vidFile);
+  const hasImg = !!imgFile && !!imgSrc;
+  const hasVid = !!vidFile && !!vidSrc;
 
   const fitClass = fit === "cover" ? "object-cover" : "object-contain";
 
   const renderInFrame = (node: React.ReactNode) => (
     <div
-      className={`relative w-full ${
-        frameAspectClass || "aspect-[16/9]"
-      } overflow-hidden rounded-xl bg-slate-100`}
+      className={`relative w-full ${frameAspectClass || "aspect-[16/9]"} overflow-hidden rounded-xl bg-slate-100`}
     >
       <div className="absolute inset-0">{node}</div>
     </div>
@@ -126,7 +152,7 @@ const MediaBlock: React.FC<{
   if (hasImg && !useVideo) {
     const imgEl = (
       <img
-        src={publicImage(imgFile)}
+        src={imgSrc}
         alt={alt}
         className={`h-full w-full ${fitClass} object-center rounded-xl`}
         onError={() => {
@@ -139,7 +165,7 @@ const MediaBlock: React.FC<{
       renderInFrame(imgEl)
     ) : (
       <img
-        src={publicImage(imgFile)}
+        src={imgSrc}
         alt={alt}
         className="w-full h-auto rounded-xl object-cover"
         onError={() => {
@@ -158,7 +184,7 @@ const MediaBlock: React.FC<{
         controls
         playsInline
         preload="metadata"
-        src={publicVideo(vidFile)}
+        src={vidSrc}
       >
         <track kind="captions" />
       </video>
@@ -171,7 +197,7 @@ const MediaBlock: React.FC<{
         controls
         playsInline
         preload="metadata"
-        src={publicVideo(vidFile)}
+        src={vidSrc}
       >
         <track kind="captions" />
       </video>
@@ -184,20 +210,19 @@ const MediaBlock: React.FC<{
 
 /* -----------------------------------------------------------
    GALLERYMEDIA (for per-item galleryItems)
-   - Always uses a uniform frame.
 ----------------------------------------------------------- */
 type GalleryItem = {
   type: "image" | "video";
-  file: string; // filename in assets or full URL
-  poster?: string; // optional poster for videos
+  file: string;             // filename in assets or full URL
+  poster?: string;          // optional poster for videos
   caption: Record<Language, string>;
 };
 
 const isHttp = (p?: string) => !!p && /^https?:\/\//i.test(p);
 const resolveSrc = (type: GalleryItem["type"], file: string) =>
-  isHttp(file) ? file : type === "image" ? publicImage(file) : publicVideo(file);
+  isHttp(file) ? file : type === "image" ? imageUrl(file) : videoUrl(file);
 const resolvePoster = (poster?: string) =>
-  poster ? (isHttp(poster) ? poster : publicImage(poster)) : undefined;
+  poster ? (isHttp(poster) ? poster : imageUrl(poster)) : undefined;
 
 const GalleryMedia: React.FC<{ item: GalleryItem; alt: string; aspect?: string; fit?: "cover" | "contain" }> = ({
   item,
@@ -263,7 +288,6 @@ const OurStoryPage: React.FC = () => {
               placeholderKey="TEAM_PHOTO"
               alt="Team"
               placeholderLabel={P.TEAM_PHOTO[lang]}
-              // HERO: keep natural media size (no fixed aspect here)
             />
           </div>
         </div>
@@ -292,14 +316,13 @@ const OurStoryPage: React.FC = () => {
                 <p className="mt-3 whitespace-pre-line text-slate-800">{e.body[lang]}</p>
               </div>
 
-              {/* DIARY MEDIA: enforce SAME visible size across all entries */}
               <div className="rounded-2xl border border-border bg-white p-4 shadow-md">
                 <MediaBlock
                   placeholderKey={e.placeholderKey}
                   alt={e.title?.[lang] || e.date[lang]}
                   placeholderLabel={P[e.placeholderKey][lang]}
-                  frameAspectClass="aspect-[4/3]" // 👈 pick one aspect & keep consistent
-                  fit="cover"                      // 👈 or "contain" to avoid cropping
+                  frameAspectClass="aspect-[4/3]"
+                  fit="cover"
                 />
               </div>
             </article>
@@ -323,9 +346,6 @@ const OurStoryPage: React.FC = () => {
               placeholderKey="REFLECTION"
               alt="Reflection"
               placeholderLabel={P.REFLECTION[lang]}
-              // Keep natural sizing here unless you want a fixed frame too:
-              // frameAspectClass="aspect-[4/3]"
-              // fit="cover"
             />
           </div>
         </div>
@@ -352,16 +372,15 @@ const OurStoryPage: React.FC = () => {
           {UI.media[lang]}
         </h2>
 
-        {/* Prefer the new per-item gallery if available; otherwise fall back to legacy list */}
         {Array.isArray((OUR_STORY_CONTENT as any).galleryItems) &&
         (OUR_STORY_CONTENT as any).galleryItems.length > 0 ? (
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {(OUR_STORY_CONTENT as any).galleryItems.map((item: GalleryItem, i: number) => (
+            {(OUR_STORY_CONTENT as any).galleryItems.map((item: any, i: number) => (
               <div key={i} className="rounded-2xl border border-border bg-white p-4 shadow-sm">
                 <GalleryMedia
                   item={item}
                   alt={item.caption[lang]}
-                  aspect="aspect-[4/3]" // 👈 uniform frame for gallery tiles
+                  aspect="aspect-[4/3]"
                   fit="cover"
                 />
                 <p className="mt-2 text-center text-sm font-medium text-slate-700">
@@ -375,10 +394,10 @@ const OurStoryPage: React.FC = () => {
             {OUR_STORY_CONTENT.gallery?.[lang]?.map((g, i) => (
               <div key={i} className="rounded-2xl border border-border bg-white p-4 shadow-sm">
                 <MediaBlock
-                  placeholderKey="GALLERY" // default gallery asset (image/video)
+                  placeholderKey="GALLERY"
                   alt={g}
                   placeholderLabel={UI.placeholders.GALLERY[lang]}
-                  frameAspectClass="aspect-[4/3]" // 👈 uniform frame for legacy tiles too
+                  frameAspectClass="aspect-[4/3]"
                   fit="cover"
                 />
                 <p className="mt-2 text-center text-sm font-medium text-slate-700">{g}</p>
