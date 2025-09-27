@@ -63,7 +63,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <img
-              src={asset("assets/Images/logo.png")}  // file must be at public/assets/Images/logo.png
+              src={asset("assets/images/logo.png")}  // file must be at public/assets/Images/logo.png
               alt="AICC Logo"
               className="h-14 w-auto block object-contain" // explicit size so it can't collapse
               width={42}

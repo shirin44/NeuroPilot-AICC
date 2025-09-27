@@ -151,7 +151,7 @@ export const ABOUT_PAGE_CONTENT = {
   team: [
     {
       name: "Shirin Shujaa",
-      avatarSrc: "assets/Images/us/shirin.JPG",
+      avatarSrc: "assets/images/us/shirin.JPG",
       portfolioUrl: "https://shirin44.github.io/shirin-portfolio/",
       linkedinUrl: "https://www.linkedin.com/in/shirin-shujaa/",
       resumeUrl:
@@ -171,7 +171,7 @@ export const ABOUT_PAGE_CONTENT = {
     },
     {
       name: "Nghi Trinh",
-      avatarSrc: "assets/Images/us/steph.JPG",
+      avatarSrc: "assets/images/us/steph.JPG",
       portfolioUrl:
         "https://drive.google.com/file/d/1ycbTzHmodeJGU4ryWYq-8wgGgkXB9WY8/view?usp=sharing",
       linkedinUrl: "https://www.linkedin.com/in/nghi-tr%E1%BB%8Bnh-961bab274/",
@@ -190,7 +190,7 @@ export const ABOUT_PAGE_CONTENT = {
     },
     {
       name: "Thao Trinh",
-      avatarSrc: "assets/Images/us/Thao.JPG",
+      avatarSrc: "assets/images/us/Thao.JPG",
       linkedinUrl:
         "https://www.linkedin.com/in/thao-trinh-73ab23172/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
       title: {
@@ -211,7 +211,7 @@ export const ABOUT_PAGE_CONTENT = {
   mentors: [
     {
       name: "Sandy Sinn",
-      avatarSrc: "assets/Images/Sandy.jpg",
+      avatarSrc: "assets/images/Sandy.jpg",
       role: {
         [Language.EN]: "Founder of CPPWB, Suicide Prevention Educator",
         [Language.VN]: "Nhà sáng lập CPPWB, Nhà giáo dục phòng chống tự tử",
@@ -225,7 +225,7 @@ export const ABOUT_PAGE_CONTENT = {
     },
     {
       name: "Troy Yeo",
-      avatarSrc: "assets/Images/Troy.jpg",
+      avatarSrc: "assets/images/Troy.jpg",
       role: {
         [Language.EN]: "Founder & COO, AI-powered automation for SMB and Enterprises",
         [Language.VN]: "Đồng sáng lập & COO, tự động hóa dùng AI cho SMB và Doanh nghiệp",
@@ -239,7 +239,7 @@ export const ABOUT_PAGE_CONTENT = {
     },
     {
       name: "Hieu Phung",
-      avatarSrc: "assets/Images/Hieu.jpg",
+      avatarSrc: "assets/images/Hieu.jpg",
       role: {
         [Language.EN]: "Mentor / Advisor",
         [Language.VN]: "Cố vấn",
@@ -253,7 +253,7 @@ export const ABOUT_PAGE_CONTENT = {
     },
     {
       name: "Ngọc Quách",
-      avatarSrc: "assets/Images/NgocQuach.jpg",
+      avatarSrc: "assets/images/NgocQuach.jpg",
       role: {
         [Language.EN]:
           "Psychologist since 2017, supporting autistic teenagers and families in communication, emotional regulation, and self-advocacy",
@@ -269,7 +269,7 @@ export const ABOUT_PAGE_CONTENT = {
     },
     {
       name: "Kristen Lewis",
-      avatarSrc: "assets/Images/Kristen.jpg",
+      avatarSrc: "assets/images/Kristen.jpg",
       role: {
         [Language.EN]:
           "Accessibility Mentor, Employment Inclusion Specialist at Imago Work (Hanoi); 6 years in vocational training for young adults with intellectual disabilities",
@@ -285,7 +285,7 @@ export const ABOUT_PAGE_CONTENT = {
     },
     {
       name: "Thanh Thuý",
-      avatarSrc: "assets/Images/Thuy.jpg",
+      avatarSrc: "assets/images/Thuy.jpg",
       role: {
         [Language.EN]: "Mentor / Community Partner",
         [Language.VN]: "Cố vấn / Đối tác cộng đồng",
@@ -299,7 +299,7 @@ export const ABOUT_PAGE_CONTENT = {
     },
     {
       name: "Trung VAP",
-      avatarSrc: "assets/Images/TrungVAP.jpg",
+      avatarSrc: "assets/images/TrungVAP.jpg",
       role: {
         [Language.EN]: "Mentor / Industry Partner",
         [Language.VN]: "Cố vấn / Đối tác doanh nghiệp",
@@ -313,7 +313,7 @@ export const ABOUT_PAGE_CONTENT = {
     },
     {
       name: "Simona Bossoni",
-      avatarSrc: "assets/Images/Simona.png",
+      avatarSrc: "assets/images/Simona.png",
       role: {
         [Language.EN]:
           "Head of Child Development Department (HCMC hospital); Lecturer at National College of Education; Consultant for special schools and kindergartens",

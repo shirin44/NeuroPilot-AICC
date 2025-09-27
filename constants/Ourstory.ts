@@ -4,7 +4,7 @@ import { Language, StoryEntry, PlaceholderKey } from "@/types";
 /** Per-tile media schema for the gallery. */
 export type GalleryItem = {
   type: "image" | "video";
-  /** File name inside assets/Images/OurStory or assets/Videos/OurStory, OR a full URL */
+  /** File name inside assets/images/OurStory or assets/Videos/OurStory, OR a full URL */
   file: string;
   /** Optional poster image for videos (file name or URL) */
   poster?: string;
