@@ -52,7 +52,7 @@ const HeroSection: React.FC = () => {
         <h1 className="font-display text-4xl md:text-6xl font-extrabold text-foreground flex items-center justify-center gap-3 md:gap-4">
           <span>{H.hero.title[lang]}</span>
           <img
-            src='assets/Images/logo.png'
+            src='public/assets/Images/logo.png'
             alt="AICC logo"
             className="h-24 md:h-124 w-auto align-middle"
           />
@@ -75,7 +75,7 @@ const HeroSection: React.FC = () => {
         <div className="mt-12 w-full max-w-4xl mx-auto aspect-video rounded-2xl shadow-2xl border-2 border-border relative overflow-hidden">
           <video
             ref={videoRef}
-            src="/assets/Videos/home.mov"
+            src="/public/assets/Videos/home.mov"
             // Or, if importing from src: src={homeVideo}
             className="absolute inset-0 w-full h-full object-cover"
             playsInline
