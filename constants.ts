@@ -16,9 +16,9 @@ export const NARRATORS: Record<NarratorRole, Narrator> = {
     },
     hover: { [Language.EN]: "Let's practice interviews!", [Language.VN]: "Hãy luyện tập phỏng vấn!" },
     avatars: {
-      neutral: 'public/assets/characters/candidates/candidates_neutral.png',
-      happy: 'public/assets/characters/candidates/candidates_happy.png',
-      sad: 'public/assets/characters/candidates/candidates_sad.png',
+      neutral: 'assets/characters/candidates/candidates_neutral.png',
+      happy: 'assets/characters/candidates/candidates_happy.png',
+      sad: 'assets/characters/candidates/candidates_sad.png',
     },
     theme: 'blue'
   },
@@ -31,9 +31,9 @@ export const NARRATORS: Record<NarratorRole, Narrator> = {
     },
     hover: { [Language.EN]: "Learn inclusive hiring.", [Language.VN]: "Học cách tuyển dụng hòa nhập." },
     avatars: {
-      neutral: 'public/assets/characters/employers/employers_neutral.png',
-      happy: 'public/assets/characters/employers/employers_happy.png',
-      sad: 'public/assets/characters/employers/employers_sad.png',
+      neutral: 'assets/characters/employers/employers_neutral.png',
+      happy: 'assets/characters/employers/employers_happy.png',
+      sad: 'assets/characters/employers/employers_sad.png',
     },
     theme: 'purple'
   },
@@ -46,9 +46,9 @@ export const NARRATORS: Record<NarratorRole, Narrator> = {
     },
     hover: { [Language.EN]: "Support your child's growth.", [Language.VN]: "Hỗ trợ sự phát triển của con bạn." },
     avatars: {
-      neutral: 'public/assets/characters/parents/parents_neutral.png',
-      happy: 'public/assets/characters/parents/parents_happy.png',
-      sad: 'public/assets/characters/parents/parents_sad.png',
+      neutral: 'assets/characters/parents/parents_neutral.png',
+      happy: 'assets/characters/parents/parents_happy.png',
+      sad: 'assets/characters/parents/parents_sad.png',
     },
     theme: 'red'
   },
@@ -61,9 +61,9 @@ export const NARRATORS: Record<NarratorRole, Narrator> = {
     },
     hover: { [Language.EN]: "Be an empathetic peer.", [Language.VN]: "Trở thành một người bạn đồng cảm." },
     avatars: {
-      neutral: 'public/assets/characters/volunteers/volunteers_neutral.png',
-      happy: 'public/assets/characters/volunteers/volunteers_happy.png',
-      sad: 'public/assets/characters/volunteers/volunteers_sad.png',
+      neutral: 'assets/characters/volunteers/volunteers_neutral.png',
+      happy: 'assets/characters/volunteers/volunteers_happy.png',
+      sad: 'assets/characters/volunteers/volunteers_sad.png',
     },
     theme: 'green'
   },

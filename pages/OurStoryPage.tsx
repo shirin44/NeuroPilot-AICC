@@ -60,9 +60,9 @@ const MEDIA_VIDEO_MAP: Record<string, string> = {
 
 // Build public URL (Vite-safe). For CRA you could use process.env.PUBLIC_URL instead.
 const publicImage = (file: string) =>
-  `${import.meta.env.BASE_URL}public/assets/Images/OurStory/${file}`;
+  `${import.meta.env.BASE_URL}assets/Images/OurStory/${file}`;
 const publicVideo = (file: string) =>
-  `${import.meta.env.BASE_URL}public/assets/Videos/OurStory/${file}`;
+  `${import.meta.env.BASE_URL}assets/Videos/OurStory/${file}`;
 
 /* -----------------------------------------------------------
    PLACEHOLDER (supports fixed aspect ratio via aspectClass)
