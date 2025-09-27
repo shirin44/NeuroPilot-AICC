@@ -48,7 +48,7 @@ const HeroSection: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center relative bg-gradient-to-b from-background to-muted/50">
       <div className="w-full max-w-5xl px-4 animate-fadeInUp">
-        {/* Heading: "This is" + LOGO image (no brand text) */}
+       
         <h1 className="font-display text-4xl md:text-6xl font-extrabold text-foreground flex items-center justify-center gap-3 md:gap-4">
           <span>{H.hero.title[lang]}</span>
           <img
@@ -216,17 +216,16 @@ const Sponsors: React.FC = () => {
         {H.sponsors.title[lang]}
       </h2>
       <div className="flex justify-center items-center space-x-8 md:space-x-12 text-muted-foreground">
-        <span className="font-bold text-lg">{H.sponsors.labels.adc[lang]}</span>
-        <span className="font-bold text-lg">
-          {H.sponsors.labels.sponsor[lang]}
-        </span>
-        <span className="font-bold text-lg">
-          {H.sponsors.labels.partner[lang]}
-        </span>
-        <span className="font-bold text-lg">
-          {H.sponsors.labels.university[lang]}
-        </span>
-      </div>
+  <span className="font-bold text-lg">{H.sponsors.labels.adc[lang]}</span>
+  
+  {/* Replace this */}
+  <img
+    src='https://1000logos.net/wp-content/uploads/2019/07/RMIT-Logo.png'
+    alt="RMIT University Logo"
+    className="h-10 md:h-12 w-auto"
+  />
+</div>
+
     </section>
   );
 };

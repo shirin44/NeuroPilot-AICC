@@ -9,15 +9,9 @@ import { OUR_STORY_CONTENT } from "../constants/Ourstory";
 const normalizeLang = (l: unknown): Language =>
   l === Language.VN || l === "vi" || l === "VN" ? Language.VN : Language.EN;
 
-/** Map placeholder keys -> image/video filenames living in:
- *  - public/assets/Images/OurStory/<file>
- *  - public/assets/Videos/OurStory/<file>
- *
- *  Rename these to match your real assets.
- */
 const MEDIA_IMAGE_MAP: Record<string, string> = {
-  TEAM_PHOTO: "team_photo.jpg",
-  BRAINSTORM: "brainstorm.jpg",
+  TEAM_PHOTO: "us.png",
+  BRAINSTORM:  "team_photo.jpg",
   TEAM_CALL: "team_call.jpg",
   BOOTCAMP: "bootcamp.jpg",
   MEETING_THUY: "meeting_thuy.png",
@@ -30,7 +24,7 @@ const MEDIA_IMAGE_MAP: Record<string, string> = {
   SURVEY: "survey.jpg",
   FEEDBACK: "feedback.jpg",
   PROPOSAL: "proposal.jpg",
-  KRISTEN: "kristen.jpg",
+  KRISTEN: "kristen.png",
   BUG: "bug.jpg",
   CODING: "coding.jpg",
   SIMONA: "simona.png",
