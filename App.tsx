@@ -1,7 +1,5 @@
-
-
 import React, { useState, useMemo, useEffect } from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
@@ -11,7 +9,7 @@ import CalmBreathingGuide from './components/CalmBreathingGuide';
 import ModeSelectionPage from './pages/ModeSelectionPage';
 import OurStoryPage from './pages/OurStoryPage';
 import { NARRATORS } from './constants';
-import "./index.css";
+import './index.css';
 
 export const AppContext = React.createContext<{
   language: Language;
@@ -53,35 +51,36 @@ const App: React.FC = () => {
     // Apply theme class to body
     const body = document.body;
     body.classList.remove('theme-blue', 'theme-red', 'theme-purple', 'theme-green');
-    
+
     if (narratorRole) {
       const theme = NARRATORS[narratorRole].theme;
       body.classList.add(`theme-${theme}`);
-    } else {
-      // When no role is selected (e.g., on homepage), remove any specific theme class
-      // to fall back to the :root default (which is blue).
     }
   }, [narratorRole]);
 
-  const contextValue = useMemo(() => ({
-    language,
-    setLanguage,
-    narratorRole,
-    setNarratorRole,
-    mode,
-    setMode,
-    isBreathingGuideVisible,
-    setIsBreathingGuideVisible,
-    narratorDialogue,
-    setNarratorDialogue,
-    narratorState, 
-    setNarratorState,
-  }), [language, narratorRole, mode, isBreathingGuideVisible, narratorDialogue, narratorState]);
+  const contextValue = useMemo(
+    () => ({
+      language,
+      setLanguage,
+      narratorRole,
+      setNarratorRole,
+      mode,
+      setMode,
+      isBreathingGuideVisible,
+      setIsBreathingGuideVisible,
+      narratorDialogue,
+      setNarratorDialogue,
+      narratorState,
+      setNarratorState,
+    }),
+    [language, narratorRole, mode, isBreathingGuideVisible, narratorDialogue, narratorState]
+  );
 
   return (
     <AppContext.Provider value={contextValue}>
       {isBreathingGuideVisible && <CalmBreathingGuide />}
-      <HashRouter>
+      {/* ✅ BrowserRouter with BASE_URL for GitHub Pages */}
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -89,10 +88,8 @@ const App: React.FC = () => {
           <Route path="/mode-selection" element={<ModeSelectionPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/ourStory" element={<OurStoryPage />} />
-
-
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </AppContext.Provider>
   );
 };
