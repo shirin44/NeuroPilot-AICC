@@ -2,126 +2,153 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- ✅ Use BASE_URL for GitHub Pages to rewrite paths correctly -->
-    <link rel="icon" type="image/svg+xml" href="/NeuroPilot-AICC/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AICC</title>
-
-    <!-- Tailwind & EmailJS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-    <!-- Fonts -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Theme colors, animations, tailwind config -->
     <style>
       :root {
         /* Default Light Theme: Jobseeker (Blue) - High Contrast Update */
         --background: 220 16% 96%; /* #F1F5F9 */
         --foreground: 222 47% 11%; /* #0F172A */
-        --card: 0 0% 100%;
+        --card: 0 0% 100%; /* #FFFFFF */
         --card-foreground: 222 47% 11%;
-        --primary: 224 71% 40%;
-        --primary-foreground: 0 0% 100%;
-        --secondary: 220 16% 96%;
+        --primary: 224 71% 40%; /* #1E40AF - Darker blue for AA */
+        --primary-foreground: 0 0% 100%; /* #FFFFFF */
+        --secondary: 220 16% 96%; /* #F1F5F9 */
         --secondary-foreground: 222 47% 11%;
-        --accent: 267 27% 48%;
+        --accent: 267 27% 48%; /* #7A5DA0 - Purple for contrast */
         --accent-foreground: 0 0% 100%;
         --muted: 220 16% 96%;
-        --muted-foreground: 220 14% 25%;
-        --border: 215 20% 87%;
+        --muted-foreground: 220 14% 25%; /* #334155 - Darker for AA */
+        --border: 215 20% 87%; /* #E2E8F0 */
         --ring: 224 71% 40%;
-        --success: 145 63% 42%;
-        --warning: 45 93% 47%;
-        --danger: 0 72% 51%;
+        --success: 145 63% 42%; /* A clear, accessible green */
+        --warning: 45 93% 47%; /* A clear, accessible yellow/orange */
+        --danger: 0 72% 51%; /* A clear, accessible red */
       }
-    
       .theme-blue {
-        --background: 210 40% 88%;
-        --foreground: 215 25% 20%;
-        --card: 0 0% 100%;
-        --card-foreground: 215 25% 20%;
-        --primary: 211 60% 55%;
-        --primary-foreground: 0 0% 100%;
-        --secondary: 210 35% 75%;
+        /* Jobseeker - Pastel Contrast */
+        --background: 210 40% 88%; /* soft light blue-gray */
+        --foreground: 215 25% 20%; /* dark navy-gray for readability */
+
+        --card: 0 0% 100%; /* white cards pop against bg */
+        --card-foreground: 215 25% 20%; /* same dark navy-gray for text */
+
+        --primary: 211 60% 55%; /* medium blue (good contrast vs bg) */
+        --primary-foreground: 0 0% 100%; /* white text on blue */
+
+        --secondary: 210 35% 75%; /* lighter pastel blue block */
         --secondary-foreground: 215 25% 20%;
-        --accent: 209 55% 50%;
+
+        --accent: 209 55% 50%; /* richer teal-blue for callouts */
         --accent-foreground: 0 0% 100%;
-        --muted: 210 20% 82%;
-        --muted-foreground: 215 20% 30%;
-        --border: 210 20% 70%;
+
+        --muted: 210 20% 82%; /* softer gray-blue areas */
+        --muted-foreground: 215 20% 30%; /* muted text still legible */
+
+        --border: 210 20% 70%; /* border separates softly */
         --ring: 211 60% 55%;
-        --success: 145 45% 45%;
-        --warning: 40 85% 55%;
-        --danger: 0 70% 50%;
+
+        --success: 145 45% 45%; /* earthy green, still readable */
+        --warning: 40 85% 55%; /* amber yellow */
+        --danger: 0 70% 50%; /* coral red */
       }
-    
+
       .theme-red {
-        --background: 10 45% 90%;
-        --foreground: 10 25% 20%;
-        --card: 0 0% 100%;
-        --card-foreground: 10 25% 20%;
-        --primary: 10 65% 55%;
-        --primary-foreground: 0 0% 100%;
-        --secondary: 15 40% 75%;
+        /* CareGiver - Pastel Contrast */
+        --background: 10 45% 90%; /* soft peach-pink background */
+        --foreground: 10 25% 20%; /* deep warm brown for text */
+
+        --card: 0 0% 100%; /* white cards on pastel background */
+        --card-foreground: 10 25% 20%; /* same dark warm brown */
+
+        --primary: 10 65% 55%; /* coral red for buttons/highlights */
+        --primary-foreground: 0 0% 100%; /* white text on coral */
+
+        --secondary: 15 40% 75%; /* pastel orange-pink block */
         --secondary-foreground: 10 25% 20%;
-        --accent: 5 60% 50%;
+
+        --accent: 5 60% 50%; /* muted red accent (still readable) */
         --accent-foreground: 0 0% 100%;
-        --muted: 12 30% 82%;
-        --muted-foreground: 10 20% 30%;
-        --border: 12 20% 70%;
+
+        --muted: 12 30% 82%; /* light dusty rose for muted areas */
+        --muted-foreground: 10 20% 30%; /* soft but legible muted text */
+
+        --border: 12 20% 70%; /* light pink-beige border */
         --ring: 10 65% 55%;
-        --success: 145 45% 45%;
-        --warning: 40 85% 55%;
-        --danger: 0 70% 50%;
+
+        --success: 145 45% 45%; /* earthy green */
+        --warning: 40 85% 55%; /* amber yellow */
+        --danger: 0 70% 50%; /* coral red */
       }
-    
+
       .theme-purple {
-        --background: 270 40% 92%;
-        --foreground: 270 30% 20%;
-        --card: 0 0% 100%;
-        --card-foreground: 270 30% 20%;
-        --primary: 267 45% 60%;
-        --primary-foreground: 0 0% 100%;
-        --secondary: 268 30% 80%;
+        /* Employer - Pastel Contrast */
+        --background: 270 40% 92%; /* lavender pastel background */
+        --foreground: 270 30% 20%; /* deep plum text */
+
+        --card: 0 0% 100%; /* white cards */
+        --card-foreground: 270 30% 20%; /* dark plum text on cards */
+
+        --primary: 267 45% 60%; /* rich lavender for buttons */
+        --primary-foreground: 0 0% 100%; /* white text on lavender */
+
+        --secondary: 268 30% 80%; /* softer pastel purple */
         --secondary-foreground: 270 30% 20%;
-        --accent: 269 40% 55%;
+
+        --accent: 269 40% 55%; /* muted violet accent */
         --accent-foreground: 0 0% 100%;
-        --muted: 270 25% 85%;
-        --muted-foreground: 270 20% 30%;
-        --border: 270 20% 75%;
+
+        --muted: 270 25% 85%; /* pale lilac muted bg */
+        --muted-foreground: 270 20% 30%; /* muted text */
+
+        --border: 270 20% 75%; /* lavender-gray borders */
         --ring: 267 45% 60%;
-        --success: 145 45% 45%;
-        --warning: 40 85% 55%;
-        --danger: 0 70% 50%;
+
+        --success: 145 45% 45%; /* soft green */
+        --warning: 40 85% 55%; /* amber yellow */
+        --danger: 0 70% 50%; /* coral red */
       }
-    
+
       .theme-green {
-        --background: 135 35% 92%;
-        --foreground: 135 25% 20%;
-        --card: 0 0% 100%;
-        --card-foreground: 135 25% 20%;
-        --primary: 135 40% 50%;
-        --primary-foreground: 0 0% 100%;
-        --secondary: 135 30% 80%;
+        /* Volunteer - Pastel Contrast */
+        --background: 135 35% 92%; /* mint pastel background */
+        --foreground: 135 25% 20%; /* dark forest green text */
+
+        --card: 0 0% 100%; /* white cards */
+        --card-foreground: 135 25% 20%; /* dark green text on cards */
+
+        --primary: 135 40% 50%; /* medium green for buttons */
+        --primary-foreground: 0 0% 100%; /* white text on green */
+
+        --secondary: 135 30% 80%; /* pale mint blocks */
         --secondary-foreground: 135 25% 20%;
-        --accent: 135 35% 55%;
+
+        --accent: 135 35% 55%; /* fresh green accent */
         --accent-foreground: 0 0% 100%;
-        --muted: 135 20% 85%;
-        --muted-foreground: 135 20% 30%;
-        --border: 135 20% 75%;
+
+        --muted: 135 20% 85%; /* light sage muted bg */
+        --muted-foreground: 135 20% 30%; /* muted text */
+
+        --border: 135 20% 75%; /* sage-gray border */
         --ring: 135 40% 50%;
-        --success: 145 45% 45%;
-        --warning: 40 85% 55%;
-        --danger: 0 70% 50%;
+
+        --success: 145 45% 45%; /* earthy green */
+        --warning: 40 85% 55%; /* amber */
+        --danger: 0 70% 50%; /* coral red */
       }
-    
+
       .force-light-theme {
         --background: 220 16% 96%;
         --foreground: 222 47% 11%;
@@ -138,7 +165,7 @@
         --border: 215 20% 87%;
         --ring: 224 71% 40%;
       }
-    
+
       @media (prefers-reduced-motion: reduce) {
         *,
         *::before,
@@ -149,45 +176,89 @@
           scroll-behavior: auto !important;
         }
       }
-    
+
       @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-8px); }
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
       }
-      .animate-float { animation: float 6s infinite ease-in-out; }
-    
+      .animate-float {
+        animation: float 6s infinite ease-in-out;
+      }
       @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-      .animate-fadeInUp { animation: fadeInUp 0.4s ease-out forwards; }
-    
+      .animate-fadeInUp {
+        animation: fadeInUp 0.4s ease-out forwards;
+      }
       @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
-      .animate-fadeIn { animation: fadeIn 0.5s ease-in-out forwards; }
-    
+      .animate-fadeIn {
+        animation: fadeIn 0.5s ease-in-out forwards;
+      }
       @keyframes pulse-calm {
-        0% { transform: scale(1); box-shadow: 0 0 0 0 hsl(var(--primary)/0.4); }
-        70% { transform: scale(1.05); box-shadow: 0 0 0 10px hsl(var(--primary)/0); }
-        100% { transform: scale(1); box-shadow: 0 0 0 0 hsl(var(--primary)/0); }
+        0% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4);
+        }
+        70% {
+          transform: scale(1.05);
+          box-shadow: 0 0 0 10px hsl(var(--primary) / 0);
+        }
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 hsl(var(--primary) / 0);
+        }
       }
-      .animate-pulse-calm { animation: pulse-calm 3s infinite; }
-    
+      .animate-pulse-calm {
+        animation: pulse-calm 3s infinite;
+      }
       @keyframes progress-node-pulse {
-        0%,100% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.2); opacity: 0.8; }
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 0.8;
+        }
       }
-      .animate-progress-node-pulse { animation: progress-node-pulse 2s infinite ease-in-out; }
-    
+      .animate-progress-node-pulse {
+        animation: progress-node-pulse 2s infinite ease-in-out;
+      }
       @keyframes bounce-slow {
-        0%,100% { transform: translateY(0); animation-timing-function: cubic-bezier(0.8,0,1,1);}
-        50% { transform: translateY(-15px); animation-timing-function: cubic-bezier(0,0,0.2,1);}
+        0%,
+        100% {
+          transform: translateY(0);
+          animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+        }
+        50% {
+          transform: translateY(-15px);
+          animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+        }
       }
-      .animate-bounce-slow { animation: bounce-slow 2s infinite; }
+      .animate-bounce-slow {
+        animation: bounce-slow 2s infinite;
+      }
     </style>
-    
     <script>
       tailwind.config = {
         theme: {
@@ -224,13 +295,69 @@
               success: "hsl(var(--success))",
               warning: "hsl(var(--warning))",
               danger: "hsl(var(--danger))",
+              "brand-blue": {
+                50: "#F3F7FB",
+                100: "#E3EEF6",
+                200: "#CEE3EF",
+                300: "#ABD0E5",
+                400: "#8BBBD9",
+                500: "#669DCB",
+                600: "#5386BD",
+                700: "#4873AD",
+                800: "#3F5F8E",
+                900: "#375071",
+                950: "#253346",
+              },
+              "brand-red": {
+                50: "#FCF5F0",
+                100: "#F9E8DB",
+                200: "#F2CDB6",
+                300: "#E6A17A",
+                400: "#DF8158",
+                500: "#D76138",
+                600: "#C94B2D",
+                700: "#A73927",
+                800: "#863026",
+                900: "#6C2A22",
+                950: "#3A1310",
+              },
+              "brand-purple": {
+                50: "#FAF8FC",
+                100: "#F3EFF8",
+                200: "#EAE3F1",
+                300: "#D8CCE6",
+                400: "#B8A2D1",
+                500: "#A589C3",
+                600: "#8E6EAF",
+                700: "#785997",
+                800: "#664D7C",
+                900: "#533F64",
+              },
+              "brand-green": {
+                50: "#F1F8F1",
+                100: "#DFEDDE",
+                200: "#C0DBBF",
+                300: "#94C196",
+                400: "#7BAE7F",
+                500: "#45844C",
+                600: "#33683A",
+                700: "#28542F",
+                800: "#224328",
+                900: "#1D3722",
+                950: "#0F1F12",
+              },
+              "brand-neutral": {
+                100: "#F5F5F5",
+                300: "#E0E0E0",
+                500: "#9E9E9E",
+                700: "#616161",
+                900: "#212121",
+              },
             },
           },
         },
       };
     </script>
-
-    <!-- Optional import map if you want CDN fallback -->
 
     <script type="importmap">
       {
@@ -248,8 +375,5 @@
   </head>
   <body class="bg-background font-sans text-foreground">
     <div id="root"></div>
-    <!-- ✅ ENTRY SCRIPT — do NOT delete -->
-    <!-- If your main entry is at project root: -->
-    <!-- (If your entry is actually in src/main.tsx, change the path accordingly) -->
   </body>
 </html>
