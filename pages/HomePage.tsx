@@ -6,6 +6,7 @@ import { HOME_PAGE_CONTENT } from "@/constants/homePage";
 import { NarratorRole, Language } from "../types";
 import { AppContext } from "../App";
 import { asset } from "@/utils/asset";
+
 // If your video lives under src/assets/... use this import:
 // import homeVideo from "@/assets/Videos/home.mp4";
 
