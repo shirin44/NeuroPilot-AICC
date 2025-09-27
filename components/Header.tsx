@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { AppContext } from '../App';
-import { HEADER_CONTENT } from '@/constants/Header';  
-import { Language, NarratorRole } from '../types';
-import Tooltip from './Tooltip';
-
-
+// components/Header.tsx
+import React, { useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AppContext } from "../App";
+import { HEADER_CONTENT } from "@/constants/Header";
+import { Language, NarratorRole } from "../types";
+import Tooltip from "./Tooltip";
+import { asset } from "@/utils/asset"; // ← base-aware asset helper
 
 const LanguageToggle: React.FC = () => {
   const { language, setLanguage } = useContext(AppContext);
@@ -23,9 +23,9 @@ const LanguageToggle: React.FC = () => {
         className="flex items-center space-x-2 px-3 py-2 border border-border rounded-full text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
         aria-label="Toggle language"
       >
-        <span className={language === Language.EN ? 'font-bold text-primary' : ''}>EN</span>
+        <span className={language === Language.EN ? "font-bold text-primary" : ""}>EN</span>
         <span>/</span>
-        <span className={language === Language.VN ? 'font-bold text-primary' : ''}>VN</span>
+        <span className={language === Language.VN ? "font-bold text-primary" : ""}>VN</span>
       </button>
     </Tooltip>
   );
@@ -39,21 +39,21 @@ const Header: React.FC = () => {
   const handleSelectRole = (role: NarratorRole) => {
     setNarratorRole(role);
     setMode(null);
-    navigate('/mode-selection');
+    navigate("/mode-selection");
   };
 
   const navLinks = [
-    { path: '/', label: HEADER_CONTENT.nav.home[language] },
-    { path: '/about', label: HEADER_CONTENT.nav.about[language] },
-    { path: '/contact', label: HEADER_CONTENT.nav.contact[language] },
-    { path: '/OurStory', label: HEADER_CONTENT.nav.ourStory[language] },
+    { path: "/", label: HEADER_CONTENT.nav.home[language] },
+    { path: "/about", label: HEADER_CONTENT.nav.about[language] },
+    { path: "/contact", label: HEADER_CONTENT.nav.contact[language] },
+    { path: "/OurStory", label: HEADER_CONTENT.nav.ourStory[language] },
   ];
 
   const roleNavLinks = [
-    { role: NarratorRole.Jobseeker, label: HEADER_CONTENT.roles.jobseeker[language], theme: 'blue', colorClass: 'hover:text-brand-blue-400' },
-    { role: NarratorRole.Employer, label: HEADER_CONTENT.roles.employer[language], theme: 'purple', colorClass: 'hover:text-brand-purple-400' },
-    { role: NarratorRole.CareGiver, label: HEADER_CONTENT.roles.CareGiver[language], theme: 'red', colorClass: 'hover:text-brand-red-300' },
-    { role: NarratorRole.Volunteer, label: HEADER_CONTENT.roles.volunteer[language], theme: 'green', colorClass: 'hover:text-brand-green-400' },
+    { role: NarratorRole.Jobseeker, label: HEADER_CONTENT.roles.jobseeker[language], colorClass: "hover:text-brand-blue-400" },
+    { role: NarratorRole.Employer, label: HEADER_CONTENT.roles.employer[language], colorClass: "hover:text-brand-purple-400" },
+    { role: NarratorRole.CareGiver, label: HEADER_CONTENT.roles.CareGiver[language], colorClass: "hover:text-brand-red-300" },
+    { role: NarratorRole.Volunteer, label: HEADER_CONTENT.roles.volunteer[language], colorClass: "hover:text-brand-green-400" },
   ];
 
   return (
@@ -61,11 +61,15 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <img 
-              src='assets/Images/logo.png'
-              alt="AICC Logo" 
-              className="h-12 w-12 object-contain"
+          <Link to="/" className="flex items-center gap-2">
+            <img
+              src={asset("assets/Images/logo.png")}  // file must be at public/assets/Images/logo.png
+              alt="AICC Logo"
+              className="h-14 w-auto block object-contain" // explicit size so it can't collapse
+              width={42}
+              height={42}
+              loading="eager"
+              fetchPriority="high"
             />
           </Link>
 
@@ -77,15 +81,15 @@ const Header: React.FC = () => {
                 to={link.path}
                 className={`font-medium transition-colors ${
                   location.pathname === link.path
-                    ? 'text-primary border-b-2 border-primary'
-                    : 'text-muted-foreground hover:text-primary'
+                    ? "text-primary border-b-2 border-primary"
+                    : "text-muted-foreground hover:text-primary"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
-            <div className="h-6 w-px bg-border"></div>
-            {roleNavLinks.map(link => (
+            <div className="h-6 w-px bg-border" />
+            {roleNavLinks.map((link) => (
               <button
                 key={link.role}
                 onClick={() => handleSelectRole(link.role)}
