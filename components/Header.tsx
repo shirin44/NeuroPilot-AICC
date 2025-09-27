@@ -5,14 +5,13 @@ import { AppContext } from "../App";
 import { HEADER_CONTENT } from "@/constants/Header";
 import { Language, NarratorRole } from "../types";
 import Tooltip from "./Tooltip";
-import { asset } from "@/utils/asset"; // ← base-aware asset helper
 
+import logoUrl from "@/src/assets/images/logo.png"; 
 const LanguageToggle: React.FC = () => {
   const { language, setLanguage } = useContext(AppContext);
   const toggleLanguage = () => {
     setLanguage(language === Language.EN ? Language.VN : Language.EN);
   };
-
   return (
     <Tooltip
       tip={language === Language.EN ? "Chuyển sang tiếng Việt" : "Switch to English"}
@@ -63,11 +62,9 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <img
-              src={asset("assets/images/logo.png")}  // file must be at public/assets/Images/logo.png
+              src={logoUrl}               
               alt="AICC Logo"
-              className="h-14 w-auto block object-contain" // explicit size so it can't collapse
-              width={42}
-              height={42}
+              className="h-14 w-auto block object-contain"
               loading="eager"
               fetchPriority="high"
             />
