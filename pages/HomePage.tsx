@@ -52,7 +52,7 @@ const HeroSection: React.FC = () => {
         <h1 className="font-display text-4xl md:text-6xl font-extrabold text-foreground flex items-center justify-center gap-3 md:gap-4">
           <span>{H.hero.title[lang]}</span>
           <img
-            src='https://drive.google.com/file/d/1YqzJaleHv9m3pYNSxakjV2msSW-8BLb0/view?usp=share_link'
+            src='public/assets/Images/logo.png'
             alt="AICC logo"
             className="h-24 md:h-124 w-auto align-middle"
           />
