@@ -75,7 +75,7 @@ const HeroSection: React.FC = () => {
         <div className="mt-12 w-full max-w-4xl mx-auto aspect-video rounded-2xl shadow-2xl border-2 border-border relative overflow-hidden">
           <video
             ref={videoRef}
-            src="/assets/Videos/home.mp4"
+            src="/assets/Videos/home.mov"
             // Or, if importing from src: src={homeVideo}
             className="absolute inset-0 w-full h-full object-cover"
             playsInline
