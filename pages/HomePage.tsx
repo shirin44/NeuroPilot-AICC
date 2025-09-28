@@ -1,3 +1,4 @@
+// src/pages/HomePage.tsx
 import React from "react";
 import Layout from "../components/Layout";
 import NarratorCard from "../components/NarratorCard";
@@ -5,15 +6,8 @@ import { NARRATORS } from "@/constants";
 import { HOME_PAGE_CONTENT } from "@/constants/homePage";
 import { NarratorRole, Language } from "../types";
 import { AppContext } from "../App";
-import logoUrl from "@/src/assets/images/logo.png"; 
+import logoUrl from "/Users/shirinshujaa/Desktop/NeuroPilot-AICC/src/assets/images/logo.png";
 
-// If your video lives under src/assets/... use this import:
-// import homeVideo from "@/assets/Videos/home.mp4";
-
-// Import the logo image
-
-
-/* ---------- Language Helper ---------- */
 const normalizeLang = (l: unknown): Language =>
   l === Language.VN || l === "vi" || l === "VN" ? Language.VN : Language.EN;
 
@@ -22,44 +16,19 @@ const HeroSection: React.FC = () => {
   const { language } = React.useContext(AppContext);
   const lang = normalizeLang(language);
   const H = HOME_PAGE_CONTENT;
-
-  // Split parts used for the "slam" animation word
   const wl = H.hero.welcomeLeadParts[lang];
 
-  // Video controls
-  const videoRef = React.useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = React.useState(false);
-
-  const togglePlay = async () => {
-    const v = videoRef.current;
-    if (!v) return;
-    if (v.paused) {
-      try {
-        await v.play();
-        setIsPlaying(true);
-      } catch {
-        v.setAttribute("controls", "true");
-      }
-    } else {
-      v.pause();
-      setIsPlaying(false);
-    }
-  };
+  const [showPlayer, setShowPlayer] = React.useState(false);
+  const YT_ID = "Q_lkVCYpJCg"; // extracted from your YouTube link
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center relative bg-gradient-to-b from-background to-muted/50">
       <div className="w-full max-w-5xl px-4 animate-fadeInUp">
-       
         <h1 className="font-display text-4xl md:text-6xl font-extrabold text-foreground flex items-center justify-center gap-3 md:gap-4">
           <span>{H.hero.title[lang]}</span>
-          <img
-            src={logoUrl}   
-            alt="AICC logo"
-            className="h-24 md:h-124 w-auto align-middle"
-          />
+          <img src={logoUrl} alt="AICC logo" className="h-24 w-auto align-middle" />
         </h1>
 
-        {/* animated word in the middle */}
         <p className="mt-3 text-base md:text-lg text-foreground/80 font-semibold">
           {wl.before}
           <span className="inline-block text-4xl font-extrabold text-primary animate-slam">
@@ -72,40 +41,33 @@ const HeroSection: React.FC = () => {
           {H.hero.tagline[lang]}
         </p>
 
-        {/* ---------- Video Card (no autoplay + no dark overlay) ---------- */}
+        {/* Video area */}
         <div className="mt-12 w-full max-w-4xl mx-auto aspect-video rounded-2xl shadow-2xl border-2 border-border relative overflow-hidden">
-          <video
-            ref={videoRef}
-            src="/assets/Videos/home.mov"
-            // Or, if importing from src: src={homeVideo}
-            className="absolute inset-0 w-full h-full object-cover"
-            playsInline
-            muted
-            preload="metadata"
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-            onClick={togglePlay} // click video to play/pause
-            aria-label={H.hero.ariaPlayVideo[lang]}
-          />
-
-          {/* Center play button (only when paused). No dark overlay. */}
-          {!isPlaying && (
+          {!showPlayer ? (
             <button
-              onClick={togglePlay}
-              className="absolute inset-0 m-auto z-10 w-20 h-20 bg-background/80 rounded-full flex items-center justify-center shadow-xl transition-transform duration-300"
-              aria-label={H.hero.ariaPlayVideo[lang]}
+              onClick={() => setShowPlayer(true)}
+              className="absolute inset-0"
+              aria-label="Play video"
             >
-              <svg
-                className="w-10 h-10 text-foreground ml-1"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path>
-              </svg>
+              <img
+                src={`https://img.youtube.com/vi/${YT_ID}/hqdefault.jpg`}
+                alt="Video thumbnail"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <span className="absolute inset-0 m-auto z-10 w-20 h-20 bg-background/80 rounded-full flex items-center justify-center shadow-xl">
+                ▶
+              </span>
             </button>
+          ) : (
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${YT_ID}?autoplay=1&rel=0`}
+              title="AICC Home Video"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            />
           )}
-
-          {/* Label bottom-right */}
           <p className="absolute bottom-4 right-4 z-10 text-white/90 text-sm font-semibold drop-shadow px-2 py-1 rounded">
             {H.hero.videoLabel[lang]}
           </p>
@@ -118,9 +80,7 @@ const HeroSection: React.FC = () => {
         aria-label={HOME_PAGE_CONTENT.hero.ariaScroll[lang]}
         onClick={(e) => {
           e.preventDefault();
-          document
-            .getElementById("narrators")
-            ?.scrollIntoView({ behavior: "smooth" });
+          document.getElementById("narrators")?.scrollIntoView({ behavior: "smooth" });
         }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow"
       >
@@ -131,12 +91,7 @@ const HeroSection: React.FC = () => {
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M19 9l-7 7-7-7"
-            ></path>
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
           </svg>
         </div>
       </a>
@@ -179,25 +134,19 @@ const QuickFacts: React.FC = () => {
             <h3 className="font-display text-3xl font-bold text-brand-blue-900">
               {H.facts.f1.head[lang]}
             </h3>
-            <p className="mt-2 text-muted-foreground font-medium">
-              {H.facts.f1.body[lang]}
-            </p>
+            <p className="mt-2 text-muted-foreground font-medium">{H.facts.f1.body[lang]}</p>
           </div>
           <div>
             <h3 className="font-display text-3xl font-bold text-brand-red-900">
               {H.facts.f2.head[lang]}
             </h3>
-            <p className="mt-2 text-muted-foreground font-medium">
-              {H.facts.f2.body[lang]}
-            </p>
+            <p className="mt-2 text-muted-foreground font-medium">{H.facts.f2.body[lang]}</p>
           </div>
           <div>
             <h3 className="font-display text-3xl font-bold text-brand-purple-900">
               {H.facts.f3.head[lang]}
             </h3>
-            <p className="mt-2 text-muted-foreground font-medium">
-              {H.facts.f3.body[lang]}
-            </p>
+            <p className="mt-2 text-muted-foreground font-medium">{H.facts.f3.body[lang]}</p>
           </div>
         </div>
       </div>
@@ -217,16 +166,13 @@ const Sponsors: React.FC = () => {
         {H.sponsors.title[lang]}
       </h2>
       <div className="flex justify-center items-center space-x-8 md:space-x-12 text-muted-foreground">
-  <span className="font-bold text-lg">{H.sponsors.labels.adc[lang]}</span>
-  
-  {/* Replace this */}
-  <img
-    src='https://1000logos.net/wp-content/uploads/2019/07/RMIT-Logo.png'
-    alt="RMIT University Logo"
-    className="h-10 md:h-12 w-auto"
-  />
-</div>
-
+        <span className="font-bold text-lg">{H.sponsors.labels.adc[lang]}</span>
+        <img
+          src="https://1000logos.net/wp-content/uploads/2019/07/RMIT-Logo.png"
+          alt="RMIT University Logo"
+          className="h-10 md:h-12 w-auto"
+        />
+      </div>
     </section>
   );
 };
