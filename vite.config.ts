@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
 
     build: {
       // GitHub Pages: normally “dist”, but you can change to “docs” if you want to commit the build
-      outDir: "docs",
+      outDir: "dist",
       assetsDir: "assets",
       sourcemap: true,
     },
