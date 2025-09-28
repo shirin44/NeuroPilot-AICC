@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { AppContext } from '../App';
 import { NarratorRole } from '../types';
-import { NARRATORS, LOCALIZED_CONTENT, STORY_CONTENT } from '../constants';
+import { NARRATORS, LOCALIZED_CONTENT, STORY_CONTENT } from '@/constants';
 
 import InterviewPractice from '../components/features/jobseeker/InterviewPractice';
 import SessionHistory from '../components/features/jobseeker/SessionHistory';

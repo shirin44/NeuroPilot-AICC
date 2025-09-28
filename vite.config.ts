@@ -4,32 +4,30 @@ import react from "@vitejs/plugin-react";
 import path from "node:path";
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, ".", ""); // loads .env, .env.local, etc.
+  const env = loadEnv(mode, process.cwd(), "");
 
   return {
     plugins: [react()],
-    // IMPORTANT for GitHub Pages
-    base: mode === "production" ? "/NeuroPilot-AICC/" : "/",
 
+    // IMPORTANT: match the GitHub repo name
+    base: "/NeuroPilot-AICC/",
+
+    // Safe way to expose public keys only — don’t push secrets
     define: {
-      // Keep your current exposure of env if your app reads process.env.*
-      "process.env.API_KEY": JSON.stringify(env.GEMINI_API_KEY),
-      "process.env.GEMINI_API_KEY": JSON.stringify(env.GEMINI_API_KEY),
-      // (FYI: the Vite-native way is import.meta.env.VITE_*)
+      "process.env.API_KEY": JSON.stringify(env.VITE_API_KEY || ""),
     },
 
     resolve: {
       alias: {
-        // If you prefer '@/...' to point to project root; change to 'src' if you want '@/components' from /src/components
         "@": path.resolve(__dirname, "."),
-        // "@": path.resolve(__dirname, "src"),
       },
     },
 
     build: {
-      outDir: "dist",
+      // GitHub Pages: normally “dist”, but you can change to “docs” if you want to commit the build
+      outDir: "docs",
       assetsDir: "assets",
-      sourcemap: true, 
+      sourcemap: true,
     },
   };
 });

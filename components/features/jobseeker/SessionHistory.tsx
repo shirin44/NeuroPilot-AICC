@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import StarMethodIcon from "../../icons/StarMethodIcon";
 import { AppContext } from "../../../App";
-import { DIALOGUE } from "../../../constants";
+import { DIALOGUE } from "@/constants";
 import {
   loadHistory,
   deleteHistoryEntry,

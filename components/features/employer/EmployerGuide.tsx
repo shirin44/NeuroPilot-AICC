@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { AppContext } from "../../../App";
-import { DIALOGUE } from "../../../constants";
+import { DIALOGUE } from "@/constants";
 import { EMPLOYER_CONTENT } from "@/constants/Employer";
 import { Language } from "@/types";
 

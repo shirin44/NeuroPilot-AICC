@@ -1,7 +1,7 @@
 // CalmBreathingGuide.tsx
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { AppContext } from '../App';
-import { LOCALIZED_CONTENT, DIALOGUE, NARRATORS, CALM_PRACTICES } from '../constants';
+import { LOCALIZED_CONTENT, DIALOGUE, NARRATORS, CALM_PRACTICES } from '@/constants';
 import { NarratorRole } from '../types';
 
 type Practice = 'bloom' | 'tracing' | 'flow' | 'tap';

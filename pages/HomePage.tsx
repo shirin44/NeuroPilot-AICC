@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../components/Layout";
 import NarratorCard from "../components/NarratorCard";
-import { NARRATORS } from "../constants";
+import { NARRATORS } from "@/constants";
 import { HOME_PAGE_CONTENT } from "@/constants/homePage";
 import { NarratorRole, Language } from "../types";
 import { AppContext } from "../App";

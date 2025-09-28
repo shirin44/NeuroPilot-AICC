@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import Layout from "../components/Layout";
 import { AppContext } from "../App";
 import { Language } from "../types";
-import { OUR_STORY_CONTENT } from "../constants/Ourstory";
+import { OUR_STORY_CONTENT } from "@/constants/Ourstory";
 
 // --- Normalize language (enum or string) ---
 const normalizeLang = (l: unknown): Language =>

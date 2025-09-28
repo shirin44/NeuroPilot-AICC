@@ -5,7 +5,7 @@ import { AppContext } from "../App";
 import { Sparkles, Globe2, Link as LinkIcon } from "lucide-react";
 import { Linkedin, Facebook } from "lucide-react";
 import { Language } from "../types";
-import { ABOUT_PAGE_CONTENT } from "../constants/AboutPage";
+import { ABOUT_PAGE_CONTENT } from "@/constants/AboutPage";
 
 /* ---------- Language Helper ---------- */
 const normalizeLang = (l: unknown): Language =>

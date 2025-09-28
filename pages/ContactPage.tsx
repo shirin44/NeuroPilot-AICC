@@ -1,7 +1,7 @@
 // src/pages/ContactPage.tsx
 import React, { useContext, useState, useEffect } from "react";
 import Layout from "../components/Layout";
-import { NARRATORS } from "../constants";
+import { NARRATORS } from "@/constants";
 import { CONTACT_PAGE_CONTENT } from "@/constants/Contact";
 import { AppContext } from "../App";
 import { NarratorRole, Language } from "../types";

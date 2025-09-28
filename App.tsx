@@ -1,15 +1,18 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
-import DashboardPage from './pages/DashboardPage';
-import { Language, NarratorRole, AppMode, NarratorAppEmotion } from './types';
-import CalmBreathingGuide from './components/CalmBreathingGuide';
-import ModeSelectionPage from './pages/ModeSelectionPage';
-import OurStoryPage from './pages/OurStoryPage';
-import { NARRATORS } from './constants';
-import './index.css';
+// App.tsx (root)
+import React, { useState, useMemo, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import DashboardPage from "./pages/DashboardPage";
+import ModeSelectionPage from "./pages/ModeSelectionPage";
+import OurStoryPage from "./pages/OurStoryPage";
+
+import { Language, NarratorRole, AppMode, NarratorAppEmotion } from "./types";
+import CalmBreathingGuide from "./components/CalmBreathingGuide";
+import { NARRATORS } from "./constants"; // <-- fine: you have constants.ts at root
+import "./index.css"; // <-- you have index.css at root
 
 export const AppContext = React.createContext<{
   language: Language;
@@ -33,9 +36,9 @@ export const AppContext = React.createContext<{
   setMode: () => {},
   isBreathingGuideVisible: false,
   setIsBreathingGuideVisible: () => {},
-  narratorDialogue: '',
+  narratorDialogue: "",
   setNarratorDialogue: () => {},
-  narratorState: 'neutral',
+  narratorState: "neutral",
   setNarratorState: () => {},
 });
 
@@ -44,14 +47,13 @@ const App: React.FC = () => {
   const [narratorRole, setNarratorRole] = useState<NarratorRole | null>(null);
   const [mode, setMode] = useState<AppMode | null>(null);
   const [isBreathingGuideVisible, setIsBreathingGuideVisible] = useState(false);
-  const [narratorDialogue, setNarratorDialogue] = useState('');
-  const [narratorState, setNarratorState] = useState<NarratorAppEmotion>('neutral');
+  const [narratorDialogue, setNarratorDialogue] = useState("");
+  const [narratorState, setNarratorState] = useState<NarratorAppEmotion>("neutral");
 
   useEffect(() => {
-    // Apply theme class to body
+    // Apply theme class based on narrator role
     const body = document.body;
-    body.classList.remove('theme-blue', 'theme-red', 'theme-purple', 'theme-green');
-
+    body.classList.remove("theme-blue", "theme-red", "theme-purple", "theme-green");
     if (narratorRole) {
       const theme = NARRATORS[narratorRole].theme;
       body.classList.add(`theme-${theme}`);
@@ -79,17 +81,21 @@ const App: React.FC = () => {
   return (
     <AppContext.Provider value={contextValue}>
       {isBreathingGuideVisible && <CalmBreathingGuide />}
-      {/* ✅ BrowserRouter with BASE_URL for GitHub Pages */}
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/mode-selection" element={<ModeSelectionPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/ourStory" element={<OurStoryPage />} />
-        </Routes>
-      </BrowserRouter>
+
+      {/* NOTE: BrowserRouter lives in index.tsx, not here */}
+      <Routes>
+        {/* index = "/" under the basename */}
+        <Route index element={<HomePage />} />
+        {/* relative paths (no leading slash) honor basename automatically */}
+        <Route path="about" element={<AboutPage />} />
+        <Route path="contact" element={<ContactPage />} />
+        <Route path="mode-selection" element={<ModeSelectionPage />} />
+        <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="ourStory" element={<OurStoryPage />} />
+
+        {/* Catch-all to home (or swap for a 404 page) */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </AppContext.Provider>
   );
 };

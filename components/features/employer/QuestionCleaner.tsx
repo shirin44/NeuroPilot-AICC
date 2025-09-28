@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { cleanInterviewQuestion } from '../../../services/geminiService';
 import { AppContext } from '../../../App';
-import { DIALOGUE } from '../../../constants';
+import { DIALOGUE } from '@/constants';
 import VoiceInputButton from '../../VoiceInputButton';
 import Tooltip from '../../Tooltip';
 import CleanIcon from '../../icons/CleanIcon';

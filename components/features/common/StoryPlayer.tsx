@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Story, StoryChoice, StoryScene } from '../../../types';
 import { AppContext } from '../../../App';
-import { LOCALIZED_CONTENT } from '../../../constants';
+import { LOCALIZED_CONTENT } from '@/constants';
 import CheckIcon from '../../icons/CheckIcon';
 import { Star, Lightbulb, Target } from 'lucide-react';
 import { getStoryFeedback } from '../../../services/geminiService';

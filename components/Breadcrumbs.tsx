@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AppContext } from '../App';
-import { NARRATORS, LOCALIZED_CONTENT, STORY_CONTENT } from '../constants';
+import { NARRATORS, LOCALIZED_CONTENT, STORY_CONTENT } from '@/constants';
 
 interface Breadcrumb {
   path: string;

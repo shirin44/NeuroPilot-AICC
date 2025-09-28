@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../../App";
-import { DIALOGUE, LOCALIZED_CONTENT } from "../../../constants";
+import { DIALOGUE, LOCALIZED_CONTENT } from "@/constants";
 import { PARENT_CONTENT } from "@/constants/Parent";
 
 import ModuleCard from "./ModuleCard";

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { AppContext } from '../App';
-import { NARRATORS } from '../constants';
+import { NARRATORS } from '@/constants';
 import type { NarratorAppEmotion, NarratorState } from '../types';
 
 const mapAppEmotionToImageState = (emotion: NarratorAppEmotion): NarratorState => {
