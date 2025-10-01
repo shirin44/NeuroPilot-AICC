@@ -7,6 +7,35 @@ import { Linkedin, Facebook } from "lucide-react";
 import { Language } from "../types";
 import { ABOUT_PAGE_CONTENT } from "@/constants/AboutPage";
 
+/* ---------- helper: resolve image strings to real URLs ---------- */
+/** Grab every image under src/assets/images as a URL at build time */
+const IMAGE_URLS = import.meta.glob("/src/assets/images/**/*", {
+  eager: true,
+  as: "url",
+}) as Record<string, string>;
+
+/** Turn a loose string like "Thuy.jpg" or "src/assets/images/us/Thuy.jpg" into the final URL */
+function resolveImageUrl(input?: string): string | undefined {
+  if (!input) return undefined;
+  let s = input.replace(/\\/g, "/").trim();
+
+  // Normalize various common prefixes
+  if (!s.startsWith("/")) s = "/" + s;
+  s = s.replace(/^\/@?src\//, "/src/");
+
+  // 1) exact match like "/src/assets/images/us/Thuy.jpg"
+  if (IMAGE_URLS[s]) return IMAGE_URLS[s];
+
+  // 2) filename only match, e.g. "Thuy.jpg"
+  const file = s.split("/").pop();
+  if (file) {
+    const found = Object.entries(IMAGE_URLS).find(([k]) => k.endsWith("/" + file));
+    if (found) return found[1];
+  }
+
+  return undefined;
+}
+
 /* ---------- Language Helper ---------- */
 const normalizeLang = (l: unknown): Language =>
   l === Language.VN || l === "vi" || l === "VN" ? Language.VN : Language.EN;
@@ -27,7 +56,7 @@ const Section: React.FC<{
   </section>
 );
 
-/* ---------- Team Member Card (collapsible bio + localized labels) ---------- */
+/* ---------- Team Member Card ---------- */
 type TeamMemberProps = {
   name: string;
   title: string;
@@ -49,8 +78,8 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({
 }) => {
   const { language } = React.useContext(AppContext);
   const lang = normalizeLang(language);
-  const fallback = `https://via.placeholder.com/128/E3EEF6/375071?text=Photo`;
-  const src = avatarSrc || fallback;
+  const resolved = resolveImageUrl(avatarSrc);
+  const src = resolved || "https://via.placeholder.com/128/E3EEF6/375071?text=Photo";
   const [expanded, setExpanded] = React.useState(false);
 
   return (
@@ -64,9 +93,7 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({
         />
       </div>
       <div className="flex-grow">
-        <h3 className="font-display text-xl font-bold text-card-foreground">
-          {name}
-        </h3>
+        <h3 className="font-display text-xl font-bold text-card-foreground">{name}</h3>
         <p className="mt-1 text-sm font-semibold text-primary">{title}</p>
 
         {/* Collapsible bio */}
@@ -135,7 +162,7 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({
   );
 };
 
-/* ---------- Mentor Card (localized role + testimony + socials) ---------- */
+/* ---------- Mentor Card ---------- */
 type MentorCardProps = {
   name: string;
   role: string;
@@ -151,8 +178,8 @@ const MentorCard: React.FC<MentorCardProps> = ({
   socials,
   testimony,
 }) => {
-  const fallback = `https://via.placeholder.com/160/E3EEF6/375071?text=Mentor`;
-  const src = avatarSrc || fallback;
+  const resolved = resolveImageUrl(avatarSrc);
+  const src = resolved || "https://via.placeholder.com/160/E3EEF6/375071?text=Mentor";
 
   return (
     <div className="min-w-[280px] max-w-xs flex-shrink-0 bg-card p-5 rounded-xl shadow-md border border-border hover:shadow-lg transition-all">
@@ -164,9 +191,7 @@ const MentorCard: React.FC<MentorCardProps> = ({
           loading="lazy"
         />
         <div>
-          <h3 className="font-display text-base font-bold text-card-foreground">
-            {name}
-          </h3>
+          <h3 className="font-display text-base font-bold text-card-foreground">{name}</h3>
           <p className="mt-1 text-xs text-muted-foreground leading-snug">{role}</p>
 
           {socials && (
@@ -200,11 +225,7 @@ const MentorCard: React.FC<MentorCardProps> = ({
                   rel="noopener noreferrer"
                   className="text-primary hover:text-primary/80 transition-colors font-semibold text-xs"
                 >
-                  {
-                    ABOUT_PAGE_CONTENT.sections.buttons.website[
-                      normalizeLang(Language.EN)
-                    ] /* identical label */
-                  }
+                  {ABOUT_PAGE_CONTENT.sections.buttons.website[Language.EN]}
                 </a>
               )}
             </div>
@@ -232,10 +253,9 @@ const AboutPage: React.FC = () => {
   const lang = normalizeLang(language);
   const C = ABOUT_PAGE_CONTENT;
 
-  // Build localized arrays at render-time to avoid scattering i18n logic
   const TEAM = C.team.map((m) => ({
     name: m.name,
-    avatarSrc: m.avatarSrc,
+    avatarSrc: resolveImageUrl(m.avatarSrc),
     portfolioUrl: (m as any).portfolioUrl,
     linkedinUrl: (m as any).linkedinUrl,
     resumeUrl: (m as any).resumeUrl,
@@ -245,7 +265,7 @@ const AboutPage: React.FC = () => {
 
   const MENTORS = C.mentors.map((m) => ({
     name: m.name,
-    avatarSrc: m.avatarSrc,
+    avatarSrc: resolveImageUrl(m.avatarSrc),
     role: m.role[lang],
     testimony: m.testimony[lang],
     socials: (m as any).socials,
