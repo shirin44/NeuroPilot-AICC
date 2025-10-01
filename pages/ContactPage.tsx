@@ -18,6 +18,34 @@ const MAX_MESSAGE_LENGTH = 2000;
 const normalizeLang = (l: unknown): Language =>
   l === Language.VN || l === "vi" || l === "VN" ? Language.VN : Language.EN;
 
+/* ---------- Image resolver for string paths ---------- */
+// Grab every image under src/assets/images as a URL at build time
+const IMAGE_URLS = import.meta.glob("/src/assets/images/**/*", {
+  eager: true,
+  as: "url",
+}) as Record<string, string>;
+
+// Turn a loose string like "src/assets/images/us/Hieu.jpg" or "Hieu.jpg" into the final URL
+function resolveImageUrl(input?: string): string | undefined {
+  if (!input) return undefined;
+  let s = input.replace(/\\/g, "/").trim();
+
+  // normalize common prefixes
+  if (!s.startsWith("/")) s = "/" + s;
+  s = s.replace(/^\/@?src\//, "/src/");
+
+  // exact path match
+  if (IMAGE_URLS[s]) return IMAGE_URLS[s];
+
+  // filename only match
+  const file = s.split("/").pop();
+  if (file) {
+    const hit = Object.entries(IMAGE_URLS).find(([k]) => k.endsWith("/" + file));
+    if (hit) return hit[1];
+  }
+  return undefined;
+}
+
 /* ---------- Reusable Card ---------- */
 const ContactInfoCard: React.FC<{
   title: string;
@@ -44,6 +72,17 @@ const ContactPage: React.FC = () => {
   // Use a default narrator for this page
   const narratorData = NARRATORS[NarratorRole.Jobseeker];
 
+  // Resolve narrator avatar if the constant stores a string path
+  const narratorAvatar =
+    resolveImageUrl(
+      typeof narratorData.avatars?.neutral === "string"
+        ? narratorData.avatars.neutral
+        : undefined
+    ) || (typeof narratorData.avatars?.neutral === "string"
+        ? undefined
+        : (narratorData.avatars?.neutral as unknown as string)) // if already a URL from an import
+    || "https://via.placeholder.com/128/E3EEF6/375071?text=Avatar";
+
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [isSending, setIsSending] = useState(false);
@@ -51,16 +90,10 @@ const ContactPage: React.FC = () => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setShowSuccessPopup(false);
-      }
+      if (event.key === "Escape") setShowSuccessPopup(false);
     };
-    if (showSuccessPopup) {
-      document.addEventListener("keydown", handleKeyDown);
-    }
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
+    if (showSuccessPopup) document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [showSuccessPopup]);
 
   const handleInputChange = (
@@ -100,9 +133,7 @@ const ContactPage: React.FC = () => {
         setError(C.form.error[lang]);
         console.error("EmailJS Error:", err);
       })
-      .finally(() => {
-        setIsSending(false);
-      });
+      .finally(() => setIsSending(false));
   };
 
   return (
@@ -113,16 +144,11 @@ const ContactPage: React.FC = () => {
           <h1 className="font-display text-4xl font-extrabold text-foreground">
             {C.title[lang]}
           </h1>
-          <p className="mt-2 text-lg text-muted-foreground">
-            {C.subtitle[lang]}
-          </p>
+          <p className="mt-2 text-lg text-muted-foreground">{C.subtitle[lang]}</p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">
             <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-muted-foreground"
-              >
+              <label htmlFor="name" className="block text-sm font-medium text-muted-foreground">
                 {C.form.fullName[lang]}
               </label>
               <input
@@ -137,10 +163,7 @@ const ContactPage: React.FC = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-muted-foreground"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-muted-foreground">
                 {C.form.email[lang]}
               </label>
               <input
@@ -155,10 +178,7 @@ const ContactPage: React.FC = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-muted-foreground"
-              >
+              <label htmlFor="message" className="block text-sm font-medium text-muted-foreground">
                 {C.form.message[lang]}
               </label>
               <textarea
@@ -189,9 +209,7 @@ const ContactPage: React.FC = () => {
               {isSending ? C.form.sending[lang] : C.form.send[lang]}
             </button>
 
-            {error && (
-              <p className="text-sm text-center text-danger">{error}</p>
-            )}
+            {error && <p className="text-sm text-center text-danger">{error}</p>}
           </form>
         </div>
 
@@ -199,32 +217,23 @@ const ContactPage: React.FC = () => {
         <div className="space-y-8">
           <div className="flex items-center space-x-4 p-6 bg-card rounded-2xl shadow-lg">
             <img
-              src={narratorData.avatars.neutral}
+              src={narratorAvatar}
               alt={narratorData.name[lang]}
-              className="w-24 h-24 rounded-full"
+              className="w-24 h-24 rounded-full object-cover"
+              loading="lazy"
             />
             <div>
-              <p className="text-lg font-semibold text-foreground">
-                {C.narrator.header[lang]}
-              </p>
-              <p className="italic text-muted-foreground">
-                “{C.narrator.quote[lang]}”
-              </p>
+              <p className="text-lg font-semibold text-foreground">{C.narrator.header[lang]}</p>
+              <p className="italic text-muted-foreground">“{C.narrator.quote[lang]}”</p>
             </div>
           </div>
 
           <div className="space-y-4">
-            <ContactInfoCard
-              title={C.cards.general.title[lang]}
-              email="neuropilotaicc@gmail.com"
-            >
+            <ContactInfoCard title={C.cards.general.title[lang]} email="neuropilotaicc@gmail.com">
               {C.cards.general.text[lang]}
             </ContactInfoCard>
 
-            <ContactInfoCard
-              title={C.cards.partners.title[lang]}
-              email="neuropilotaicc@gmail.com"
-            >
+            <ContactInfoCard title={C.cards.partners.title[lang]} email="neuropilotaicc@gmail.com">
               {C.cards.partners.text[lang]}
             </ContactInfoCard>
           </div>
@@ -245,24 +254,11 @@ const ContactPage: React.FC = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="w-16 h-16 mx-auto bg-success/10 rounded-full flex items-center justify-center">
-              <svg
-                className="w-10 h-10 text-success"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                ></path>
+              <svg className="w-10 h-10 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
             </div>
-            <h2
-              id="success-title"
-              className="mt-4 font-display text-2xl font-bold text-foreground"
-            >
+            <h2 id="success-title" className="mt-4 font-display text-2xl font-bold text-foreground">
               {C.success.title[lang]}
             </h2>
             <p id="success-desc" className="mt-2 text-muted-foreground">
