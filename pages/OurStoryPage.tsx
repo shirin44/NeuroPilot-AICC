@@ -38,32 +38,30 @@ const imageUrl = (file?: string) => (file && IMAGES[file]) || "";
 const videoUrl = (file?: string) => (file && VIDEOS[file]) || "";
 
 /* -----------------------------------------------------------
-   Declarative mapping from placeholder keys → filenames
-   (ensure these match real files in src/assets/* with CORRECT case)
+   DECLARATIVE MEDIA MAPS (must match actual filenames exactly)
 ----------------------------------------------------------- */
 const MEDIA_IMAGE_MAP: Record<string, string | undefined> = {
-  TEAM_PHOTO: "us.png",     // ✅ exists per your repo
-  BRAINSTORM: "team_photo.jpg",     // fallback if you don’t have a separate brainstorm photo
-  TEAM_CALL: "team_photo.jpg",      // adjust if you add team_call.jpg later
-  BOOTCAMP: "bootcamp.jpg",         // adjust if you store a bootcamp still
+  TEAM_PHOTO: "us.png",
+  BRAINSTORM: "team_photo.jpg",
+  TEAM_CALL: "team_photo.jpg",
+  BOOTCAMP: "bootcamp.jpg",
   MEETING_THUY: "meeting_thuy.png",
-  IDEA_REFİNEMENT: "idea_refinement.jpg", // keep if old key is used somewhere
   IDEA_REFINEMENT: "idea_refinement.jpg",
   TEAM_LAUGH: "team_photo.jpg",
   SANDY_WORKSHOP: "sandy_workshop.jpg",
-  DRAFT: "proposal.JPG",            // use an existing still if draft.jpg doesn’t exist
+  DRAFT: "proposal.JPG",
   TRUNG_MEETING: "trung.jpg",
   SURVEY: "team_photo.jpg",
   FEEDBACK: "feedback.jpg",
   PROPOSAL: "proposal.JPG",
   KRISTEN: "kristen.png",
-  BUG: "prototype.png",             // use a close still if bug.jpg doesn’t exist
+  BUG: "prototype.png",
   CODING: "coding.jpg",
   SIMONA: "simona.png",
   TROY: "troy.jpg",
-  FINAL_SPRINT: "final_sprint.JPG", // ✅ case from your git status
-  REFLECTION: "reflection.jpg",     // if you don’t have a jpg, this will fall back to video
-  GALLERY: "gallery_bootcamp.jpg",  // optional default still if you add one
+  FINAL_SPRINT: "final_sprint.JPG",
+  REFLECTION: "reflection.jpg",
+  GALLERY: "gallery_bootcamp.jpg",
 };
 
 const MEDIA_VIDEO_MAP: Record<string, string | undefined> = {
@@ -79,24 +77,24 @@ const MEDIA_VIDEO_MAP: Record<string, string | undefined> = {
   TRUNG_MEETING: undefined,
   SURVEY: undefined,
   FEEDBACK: undefined,
-  PROPOSAL: "proposal.MOV",   // change to your actual case if needed
+  PROPOSAL: "proposal.MOV",
   KRISTEN: undefined,
   BUG: undefined,
   CODING: undefined,
   SIMONA: undefined,
   TROY: undefined,
   FINAL_SPRINT: undefined,
-  REFLECTION: "reflection.MP4", // ✅ case from your git status
+  REFLECTION: "reflection.MP4",
   GALLERY: "bootcamp.mp4",
 };
 
 /* -----------------------------------------------------------
-   PLACEHOLDER (supports fixed aspect ratio via aspectClass)
+   PLACEHOLDER
 ----------------------------------------------------------- */
-const PlaceholderMedia: React.FC<{
-  label: string;
-  aspectClass?: string;
-}> = ({ label, aspectClass }) => {
+const PlaceholderMedia: React.FC<{ label: string; aspectClass?: string }> = ({
+  label,
+  aspectClass,
+}) => {
   const aspect = aspectClass || "aspect-[16/9]";
   return (
     <div
@@ -113,9 +111,6 @@ const PlaceholderMedia: React.FC<{
 
 /* -----------------------------------------------------------
    MEDIABLOCK
-   - Tries image; falls back to video if img 404/empty.
-   - frameAspectClass enforces identical visible size.
-   - fit = "cover" | "contain"
 ----------------------------------------------------------- */
 const MediaBlock: React.FC<{
   placeholderKey: string;
@@ -123,7 +118,13 @@ const MediaBlock: React.FC<{
   placeholderLabel: string;
   frameAspectClass?: string;
   fit?: "cover" | "contain";
-}> = ({ placeholderKey, alt, placeholderLabel, frameAspectClass, fit = "cover" }) => {
+}> = ({
+  placeholderKey,
+  alt,
+  placeholderLabel,
+  frameAspectClass,
+  fit = "cover",
+}) => {
   const [useVideo, setUseVideo] = useState(false);
 
   const imgFile = MEDIA_IMAGE_MAP[placeholderKey];
@@ -137,18 +138,20 @@ const MediaBlock: React.FC<{
 
   const renderInFrame = (node: React.ReactNode) => (
     <div
-      className={`relative w-full ${frameAspectClass || "aspect-[16/9]"} overflow-hidden rounded-xl bg-slate-100`}
+      className={`relative w-full ${
+        frameAspectClass || "aspect-[16/9]"
+      } overflow-hidden rounded-xl bg-slate-100`}
     >
       <div className="absolute inset-0">{node}</div>
     </div>
   );
 
-  // Neither configured -> placeholder
   if (!hasImg && !hasVid) {
-    return <PlaceholderMedia label={placeholderLabel} aspectClass={frameAspectClass} />;
+    return (
+      <PlaceholderMedia label={placeholderLabel} aspectClass={frameAspectClass} />
+    );
   }
 
-  // Try image first
   if (hasImg && !useVideo) {
     const imgEl = (
       <img
@@ -161,22 +164,9 @@ const MediaBlock: React.FC<{
         loading="lazy"
       />
     );
-    return frameAspectClass ? (
-      renderInFrame(imgEl)
-    ) : (
-      <img
-        src={imgSrc}
-        alt={alt}
-        className="w-full h-auto rounded-xl object-cover"
-        onError={() => {
-          if (hasVid) setUseVideo(true);
-        }}
-        loading="lazy"
-      />
-    );
+    return frameAspectClass ? renderInFrame(imgEl) : imgEl;
   }
 
-  // Fallback: video
   if (hasVid) {
     const videoEl = (
       <video
@@ -189,32 +179,21 @@ const MediaBlock: React.FC<{
         <track kind="captions" />
       </video>
     );
-    return frameAspectClass ? (
-      renderInFrame(videoEl)
-    ) : (
-      <video
-        className="w-full h-auto rounded-xl"
-        controls
-        playsInline
-        preload="metadata"
-        src={vidSrc}
-      >
-        <track kind="captions" />
-      </video>
-    );
+    return frameAspectClass ? renderInFrame(videoEl) : videoEl;
   }
 
-  // Last resort
-  return <PlaceholderMedia label={placeholderLabel} aspectClass={frameAspectClass} />;
+  return (
+    <PlaceholderMedia label={placeholderLabel} aspectClass={frameAspectClass} />
+  );
 };
 
 /* -----------------------------------------------------------
-   GALLERYMEDIA (for per-item galleryItems)
+   GALLERYMEDIA
 ----------------------------------------------------------- */
 type GalleryItem = {
   type: "image" | "video";
-  file: string;             // filename in assets or full URL
-  poster?: string;          // optional poster for videos
+  file: string;
+  poster?: string;
   caption: Record<Language, string>;
 };
 
@@ -224,18 +203,20 @@ const resolveSrc = (type: GalleryItem["type"], file: string) =>
 const resolvePoster = (poster?: string) =>
   poster ? (isHttp(poster) ? poster : imageUrl(poster)) : undefined;
 
-const GalleryMedia: React.FC<{ item: GalleryItem; alt: string; aspect?: string; fit?: "cover" | "contain" }> = ({
-  item,
-  alt,
-  aspect = "aspect-[4/3]",
-  fit = "cover",
-}) => {
+const GalleryMedia: React.FC<{
+  item: GalleryItem;
+  alt: string;
+  aspect?: string;
+  fit?: "cover" | "contain";
+}> = ({ item, alt, aspect = "aspect-[4/3]", fit = "cover" }) => {
   const src = resolveSrc(item.type, item.file);
   const poster = resolvePoster(item.poster);
   const fitClass = fit === "cover" ? "object-cover" : "object-contain";
 
   return (
-    <div className={`relative w-full ${aspect} overflow-hidden rounded-xl bg-slate-100`}>
+    <div
+      className={`relative w-full ${aspect} overflow-hidden rounded-xl bg-slate-100`}
+    >
       {item.type === "image" ? (
         <img
           src={src}
@@ -307,13 +288,17 @@ const OurStoryPage: React.FC = () => {
               }`}
             >
               <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                <p className="text-sm font-semibold text-primary">{e.date[lang]}</p>
+                <p className="text-sm font-semibold text-primary">
+                  {e.date[lang]}
+                </p>
                 {e.title?.[lang] && (
                   <h3 className="mt-1 font-display text-xl font-bold text-foreground">
                     {e.title[lang]}
                   </h3>
                 )}
-                <p className="mt-3 whitespace-pre-line text-slate-800">{e.body[lang]}</p>
+                <p className="mt-3 whitespace-pre-line text-slate-800">
+                  {e.body[lang]}
+                </p>
               </div>
 
               <div className="rounded-2xl border border-border bg-white p-4 shadow-md">
@@ -376,7 +361,10 @@ const OurStoryPage: React.FC = () => {
         (OUR_STORY_CONTENT as any).galleryItems.length > 0 ? (
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {(OUR_STORY_CONTENT as any).galleryItems.map((item: any, i: number) => (
-              <div key={i} className="rounded-2xl border border-border bg-white p-4 shadow-sm">
+              <div
+                key={i}
+                className="rounded-2xl border border-border bg-white p-4 shadow-sm"
+              >
                 <GalleryMedia
                   item={item}
                   alt={item.caption[lang]}
@@ -392,7 +380,10 @@ const OurStoryPage: React.FC = () => {
         ) : (
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {OUR_STORY_CONTENT.gallery?.[lang]?.map((g, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-white p-4 shadow-sm">
+              <div
+                key={i}
+                className="rounded-2xl border border-border bg-white p-4 shadow-sm"
+              >
                 <MediaBlock
                   placeholderKey="GALLERY"
                   alt={g}
@@ -400,7 +391,9 @@ const OurStoryPage: React.FC = () => {
                   frameAspectClass="aspect-[4/3]"
                   fit="cover"
                 />
-                <p className="mt-2 text-center text-sm font-medium text-slate-700">{g}</p>
+                <p className="mt-2 text-center text-sm font-medium text-slate-700">
+                  {g}
+                </p>
               </div>
             )) || null}
           </div>
