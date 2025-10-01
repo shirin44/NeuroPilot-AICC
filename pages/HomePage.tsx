@@ -7,8 +7,8 @@ import { HOME_PAGE_CONTENT } from "@/constants/homePage";
 import { NarratorRole, Language } from "../types";
 import { AppContext } from "../App";
 
-// Logo from public/
-const LOGO = `${import.meta.env.BASE_URL}logo.png`;
+// Use the public/ folder logo
+const LOGO_URL = `${import.meta.env.BASE_URL}logo.png`;
 
 const normalizeLang = (l: unknown): Language =>
   l === Language.VN || l === "vi" || l === "VN" ? Language.VN : Language.EN;
@@ -28,7 +28,11 @@ const HeroSection: React.FC = () => {
       <div className="w-full max-w-5xl px-4 animate-fadeInUp">
         <h1 className="font-display text-4xl md:text-6xl font-extrabold text-foreground flex items-center justify-center gap-3 md:gap-4">
           <span>{H.hero.title[lang]}</span>
-          <img src={LOGO} alt="AICC logo" className="h-24 w-auto align-middle" />
+          <img
+            src={LOGO_URL}
+            alt="AICC logo"
+            className="h-24 w-auto align-middle"
+          />
         </h1>
 
         <p className="mt-3 text-base md:text-lg text-foreground/80 font-semibold">
