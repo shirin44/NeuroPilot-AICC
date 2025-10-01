@@ -1,54 +1,4 @@
-// src/pages/AboutPage.tsx
-import React from "react";
-import Layout from "../components/Layout";
-import { AppContext } from "../App";
-import { Sparkles, Globe2, Link as LinkIcon } from "lucide-react";
-import { Linkedin, Facebook } from "lucide-react";
-import { Language } from "../types";
-import { ABOUT_PAGE_CONTENT } from "@/constants/AboutPage";
-
-/* ---------- helper: resolve image strings to real URLs ---------- */
-const IMAGE_URLS = import.meta.glob("/src/assets/images/**/*", {
-  eager: true,
-  as: "url",
-}) as Record<string, string>;
-
-function resolveImageUrl(input?: string): string | undefined {
-  if (!input) return undefined;
-  let s = input.replace(/\\/g, "/").trim();
-
-  if (!s.startsWith("/")) s = "/" + s;
-  s = s.replace(/^\/@?src\//, "/src/");
-
-  if (IMAGE_URLS[s]) return IMAGE_URLS[s];
-
-  const file = s.split("/").pop();
-  if (file) {
-    const found = Object.entries(IMAGE_URLS).find(([k]) => k.endsWith("/" + file));
-    if (found) return found[1];
-  }
-
-  return undefined;
-}
-
-const normalizeLang = (l: unknown): Language =>
-  l === Language.VN || l === "vi" || l === "VN" ? Language.VN : Language.EN;
-
-const Section: React.FC<{
-  title: string;
-  children: React.ReactNode;
-  className?: string;
-}> = ({ title, children, className = "" }) => (
-  <section className={`mb-16 ${className}`}>
-    <h2 className="font-display text-3xl font-bold text-foreground mb-8 pb-4 border-b-4 border-primary">
-      {title}
-    </h2>
-    <div className="text-foreground/90 text-lg space-y-5 leading-relaxed">
-      {children}
-    </div>
-  </section>
-);
-
+/* ---------- Team Member Card ---------- */
 type TeamMemberProps = {
   name: string;
   title: string;
@@ -70,30 +20,31 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({
 }) => {
   const { language } = React.useContext(AppContext);
   const lang = normalizeLang(language);
-
-  // ✅ Force Shirin's avatar to use the hardcoded link
-  const resolved =
-    name.toLowerCase().includes("shirin")
-      ? "https://gdorleon.github.io/Shirin.jpeg"
-      : resolveImageUrl(avatarSrc);
-
-  const src = resolved || "https://via.placeholder.com/128/E3EEF6/375071?text=Photo";
+  const resolved = resolveImageUrl(avatarSrc);
   const [expanded, setExpanded] = React.useState(false);
 
   return (
     <div className="bg-card p-6 rounded-xl shadow-md border border-border transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
+      {/* Portrait */}
       <div className="flex-shrink-0">
         <img
           className="h-24 w-24 rounded-full object-cover ring-4 ring-card shadow-sm bg-muted"
-          src={src}
+          src={
+            name.toLowerCase().includes("shirin")
+              ? "https://gdorleon.github.io/Shirin.jpeg" // ✅ Always show Shirin’s hosted portrait
+              : resolved || "https://via.placeholder.com/128/E3EEF6/375071?text=Photo"
+          }
           alt={`${name} portrait`}
           loading="lazy"
         />
       </div>
+
+      {/* Info */}
       <div className="flex-grow">
         <h3 className="font-display text-xl font-bold text-card-foreground">{name}</h3>
         <p className="mt-1 text-sm font-semibold text-primary">{title}</p>
 
+        {/* Collapsible bio */}
         <div className="mt-4 relative">
           <p
             className={[
@@ -119,6 +70,7 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({
             : ABOUT_PAGE_CONTENT.sections.buttons.showMore[lang]}
         </button>
 
+        {/* Links */}
         <div className="flex flex-wrap items-center gap-3">
           {portfolioUrl && (
             <a
@@ -157,5 +109,3 @@ const TeamMemberCard: React.FC<TeamMemberProps> = ({
     </div>
   );
 };
-
-// ✅ The rest of your file remains unchanged (MentorCard, AboutPage, etc.)
