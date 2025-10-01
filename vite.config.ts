@@ -10,7 +10,6 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
 
     // Must match the GitHub repo name
-    // If you deploy to a different repo, change this to "/<repo-name>/"
     base: "/NeuroPilot-AICC/",
 
     // Expose safe public keys only
