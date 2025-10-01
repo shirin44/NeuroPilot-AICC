@@ -1,42 +1,66 @@
-import React, { useContext, useEffect, useState, lazy, Suspense } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Layout from '../components/Layout';
-import { AppContext } from '../App';
-import { NarratorRole } from '../types';
-import { NARRATORS, LOCALIZED_CONTENT, STORY_CONTENT } from '@/constants';
+// src/pages/DashboardPage.tsx
+import React, { useContext, useEffect, useState, lazy, Suspense } from "react";
+import { useNavigate } from "react-router-dom";
+import Layout from "../components/Layout";
+import { AppContext } from "../App";
+import { NarratorRole } from "../types";
+import { NARRATORS, LOCALIZED_CONTENT, STORY_CONTENT } from "@/constants";
 
-import InterviewPractice from '../components/features/jobseeker/InterviewPractice';
-import SessionHistory from '../components/features/jobseeker/SessionHistory';
-import SpeakerIcon from '../components/icons/SpeakerIcon';
-import ParentGuidance from '../components/features/parent/ParentGuidance';
-import StoryPlayer from '../components/features/common/StoryPlayer';
-import PracticeIcon from '../components/icons/PracticeIcon';
-import HistoryIcon from '../components/icons/HistoryIcon';
-import Tooltip from '../components/Tooltip';
-import VolunteerPractice from '../components/features/volunteer/VolunteerPractice';
+import InterviewPractice from "../components/features/jobseeker/InterviewPractice";
+import SessionHistory from "../components/features/jobseeker/SessionHistory";
+import SpeakerIcon from "../components/icons/SpeakerIcon";
+import ParentGuidance from "../components/features/parent/ParentGuidance";
+import StoryPlayer from "../components/features/common/StoryPlayer";
+import PracticeIcon from "../components/icons/PracticeIcon";
+import HistoryIcon from "../components/icons/HistoryIcon";
+import Tooltip from "../components/Tooltip";
+import VolunteerPractice from "../components/features/volunteer/VolunteerPractice";
 
-// ✅ Lazy-load EmployerGuide for faster initial load
-const EmployerGuide = lazy(() => import('../components/features/employer/EmployerGuide'));
+// Lazy-load EmployerGuide
+const EmployerGuide = lazy(() => import("../components/features/employer/EmployerGuide"));
+
+/* ---------- Image resolver for constants that store string paths ---------- */
+// Map every image under src/assets/images to a final URL at build time
+const IMAGE_URLS = import.meta.glob("/src/assets/images/**/*", {
+  eager: true,
+  as: "url",
+}) as Record<string, string>;
+
+// Turn a loose string like "src/assets/images/us/Hieu.jpg" or "Hieu.jpg" into the final URL
+function resolveImageUrl(input?: string): string | undefined {
+  if (!input) return undefined;
+  let s = input.replace(/\\/g, "/").trim();
+  if (!s.startsWith("/")) s = "/" + s;
+  s = s.replace(/^\/@?src\//, "/src/");
+  if (IMAGE_URLS[s]) return IMAGE_URLS[s];
+  const file = s.split("/").pop();
+  if (file) {
+    const hit = Object.entries(IMAGE_URLS).find(([k]) => k.endsWith("/" + file));
+    if (hit) return hit[1];
+  }
+  return undefined;
+}
 
 const DashboardPage: React.FC = () => {
-  const { narratorRole, mode, language, setNarratorDialogue, setNarratorState } = useContext(AppContext);
+  const { narratorRole, mode, language, setNarratorDialogue, setNarratorState } =
+    useContext(AppContext);
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'practice' | 'history'>('practice');
+  const [activeTab, setActiveTab] = useState<"practice" | "history">("practice");
 
   useEffect(() => {
     if (!narratorRole) {
-      navigate('/');
+      navigate("/");
       return;
     }
     if (!mode) {
-      navigate('/mode-selection');
+      navigate("/mode-selection");
       return;
     }
-    if (mode === 'practice') {
+    if (mode === "practice") {
       const narrator = NARRATORS[narratorRole];
       setNarratorDialogue(narrator.intro[language]);
-      setNarratorState('intro');
-      const t = setTimeout(() => setNarratorState('idle'), 4000);
+      setNarratorState("intro");
+      const t = setTimeout(() => setNarratorState("idle"), 4000);
       return () => clearTimeout(t);
     }
   }, [narratorRole, mode, navigate, language, setNarratorDialogue, setNarratorState]);
@@ -46,9 +70,9 @@ const DashboardPage: React.FC = () => {
   const narrator = NARRATORS[narratorRole];
 
   const handleSpeak = (text: string) => {
-    if ('speechSynthesis' in window) {
+    if ("speechSynthesis" in window) {
       const u = new SpeechSynthesisUtterance(text);
-      u.lang = language === 'en' ? 'en-US' : 'vi-VN';
+      u.lang = language === "en" ? "en-US" : "vi-VN";
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(u);
     } else {
@@ -68,14 +92,16 @@ const DashboardPage: React.FC = () => {
                   role="tab"
                   id="practice-tab"
                   aria-controls="practice-panel"
-                  aria-selected={activeTab === 'practice'}
-                  onClick={() => setActiveTab('practice')}
+                  aria-selected={activeTab === "practice"}
+                  onClick={() => setActiveTab("practice")}
                   className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold
                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600
                               transition-colors
-                              ${activeTab === 'practice'
-                                ? 'bg-slate-900 text-white'
-                                : 'bg-white text-slate-900 border border-slate-300 hover:bg-slate-50'}`}
+                              ${
+                                activeTab === "practice"
+                                  ? "bg-slate-900 text-white"
+                                  : "bg-white text-slate-900 border border-slate-300 hover:bg-slate-50"
+                              }`}
                 >
                   <PracticeIcon className="w-5 h-5" />
                   {LOCALIZED_CONTENT.practice[language]}
@@ -85,14 +111,16 @@ const DashboardPage: React.FC = () => {
                   role="tab"
                   id="history-tab"
                   aria-controls="history-panel"
-                  aria-selected={activeTab === 'history'}
-                  onClick={() => setActiveTab('history')}
+                  aria-selected={activeTab === "history"}
+                  onClick={() => setActiveTab("history")}
                   className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold
                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600
                               transition-colors
-                              ${activeTab === 'history'
-                                ? 'bg-slate-900 text-white'
-                                : 'bg-white text-slate-900 border border-slate-300 hover:bg-slate-50'}`}
+                              ${
+                                activeTab === "history"
+                                  ? "bg-slate-900 text-white"
+                                  : "bg-white text-slate-900 border border-slate-300 hover:bg-slate-50"
+                              }`}
                 >
                   <HistoryIcon className="w-5 h-5" />
                   {LOCALIZED_CONTENT.history[language]}
@@ -101,7 +129,7 @@ const DashboardPage: React.FC = () => {
             </div>
 
             {/* Panels */}
-            {activeTab === 'practice' && (
+            {activeTab === "practice" && (
               <div
                 id="practice-panel"
                 role="tabpanel"
@@ -113,7 +141,7 @@ const DashboardPage: React.FC = () => {
               </div>
             )}
 
-            {activeTab === 'history' && (
+            {activeTab === "history" && (
               <div
                 id="history-panel"
                 role="tabpanel"
@@ -128,7 +156,6 @@ const DashboardPage: React.FC = () => {
         );
 
       case NarratorRole.Employer:
-        // ✅ Now goes to the full Employer guide (welcome → overview → modules)
         return (
           <Suspense fallback={<div className="p-6">Loading…</div>}>
             <EmployerGuide />
@@ -147,27 +174,38 @@ const DashboardPage: React.FC = () => {
   };
 
   const renderContent = () => {
-    if (mode === 'practice') return renderPracticeContent();
-    if (mode === 'story') {
+    if (mode === "practice") return renderPracticeContent();
+    if (mode === "story") {
       const story = STORY_CONTENT[narratorRole];
       return <StoryPlayer story={story} />;
     }
     return null;
   };
 
+  // Resolve narrator avatar whether constants store a string path or an imported URL
+  const narratorAvatarSrc =
+    resolveImageUrl(
+      typeof narrator.avatars?.neutral === "string" ? narrator.avatars.neutral : undefined
+    ) ||
+    (typeof narrator.avatars?.neutral !== "string"
+      ? (narrator.avatars?.neutral as unknown as string)
+      : undefined) ||
+    "https://via.placeholder.com/128/E3EEF6/375071?text=Avatar";
+
   return (
     <Layout>
       <div className="space-y-8">
-        {/* Header — dark, high-contrast, bold */}
-        {mode === 'practice' && (
+        {/* Header */}
+        {mode === "practice" && (
           <header className="bg-slate-900 text-white p-6 rounded-2xl shadow-lg flex items-center gap-5">
             <div className="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0">
               <span aria-hidden className="absolute -inset-1 rounded-full ring-2 ring-white/30" />
               <div className="w-full h-full rounded-full bg-white overflow-hidden">
                 <img
-                  src={narrator.avatars.neutral}
+                  src={narratorAvatarSrc}
                   alt={narrator.name[language]}
                   className="w-full h-full object-contain"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -178,7 +216,11 @@ const DashboardPage: React.FC = () => {
               </h1>
               <div className="flex items-center gap-2 mt-2">
                 <p className="text-lg text-white/90">
-                  Your <span className="font-bold underline decoration-blue-300">{narrator.name[language]}</span> is here to guide you.
+                  Your{" "}
+                  <span className="font-bold underline decoration-blue-300">
+                    {narrator.name[language]}
+                  </span>{" "}
+                  is here to guide you.
                 </p>
                 <Tooltip tip="Read introduction aloud">
                   <button
