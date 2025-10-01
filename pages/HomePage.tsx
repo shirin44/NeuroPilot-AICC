@@ -49,11 +49,15 @@ const HeroSection: React.FC = () => {
               className="absolute inset-0"
               aria-label="Play video"
             >
-              <img
-                src={`https://img.youtube.com/vi/${YT_ID}/hqdefault.jpg`}
-                alt="Video thumbnail"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
+              <iframe
+  src={`https://www.youtube.com/embed/${YT_ID}`}
+  title="YouTube video"
+  className="absolute inset-0 w-full h-full"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
               <span className="absolute inset-0 m-auto z-10 w-20 h-20 bg-background/80 rounded-full flex items-center justify-center shadow-xl">
                 ▶
               </span>
