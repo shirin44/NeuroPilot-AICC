@@ -7,7 +7,7 @@ import { HOME_PAGE_CONTENT } from "@/constants/homePage";
 import { NarratorRole, Language } from "../types";
 import { AppContext } from "../App";
 
-// Use BASE_URL so the URL includes /NeuroPilot-AICC/ in production
+// ✅ Use the logo from public folder (GitHub Pages safe)
 const logoUrl = `${import.meta.env.BASE_URL}logo.png`;
 
 const normalizeLang = (l: unknown): Language =>
@@ -56,11 +56,14 @@ const HeroSection: React.FC = () => {
             />
           ) : (
             <>
+              {/* YouTube preview thumbnail */}
               <img
                 src={`https://img.youtube.com/vi/${YT_ID}/hqdefault.jpg`}
                 alt="Video thumbnail"
                 className="absolute inset-0 w-full h-full object-cover"
               />
+
+              {/* Overlay Play Button */}
               <button
                 onClick={() => setShowPlayer(true)}
                 className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 hover:bg-black/50 transition"
@@ -89,7 +92,12 @@ const HeroSection: React.FC = () => {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow"
       >
         <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center ring-4 ring-primary/10 hover:bg-primary/30 transition-colors">
-          <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-8 h-8 text-primary"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
           </svg>
         </div>
