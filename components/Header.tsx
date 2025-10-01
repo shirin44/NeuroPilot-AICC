@@ -6,9 +6,10 @@ import { HEADER_CONTENT } from "@/constants/Header";
 import { Language, NarratorRole } from "../types";
 import Tooltip from "./Tooltip";
 
-// Serve from /public so it works on GitHub Pages
+// Primary logo served from /public so GitHub Pages can resolve it
 const LOGO_PRIMARY = `${import.meta.env.BASE_URL}logo.png`;
-// Fallback in case the public asset is missing
+
+// Fallback to GitHub raw if public asset fails
 const LOGO_FALLBACK =
   "https://raw.githubusercontent.com/logik101/box11/main/logo.png";
 
