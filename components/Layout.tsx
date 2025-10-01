@@ -1,60 +1,48 @@
-// src/components/Header.tsx
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { useLocation } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
+import FloatingCalmButton from "./FloatingCalmButton";
+import { AppContext } from "../App";
+import { NarratorRole } from "../types";
+import NarratorAvatar from "./NarratorAvatar";
+import Breadcrumbs from "./Breadcrumbs";
 
-// Primary: served from public/ (works on GitHub Pages with vite.config base)
-const LOGO_PRIMARY = `${import.meta.env.BASE_URL}logo.png`;
-// Fallback: GitHub raw URL (replace with your repo if needed)
-const LOGO_FALLBACK = "https://raw.githubusercontent.com/logik101/box11/main/logo.png";
+interface LayoutProps {
+  children: React.ReactNode;
+}
 
-const Header: React.FC = () => {
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const { narratorRole } = useContext(AppContext);
+  const location = useLocation();
+
+  const hideNarratorPages = ["/", "/about", "/contact"];
+  const shouldShowNarrator =
+    !!narratorRole && !hideNarratorPages.includes(location.pathname);
+
+  const isHomePage = location.pathname === "/";
+  const showCalmButtonForJobseeker =
+    shouldShowNarrator && narratorRole === NarratorRole.Jobseeker;
+
   return (
-    <header className="sticky top-0 z-40 bg-background/80 backdrop-blur border-b border-border">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-3">
-          <img
-            src={LOGO_PRIMARY}
-            alt="AICC Logo"
-            className="h-8 w-auto"
-            onError={(e) => {
-              const img = e.currentTarget as HTMLImageElement;
-              if (img.src !== LOGO_FALLBACK) img.src = LOGO_FALLBACK;
-            }}
-          />
-          <span className="font-bold text-lg">AICC</span>
-        </Link>
-
-        {/* Navigation */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <NavLink to="/" className={({ isActive }) => (isActive ? "text-primary font-bold" : "text-foreground hover:text-primary")}>
-            Home
-          </NavLink>
-          <NavLink to="/about" className={({ isActive }) => (isActive ? "text-primary font-bold" : "text-foreground hover:text-primary")}>
-            About
-          </NavLink>
-          <NavLink to="/contact" className={({ isActive }) => (isActive ? "text-primary font-bold" : "text-foreground hover:text-primary")}>
-            Contact
-          </NavLink>
-          <NavLink to="/our-story" className={({ isActive }) => (isActive ? "text-primary font-bold" : "text-foreground hover:text-primary")}>
-            Our Story
-          </NavLink>
-          <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "text-primary font-bold" : "text-foreground hover:text-primary")}>
-            Jobseeker
-          </NavLink>
-          <NavLink to="/employer" className={({ isActive }) => (isActive ? "text-primary font-bold" : "text-foreground hover:text-primary")}>
-            Employer
-          </NavLink>
-          <NavLink to="/caregiver" className={({ isActive }) => (isActive ? "text-primary font-bold" : "text-foreground hover:text-primary")}>
-            CareGiver
-          </NavLink>
-          <NavLink to="/volunteer" className={({ isActive }) => (isActive ? "text-primary font-bold" : "text-foreground hover:text-primary")}>
-            Volunteer
-          </NavLink>
-        </nav>
-      </div>
-    </header>
+    <div className="flex flex-col min-h-screen bg-background">
+      <Header />
+      <Breadcrumbs />
+      <main
+        className={`flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative ${
+          isHomePage ? "" : "py-8"
+        }`}
+      >
+        <div className={shouldShowNarrator ? "pb-40" : ""}>
+          {/* Padding bottom to avoid overlap with narrator */}
+          {children}
+        </div>
+        {shouldShowNarrator && <NarratorAvatar />}
+        {(isHomePage || showCalmButtonForJobseeker) && <FloatingCalmButton />}
+      </main>
+      <Footer />
+    </div>
   );
 };
 
-export default Header;
+export default Layout;
