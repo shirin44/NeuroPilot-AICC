@@ -7,9 +7,6 @@ import { HOME_PAGE_CONTENT } from "@/constants/homePage";
 import { NarratorRole, Language } from "../types";
 import { AppContext } from "../App";
 
-// ✅ Use the logo from public folder (GitHub Pages safe)
-const logoUrl = `${import.meta.env.BASE_URL}logo.png`;
-
 const normalizeLang = (l: unknown): Language =>
   l === Language.VN || l === "vi" || l === "VN" ? Language.VN : Language.EN;
 
@@ -28,7 +25,12 @@ const HeroSection: React.FC = () => {
       <div className="w-full max-w-5xl px-4 animate-fadeInUp">
         <h1 className="font-display text-4xl md:text-6xl font-extrabold text-foreground flex items-center justify-center gap-3 md:gap-4">
           <span>{H.hero.title[lang]}</span>
-          <img src={logoUrl} alt="AICC logo" className="h-24 w-auto align-middle" />
+          {/* ✅ Hardcoded GitHub raw link for logo */}
+          <img
+            src="https://raw.githubusercontent.com/logik101/box11/main/logo.png"
+            alt="AICC logo"
+            className="h-24 w-auto align-middle"
+          />
         </h1>
 
         <p className="mt-3 text-base md:text-lg text-foreground/80 font-semibold">
@@ -56,14 +58,11 @@ const HeroSection: React.FC = () => {
             />
           ) : (
             <>
-              {/* YouTube preview thumbnail */}
               <img
                 src={`https://img.youtube.com/vi/${YT_ID}/hqdefault.jpg`}
                 alt="Video thumbnail"
                 className="absolute inset-0 w-full h-full object-cover"
               />
-
-              {/* Overlay Play Button */}
               <button
                 onClick={() => setShowPlayer(true)}
                 className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 hover:bg-black/50 transition"
