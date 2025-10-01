@@ -1,3 +1,4 @@
+// src/components/Layout.tsx
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "./Header";
@@ -27,19 +28,27 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
-      <Breadcrumbs />
+
+      {/* Only show breadcrumbs when not on home */}
+      {!isHomePage && <Breadcrumbs />}
+
       <main
         className={`flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative ${
           isHomePage ? "" : "py-8"
         }`}
       >
         <div className={shouldShowNarrator ? "pb-40" : ""}>
-          {/* Padding bottom to avoid overlap with narrator */}
+          {/* Content */}
           {children}
         </div>
+
+        {/* Floating narrator avatar */}
         {shouldShowNarrator && <NarratorAvatar />}
+
+        {/* Floating calm button on home or Jobseeker mode */}
         {(isHomePage || showCalmButtonForJobseeker) && <FloatingCalmButton />}
       </main>
+
       <Footer />
     </div>
   );
