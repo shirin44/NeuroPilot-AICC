@@ -1,4 +1,4 @@
-// components/Header.tsx
+// src/components/Header.tsx
 import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
@@ -6,7 +6,12 @@ import { HEADER_CONTENT } from "@/constants/Header";
 import { Language, NarratorRole } from "../types";
 import Tooltip from "./Tooltip";
 
-import logoUrl from "@/src/assets/images/logo.png"; 
+// Serve from /public so it works on GitHub Pages
+const LOGO_PRIMARY = `${import.meta.env.BASE_URL}logo.png`;
+// Fallback in case the public asset is missing
+const LOGO_FALLBACK =
+  "https://raw.githubusercontent.com/logik101/box11/main/logo.png";
+
 const LanguageToggle: React.FC = () => {
   const { language, setLanguage } = useContext(AppContext);
   const toggleLanguage = () => {
@@ -49,10 +54,26 @@ const Header: React.FC = () => {
   ];
 
   const roleNavLinks = [
-    { role: NarratorRole.Jobseeker, label: HEADER_CONTENT.roles.jobseeker[language], colorClass: "hover:text-brand-blue-400" },
-    { role: NarratorRole.Employer, label: HEADER_CONTENT.roles.employer[language], colorClass: "hover:text-brand-purple-400" },
-    { role: NarratorRole.CareGiver, label: HEADER_CONTENT.roles.CareGiver[language], colorClass: "hover:text-brand-red-300" },
-    { role: NarratorRole.Volunteer, label: HEADER_CONTENT.roles.volunteer[language], colorClass: "hover:text-brand-green-400" },
+    {
+      role: NarratorRole.Jobseeker,
+      label: HEADER_CONTENT.roles.jobseeker[language],
+      colorClass: "hover:text-brand-blue-400",
+    },
+    {
+      role: NarratorRole.Employer,
+      label: HEADER_CONTENT.roles.employer[language],
+      colorClass: "hover:text-brand-purple-400",
+    },
+    {
+      role: NarratorRole.CareGiver,
+      label: HEADER_CONTENT.roles.CareGiver[language],
+      colorClass: "hover:text-brand-red-300",
+    },
+    {
+      role: NarratorRole.Volunteer,
+      label: HEADER_CONTENT.roles.volunteer[language],
+      colorClass: "hover:text-brand-green-400",
+    },
   ];
 
   return (
@@ -62,11 +83,15 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <img
-              src={logoUrl}               
+              src={LOGO_PRIMARY}
               alt="AICC Logo"
               className="h-14 w-auto block object-contain"
               loading="eager"
               fetchPriority="high"
+              onError={(e) => {
+                const img = e.currentTarget as HTMLImageElement;
+                if (img.src !== LOGO_FALLBACK) img.src = LOGO_FALLBACK;
+              }}
             />
           </Link>
 
