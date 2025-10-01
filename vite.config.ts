@@ -9,22 +9,23 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
 
-    // IMPORTANT: match the GitHub repo name
+    // Must match the GitHub repo name
+    // If you deploy to a different repo, change this to "/<repo-name>/"
     base: "/NeuroPilot-AICC/",
 
-    // Safe way to expose public keys only — don’t push secrets
+    // Expose safe public keys only
     define: {
       "process.env.API_KEY": JSON.stringify(env.VITE_API_KEY || ""),
     },
 
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "."),
+        // Point "@" to src so imports like "@/assets/..." work
+        "@": path.resolve(__dirname, "src"),
       },
     },
 
     build: {
-      // GitHub Pages: normally “dist”, but you can change to “docs” if you want to commit the build
       outDir: "dist",
       assetsDir: "assets",
       sourcemap: true,
